@@ -1,7 +1,7 @@
 import './App.css';
 import { clickToGet, newuser, userlogin } from './axios'
 import React, { useState } from 'react'
-
+import Select from "react-select"
 
 function App() {
   const [clicked, setClick] = useState(false)
@@ -11,6 +11,11 @@ function App() {
   const [username, setName] = useState("")
   const [password, setpwd] = useState("")  
   const [userclass, setClass] = useState("") 
+  const classoptions = [
+    { value: "general director", label: "general director"},
+    { value: "section manager", label: "section manager"},
+    { value: "group member", label: "group member"},
+  ]
   return (
     <div className="App">
       <p>Username: </p>
@@ -20,13 +25,18 @@ function App() {
       <input value={password}
             onChange={(e) => setpwd(e.target.value)}></input>
       <p>Class: </p>
-      <input value={userclass}
-            onChange={(e) => setClass(e.target.value)}></input>
+      {/* <input value={userclass}
+            onChange={(e) => setClass(e.target.value)}></input> */}
+      <Select value={userclass}
+              onChange={(e) => {
+                setClass(e)
+              }}
+              options={classoptions}/>
       <button onClick={async () => {
           setClick(true)
           const userinfo = { username: username,
                              password: password,
-                             userclass: userclass     }
+                             userclass: userclass.value     }
           let msg = await newuser(userinfo)
           setMsg(msg)
           if(msg.split(" ")[0] === 'new'){
