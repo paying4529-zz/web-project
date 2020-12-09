@@ -1,12 +1,13 @@
 import './App.css';
-import { clickToGet, newuser } from './axios'
+import { clickToGet, newuser, userlogin } from './axios'
 import React, { useState } from 'react'
 
 
 function App() {
   const [clicked, setClick] = useState(false)
   const [message, setMsg] = useState("")
-  const [loginSuccess, setSuccess] = useState(false)
+  const [loginSuccess, setLogin] = useState(false)
+  const [registerSuccess, setSuccess] = useState(false)
   const [username, setName] = useState("")
   const [password, setpwd] = useState("")  
   const [userclass, setClass] = useState("") 
@@ -25,16 +26,27 @@ function App() {
           setClick(true)
           const userinfo = { username: username,
                              password: password,
-                             class: userclass     }
+                             userclass: userclass     }
           let msg = await newuser(userinfo)
           setMsg(msg)
           if(msg.split(" ")[0] === 'new'){
             setSuccess(true)
           }
         }}
-        disabled={!userclass}>Login</button>
+        disabled={!userclass}>Register</button>
       <button onClick={async () => {
-          setSuccess(false)
+          setClick(true)
+          const userinfo = { username: username,
+                             password: password  }
+          let msg = await userlogin(userinfo)
+          setMsg(msg)
+          if(msg.split(" ")[0] === 'correct'){
+            setLogin(true)
+          }
+        }}
+        disabled={!password}>Login</button>
+      <button onClick={async () => {
+          setLogin(false)
         }}
         disabled={!loginSuccess}>Logout</button>
       <button onClick={async () => {

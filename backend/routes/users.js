@@ -24,7 +24,27 @@ const saveUser = (userinfo,res) => {
     });
 };
 
-router.post('/', (req, res) => {
+const userLogin = (userinfo,res) => {
+    const name = userinfo.username
+    const password = userinfo.password
+    User.find({username: name}, (err, result) => {
+        if (result.length){
+            if(password === result[0].password){
+                const data = { msg: `correct password`}
+                res.status(200).send(data)
+            }
+            else{
+                const data = { msg: `wrong password`}
+                res.status(200).send(data)
+            }
+        } else {
+            const data = { msg: `please register first.`}
+            res.status(200).send(data)
+        }
+    });
+};
+
+router.post('/register', (req, res) => {
     // console.log('POST HTTP method on users resource');
     if(res){
         var userinfo = req.body
@@ -34,6 +54,18 @@ router.post('/', (req, res) => {
         res.status(200).send(data)  
     }
 });
+
+router.post('/login', (req, res) => {
+    // console.log('POST HTTP method on users resource');
+    if(res){
+        var userinfo = req.body
+        userLogin(userinfo,res)
+    }else{
+        const data = { msg: 'Fail to login' }
+        res.status(200).send(data)  
+    }
+});
+
 router.put('/:userId', (req, res) => {
     res.send(`PUT HTTP method on users/${req.params.userId} resource`)
 });
