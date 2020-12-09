@@ -8,7 +8,11 @@
     "server": "cd backend && yarn server"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.2",
     "axios": "^0.21.0",
+    "bootstrap": "^4.5.3",
+    "react-bootstrap": "^1.4.0",
+    "react-router-dom": "^5.2.0",
     "react-select": "^3.1.1"
   }
 }
