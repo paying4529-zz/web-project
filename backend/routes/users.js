@@ -1,4 +1,3 @@
-import e from "express";
 import express from "express"
 import User from '../models/user.js'
 
@@ -65,9 +64,6 @@ router.post('/login', (req, res) => {
     }
 });
 
-router.put('/:userId', (req, res) => {
-    res.send(`PUT HTTP method on users/${req.params.userId} resource`)
-});
 router.get('/', async (req, res) => {
     const userList = await User.find();
     if (userList.length){

@@ -1,16 +1,27 @@
 import '../App.css';
 import { userlogin } from '../axios'
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Route, Redirect, useParams } from "react-router-dom";
-import { Button } from '@material-ui/core';
+import { BrowserRouter as Router, Route, Switch, Link, Redirect, useParams, useRouteMatch } from "react-router-dom";
+import { Button, List, ListItem } from '@material-ui/core';
+import Calander from "./calander"
+import TodoList from "./todolist"
 
 function Userpage({setLogout}){
+  const { url } = useRouteMatch()
   const { username } = useParams()
   return(
     <>
       <h2>{username}'s userpage</h2>
       <Button variant="contained" 
             onClick={setLogout}>Logout</Button>
+      <List component="nav">
+        <ListItem><Link to={url+"/calander"}>Calander</Link></ListItem>
+        <ListItem><Link to={url+"/todolist"}>TodoList</Link></ListItem>
+      </List>
+      <Switch>
+          <Route path={url+"/calander"}><Calander /></Route>
+          <Route path={url+"/todolist"}><TodoList /></Route>
+      </Switch>
     </>
   )
 }
@@ -54,4 +65,4 @@ function Login(){
     )
   }
 
-  export default Login;
+export default Login;

@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link, useParams, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { List, ListItem} from '@material-ui/core';
 import Register from "./pages/register"
 import Login from "./pages/login"
