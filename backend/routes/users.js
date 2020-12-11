@@ -8,7 +8,6 @@ const saveUser = (userinfo,res) => {
     const name = userinfo.username
     User.countDocuments({username: name}, (err, count) => {
         if (count){
-            console.log(count)
             const data = { msg: `name "${name}" exists!!`}
             res.status(200).send(data)
         } else {

@@ -2,7 +2,7 @@ import './App.css';
 import { clickToGet, newuser, userlogin } from './axios'
 import React, { useState } from 'react'
 import Select from "react-select"
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useParams, Redirect } from "react-router-dom";
 import { Button, List, ListItem} from '@material-ui/core';
 function Register(){
   const [clicked, setClick] = useState(false)
@@ -51,33 +51,48 @@ function Login(){
   const [loginSuccess, setLogin] = useState(false)
   const [username, setName] = useState("")
   const [password, setpwd] = useState("")  
+  const setLogout = ()=> setLogin(false)
   return (
-    <div className="App">
-      <h2>Login</h2>
-      <p>Username: </p>
-      <input value={username}
-             onChange={(e) => setName(e.target.value)}></input>
-      <p>Password: </p>
-      <input value={password}
-             onChange={(e) => setpwd(e.target.value)}></input>
-      <Button variant="contained" 
-        onClick={async () => {
-            setClick(true)
-            const userinfo = { username: username, password: password  }
-            let msg = await userlogin(userinfo)
-            setMsg(msg)
-            if(msg.split(" ")[0] === 'correct'){ setLogin(true) }
-          }}
-        disabled={!password}>Login</Button>
-      <Button variant="contained" 
-        onClick={async () => { setLogin(false) }}
-        disabled={!loginSuccess}>Logout</Button>
-      {clicked? <div>{message}</div>:<></>}
-      {loginSuccess?<div>Hi, {username}</div>:<div>not login</div>}
-    </div>
+    <Router>
+      {loginSuccess?(
+        <div className="App">
+          <Redirect to={"/"+username}/>
+          <Route path="/:username"><Userpage setLogout={setLogout}/></Route>   
+        </div>
+      ):(
+        <div className="App">
+          <Redirect to="/login"/>
+          <h2>Login</h2>
+          <p>Username: </p>
+          <input value={username}
+                onChange={(e) => setName(e.target.value)}></input>
+          <p>Password: </p>
+          <input value={password}
+                onChange={(e) => setpwd(e.target.value)}></input>
+          <Button variant="contained" 
+            onClick={async () => {
+                setClick(true)
+                const userinfo = { username: username, password: password  }
+                let msg = await userlogin(userinfo)
+                setMsg(msg)
+                if(msg.split(" ")[0] === 'correct'){ setLogin(true) }
+              }}
+            disabled={!password}>Login</Button>
+          {clicked? <div>{message}</div>:<></>}
+        </div>)}
+    </Router>
   )
 }
-
+function Userpage({setLogout}){
+  let { username } = useParams()
+  return(
+    <>
+      <h2>{username}'s userpage</h2>
+      <Button variant="contained" 
+            onClick={setLogout}>Logout</Button>
+    </>
+  )
+}
 function Home(){
   const [clicked, setClick] = useState(false)
   const [message, setMsg] = useState("")
