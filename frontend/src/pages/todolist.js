@@ -3,8 +3,11 @@ import React, {  useState } from "react";
 import Header from "./todo_components/Header";
 import Section from "./todo_components/Section";
 import Footer from "./todo_components/Footer";
+import { useRouteMatch} from "react-router-dom";
 
 function TodoList(){
+    var { url } = useRouteMatch()
+    const username = url.split("/")[1]
     const [state, setState] = useState(0)
     const [total, setTotal] = useState(0)
     const [clear, setClear] = useState(false)
@@ -14,8 +17,9 @@ function TodoList(){
     const setClearTrue = () => setClear(true)
     return (
         <div className="todo-app__root">
-            <Header text="todos" />
-            <Section setTotal={setTotal} 
+            <Header text={`${username}'s TODOs`}/>
+            <Section username={username}
+                setTotal={setTotal} 
                 statenow={state}
                 clear={clear}
                 setClear={setClear}/>

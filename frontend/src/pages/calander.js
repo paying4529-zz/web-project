@@ -6,7 +6,6 @@ function Calander(){
     var { url } = useRouteMatch()
     const username = url.split("/")[1]
     const weekdayname = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-    var start_from = 5
     return(
             <div class="Theme-black">
                 <h1>{username}'s Calendar</h1>

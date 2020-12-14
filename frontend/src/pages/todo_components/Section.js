@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import List from "./List"
 import Input from "./Input"
+import { saveTodo, getTodo } from '../../axios'
 
-function Section({setTotal,statenow,clear,setClear}){
+function Section({username,setTotal,statenow,clear,setClear}){
+    const [start, setStart] = useState(1)
     const [id, setId] = useState(0)
     const [items, setItems] = useState([])
     const [clearid, setClearId] = useState(null)
@@ -15,10 +17,7 @@ function Section({setTotal,statenow,clear,setClear}){
     const click = (ID) => { 
         const newItems = items.slice();
         for(var i=0;i<ID+1;i++){
-            if(newItems[i].id===ID){
-                newItems[i].isComplete = !newItems[i].isComplete;
-                break;
-            }
+            if(newItems[i].id===ID){  newItems[i].isComplete = !newItems[i].isComplete;  break;  }
         }
         setItems(newItems)
         countTotal();
@@ -33,10 +32,7 @@ function Section({setTotal,statenow,clear,setClear}){
             const newItems = items.slice();
             var index;
             for(var i=0;i<clearid+1;i++){
-                if(newItems[i].id===clearid){
-                    index=i;
-                    break;
-                }
+                if(newItems[i].id===clearid){ index=i; break; }
             }
             newItems.splice(index,1);
             setTotal(newItems.filter(e => !e.isComplete).length);
@@ -48,6 +44,25 @@ function Section({setTotal,statenow,clear,setClear}){
             const after = newItems.filter(e => !e.isComplete);
             setItems(after)
             setClear(false);
+        }
+        async function saveTodoToBack(){
+            if(!start){
+                const todoitem = { username: username, itemslist: items  }
+                let msg = await saveTodo(todoitem)
+                console.log(msg)
+            }
+        }
+        saveTodoToBack()
+        if(start){ getTodoFromBack() }
+        async function getTodoFromBack(){  
+            const { msg, contents } = await getTodo(username)
+            if(msg==="success"){
+                if(contents[0]){
+                    const itemlist = contents[0].itemslist
+                    setItems(itemlist)
+                }
+            }
+            setStart(0)
         }
     })
 

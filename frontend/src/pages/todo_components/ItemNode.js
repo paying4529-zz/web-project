@@ -2,9 +2,7 @@ import React,{ useEffect } from "react";
 import Wrapper from "./Wrapper";
 import xImg from '../img/x.png';
 function ItemNode({value,id,clickk,countTotal,setClearId,complete}){
-    useEffect(()=>{
-        countTotal()
-    })
+    useEffect(()=>countTotal())
     return(
         <li className="todo-app__item" 
             id={id+100}

@@ -1,5 +1,6 @@
 import express from "express"
 import User from '../models/user.js'
+import Todo from '../models/todo.js'
 
 const router =  express.Router();
 
@@ -42,8 +43,50 @@ const userLogin = (userinfo,res) => {
     });
 };
 
+const getTodo = async (username, res) => {
+    const x = await Todo.find({username: username}).limit(100).sort({ _id: 1 })  
+    if(res){
+      const data = { msg: 'success', contents: x }
+      res.status(200).send(data)
+    }else{
+      const data = { msg: 'fail', contents: [] }
+      res.status(200).send(data)
+    } 
+}
+
+const saveTodo = (todoitem,res) => {
+    const name = todoitem.username
+    Todo.countDocuments({username: name}, (err, count) => {
+        if (count){ Todo.deleteOne({username: name}) }
+        const todo = new Todo(todoitem);
+        todo.save((err) => {
+            if (err) console.error(err);
+            else{
+                const data = { msg: `${name}'s todo saved!!!`}
+                res.status(200).send(data)
+            }
+        });
+    });
+};
+
+router.post("/getTodo", (req,res)=>{
+    if(res){
+        var username = req.body.username
+        getTodo(username,res)
+    } 
+})
+
+router.post("/saveTodo", (req, res)=>{
+    if(res){
+        var todoitem = req.body
+        saveTodo(todoitem,res)
+    }else{
+        const data = { msg: 'Fail to save todo' }
+        res.status(403).send(data)  
+    }
+})
+
 router.post('/register', (req, res) => {
-    // console.log('POST HTTP method on users resource');
     if(res){
         var userinfo = req.body
         saveUser(userinfo,res)
@@ -54,7 +97,6 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    // console.log('POST HTTP method on users resource');
     if(res){
         var userinfo = req.body
         userLogin(userinfo,res)
@@ -70,9 +112,7 @@ router.get('/', async (req, res) => {
         const data = {contents: userList}
         res.status(200).send(data);
     }    
-    else{
-        res.status(500).send([]);
-    }
+    else{ res.status(500).send([]); }
 });
    
 export default router

@@ -8,28 +8,26 @@ input[type='checkbox'] {
 
 .todo-app__root {
     margin: 0 auto;
-    /* margin-top: 7em; */
     width: 50em;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 1em;
     color: #4d4d4d;
-    font-weight: 100;
 }
 
 .todo-app__header {
     margin-bottom: 1em;
+    
 }
 
 .todo-app__title {
     font-size: 100px;
-    font-weight: 100;
     text-align: center;
     color:#F4D03F;
     margin: 0;
     padding: 0;
+    font-weight: 500;
 }
 
 .todo-app__input {

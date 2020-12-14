@@ -18,4 +18,15 @@ const userlogin = async(userinfo) => {
     const { data } = await instance.post('/users/login', userinfo)
     return data.msg
 }
-export { clickToGet, newuser, userlogin };
+
+const saveTodo = async(todoitem) => {
+    const { data } = await instance.post('/users/saveTodo', todoitem)
+    return data.msg
+}
+
+async function getTodo(username){
+    const { data } = await instance.post('/users/getTodo', { username })
+    return data
+}
+
+export { clickToGet, newuser, userlogin, saveTodo, getTodo };
