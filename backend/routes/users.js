@@ -69,6 +69,40 @@ const saveTodo = (todoitem, res) => {
     });
 };
 
+const getSubClass = async (username, res) => {
+    console.log(username)
+    const result = await User.find({username: username},()=>{});
+    const userClass = result[0].userclass
+    if(userClass==="general director"){
+        const userList = await User.find({$or:[{userclass:"section manager"},{userclass:"group member"}]},()=>{}).limit(100)
+        if (userList.length){ 
+            const list = userList.map(r=>r.username)
+            const data = {contents: list}
+            res.status(200).send(data);
+        }
+    }
+    else if(userClass==="section manager"){
+        const userList = await User.find({userclass:"group member"},()=>{}).limit(100)
+        if (userList.length){ 
+            const list = userList.map(r=>r.username)
+            const data = {contents: list}
+            res.status(200).send(data);
+        }
+    }
+    else if(userClass==="group member"){
+        const data = {contents: []}
+        res.status(200).send(data);
+    }
+}
+
+router.post("/getsubclass",(req,res)=>{
+    if(res){
+        var username = req.body.username
+        getSubClass(username,res)
+    } 
+
+})
+
 router.post("/getTodo", (req,res)=>{
     if(res){
         var username = req.body.username

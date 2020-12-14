@@ -9,9 +9,11 @@ const clickToGet = async () => {
     ));
 }
 
-const GetUserClass = async () => { 
-    const { data } = await instance.post('/userclass'); 
-    return data.userclass;
+const GetSubClass = async (username) => { 
+    console.log("11111111")
+    const { data } = await instance.post('/users/getsubclass', { username }); 
+    console.log(data)
+    return data.contents;
 }
 
 const newuser = async(userinfo) => {
@@ -34,4 +36,4 @@ async function getTodo(username){
     return data
 }
 
-export { clickToGet, newuser, userlogin, saveTodo, getTodo };
+export { clickToGet, newuser, userlogin, saveTodo, getTodo, GetSubClass };

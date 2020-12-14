@@ -59,7 +59,7 @@ function Section({setTotal,statenow,clear,setClear}){
         async function getTodoFromBack(){  
             const { msg, contents } = await getTodo(username)
             if(msg==="success"){
-                if(contents){
+                if(contents[0]){
                     const itemlist = contents[0].itemslist
                     setItems(itemlist)
                 }
