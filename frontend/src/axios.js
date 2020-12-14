@@ -9,6 +9,11 @@ const clickToGet = async () => {
     ));
 }
 
+const GetUserClass = async () => { 
+    const { data } = await instance.post('/userclass'); 
+    return data.userclass;
+}
+
 const newuser = async(userinfo) => {
     const { data } = await instance.post('/users/register', userinfo)
     return data.msg

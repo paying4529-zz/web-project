@@ -17,6 +17,7 @@ function TodoList(){
     const setClearTrue = () => setClear(true)
     return (
         <div className="todo-app__root">
+            
             <Header text={`${username}'s TODOs`}/>
             <Section username={username}
                 setTotal={setTotal} 

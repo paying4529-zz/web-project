@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import List from "./List"
 import Input from "./Input"
 import { saveTodo, getTodo } from '../../axios'
+import { useRouteMatch} from "react-router-dom";
 
-function Section({username,setTotal,statenow,clear,setClear}){
+function Section({setTotal,statenow,clear,setClear}){
+    var { url } = useRouteMatch()
+    const username = url.split("/")[1]
     const [start, setStart] = useState(1)
     const [id, setId] = useState(0)
     const [items, setItems] = useState([])
@@ -46,24 +49,24 @@ function Section({username,setTotal,statenow,clear,setClear}){
             setClear(false);
         }
         async function saveTodoToBack(){
-            if(!start){
-                const todoitem = { username: username, itemslist: items  }
-                let msg = await saveTodo(todoitem)
-                console.log(msg)
-            }
+            const todoitem = { username: username, itemslist: items  }
+            let msg = await saveTodo(todoitem)
+            console.log(msg)
         }
-        saveTodoToBack()
         if(start){ getTodoFromBack() }
+        else{ saveTodoToBack() }
+        
         async function getTodoFromBack(){  
             const { msg, contents } = await getTodo(username)
             if(msg==="success"){
-                if(contents[0]){
+                if(contents){
                     const itemlist = contents[0].itemslist
                     setItems(itemlist)
                 }
             }
             setStart(0)
         }
+        
     })
 
     return (

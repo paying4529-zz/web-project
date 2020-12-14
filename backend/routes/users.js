@@ -54,10 +54,10 @@ const getTodo = async (username, res) => {
     } 
 }
 
-const saveTodo = (todoitem,res) => {
+const saveTodo = (todoitem, res) => {
     const name = todoitem.username
     Todo.countDocuments({username: name}, (err, count) => {
-        if (count){ Todo.deleteOne({username: name}) }
+        if (count){ Todo.deleteOne({ username: name },()=>{}) }
         const todo = new Todo(todoitem);
         todo.save((err) => {
             if (err) console.error(err);
@@ -79,7 +79,7 @@ router.post("/getTodo", (req,res)=>{
 router.post("/saveTodo", (req, res)=>{
     if(res){
         var todoitem = req.body
-        saveTodo(todoitem,res)
+        saveTodo(todoitem, res)
     }else{
         const data = { msg: 'Fail to save todo' }
         res.status(403).send(data)  
@@ -113,6 +113,5 @@ router.get('/', async (req, res) => {
         res.status(200).send(data);
     }    
     else{ res.status(500).send([]); }
-});
-   
+});   
 export default router
