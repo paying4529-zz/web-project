@@ -8,6 +8,10 @@ function TodoList(){
     const [state, setState] = useState(0)
     const [total, setTotal] = useState(0)
     const [clear, setClear] = useState(false)
+    const setState0 = () => setState(0)
+    const setState1 = () => setState(1)
+    const setState2 = () => setState(2)
+    const setClearTrue = () => setClear(true)
     return (
         <div className="todo-app__root">
             <Header text="todos" />
@@ -16,8 +20,10 @@ function TodoList(){
                 clear={clear}
                 setClear={setClear}/>
             <Footer total={total} 
-                setStateNow={setState} 
-                setClear={setClear}/> 
+                setState0={setState0} 
+                setState1={setState1} 
+                setState2={setState2} 
+                setClearT={setClearTrue}/> 
         </div>
     );
 }
