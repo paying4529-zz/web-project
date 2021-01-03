@@ -1,12 +1,17 @@
 import axios from 'axios'
 
+
+import { useQuery, useMutation } from '@apollo/client';
+import  USERS_QUERY from './graphql/users_query'
+import CREATE_USER_MUTATION from './graphql/create_user_mutation'
+import { useState, useEffect } from 'react';
+
 const instance = axios.create({ baseURL: 'http://localhost:4000' });
 
-const clickToGet = async () => { 
-    const { data } = await instance.get('/users'); 
-    return data.contents.map(e=>(
-        <div>{e.username+"||"+e.password+"||"+e.userclass}</div>
-    ));
+const GetUsers = () => { 
+    const {loading, error, data} = useQuery(USERS_QUERY)
+   
+    return {data}
 }
 
 const GetSubClass = async (username) => { 
@@ -16,9 +21,29 @@ const GetSubClass = async (username) => {
     return data.contents;
 }
 
-const newuser = async(userinfo) => {
-    const { data } = await instance.post('/users/register', userinfo)
-    return data.msg
+const NewUser = () => {
+    const [addUser, {data}] = useMutation(CREATE_USER_MUTATION)
+    const [isSuccess, setIsSuccess] = useState(false)
+    useEffect(()=>{
+        if (data){
+            setIsSuccess(data.addUser.success)
+        }
+    }, [data])
+    const createUser = (userinfo) => {
+        const {username, password, userclass} = userinfo
+        console.log("create user")
+        console.log(username, password, userclass)
+        addUser({
+            variables: {
+                username: username,
+                password: password,
+                userclass: userclass
+            }
+        })
+
+    }
+
+    return {createUser, isSuccess}
 }
 
 const userlogin = async(userinfo) => {
@@ -36,4 +61,4 @@ async function getTodo(username){
     return data
 }
 
-export { clickToGet, newuser, userlogin, saveTodo, getTodo, GetSubClass };
+export { GetUsers, NewUser, userlogin, saveTodo, getTodo, GetSubClass };
