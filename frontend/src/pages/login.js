@@ -10,7 +10,7 @@ function Userpage({setLogout}){
   const { url } = useRouteMatch()
   const { username } = useParams()
   return(
-    <>
+    <Router>
       <h2>{username}'s userpage</h2>
       <Button variant="contained" 
             onClick={setLogout}>Logout</Button>
@@ -22,7 +22,7 @@ function Userpage({setLogout}){
           <Route path={url+"/calander"}><Calander /></Route>
           <Route path={url+"/todolist"}><TodoList /></Route>
       </Switch>
-    </>
+    </Router>
   )
 }
 
@@ -36,12 +36,12 @@ function Login(){
     return (
       <Router>
         {loginSuccess?(
-          <div className="App">
+          <div className="user_page">
             <Redirect to={"/"+username}/>
             <Route path="/:username"><Userpage setLogout={setLogout}/></Route>   
           </div>
         ):(
-          <div className="App">
+          <div className="login_page">
             <Redirect to="/login"/>
             <h2>Login</h2>
             <p>Username: </p>

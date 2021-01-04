@@ -2,15 +2,24 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Register_page{
+  text-align: center;
+  background-color: #b489a6;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Home_page{
+  text-align: center;
+  background-color: #b4b389;
+}
+
+.login_page{
+  text-align: center;
+  background-color: #89b4ae;
+}
+
+.user_page{
+  text-align: center;
+  background-color: #8997b4;
 }
 
 .App-header {
@@ -22,17 +31,4 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

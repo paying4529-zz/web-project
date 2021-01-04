@@ -13,21 +13,17 @@ const Root = {
         console.log("mutation")
         const {username, password, userclass} = args.data
         const data = await User.find({"username": username})
-        if (data.length > 0)
-        {
+        if (data.length > 0){
             return {
                 success: false
             }
         }
-        else
-        {
-            const newUser = new User(
-                {
+        else{
+            const newUser = new User({
                     username: username,
                     password: password,
                     userclass: userclass
-                }
-            )
+            })
             const error = await newUser.save()
             return {
                 user: newUser,

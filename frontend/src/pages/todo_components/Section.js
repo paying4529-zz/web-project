@@ -61,6 +61,8 @@ function Section({setTotal,statenow,clear,setClear}){
             if(msg==="success"){
                 if(contents[0]){
                     const itemlist = contents[0].itemslist
+                    const lastid = itemlist[itemlist.length-1].id
+                    setId(lastid+1)
                     setItems(itemlist)
                 }
             }

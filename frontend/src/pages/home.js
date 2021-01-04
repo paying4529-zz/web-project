@@ -10,7 +10,7 @@ function Home(){
       console.log("data:", data)}
     )
     return (
-      <div className="App">
+      <div className="Home_page">
         <h2>Home</h2>
         <Button variant="contained"
           onClick={()=>{setClick(true)}}>

@@ -57,7 +57,9 @@ const getTodo = async (username, res) => {
 const saveTodo = (todoitem, res) => {
     const name = todoitem.username
     Todo.countDocuments({username: name}, (err, count) => {
-        if (count){ Todo.deleteOne({ username: name },()=>{}) }
+        if (count){ 
+            console.log(count)
+            Todo.deleteOne({ username: name },()=>{}) }
         const todo = new Todo(todoitem);
         todo.save((err) => {
             if (err) console.error(err);

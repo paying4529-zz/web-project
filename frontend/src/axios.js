@@ -2,15 +2,14 @@ import axios from 'axios'
 
 
 import { useQuery, useMutation } from '@apollo/client';
-import  USERS_QUERY from './graphql/users_query'
-import CREATE_USER_MUTATION from './graphql/create_user_mutation'
+import  {USERS_QUERY, TODOS_QUERY} from './graphql/queries'
+import {CREATE_USER_MUTATION} from './graphql/mutations'
 import { useState, useEffect } from 'react';
 
 const instance = axios.create({ baseURL: 'http://localhost:4000' });
 
 const GetUsers = () => { 
     const {loading, error, data} = useQuery(USERS_QUERY)
-   
     return {data}
 }
 

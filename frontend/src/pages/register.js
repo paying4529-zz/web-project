@@ -19,7 +19,7 @@ function Register(){
       { value: "group member", label: "group member"},
     ]
     return (
-      <div className="App">
+      <div className="Register_page">
         <h2>Register</h2>
         <p>Username: </p>
         <input value={username}

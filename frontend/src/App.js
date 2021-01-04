@@ -8,7 +8,6 @@ import Home from "./pages/home"
 function App() {
   return (
     <Router>
-      <div>
         <List component="nav">
           <ListItem><Link to="/">Home</Link></ListItem>
           <ListItem><Link to="/register">Register</Link></ListItem>
@@ -19,7 +18,6 @@ function App() {
           <Route path="/login"><Login /></Route>
           <Route path="/"><Home /></Route>
         </Switch>
-      </div>
     </Router>
   );
 }
