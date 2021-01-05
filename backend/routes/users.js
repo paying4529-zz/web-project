@@ -4,25 +4,6 @@ import Todo from '../models/todo.js'
 
 const router =  express.Router();
 
-// const saveUser = (userinfo,res) => {
-//     const name = userinfo.username
-//     User.countDocuments({username: name}, (err, count) => {
-//         if (count){
-//             const data = { msg: `name "${name}" exists!!`}
-//             res.status(200).send(data)
-//         } else {
-//             const user = new User(userinfo);
-//             user.save((err) => {
-//                 if (err) console.error(err);
-//                 else{
-//                     const data = { msg: `new user "${name}" saved!!!`}
-//                     res.status(200).send(data)
-//                 }
-//             });
-//         }
-//     });
-// };
-
 const userLogin = (userinfo,res) => {
     const name = userinfo.username
     const password = userinfo.password
@@ -54,7 +35,7 @@ const saveTodo = (todoitem, res) => {
         const todo = new Todo(todoitem);
         
         todo.save((err) => {
-            if(err){console.log(err)}
+            if(err){consle.log(err)}
             else{
                 console.log("save")
                 console.log(todo)

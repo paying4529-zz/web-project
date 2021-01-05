@@ -11,9 +11,10 @@ function Userpage({setLogout}){
   const { username } = useParams()
   return(
     <Router>
-      <h2>{username}'s userpage</h2>
-      <Button variant="contained" 
-            onClick={setLogout}>Logout</Button>
+      <div class="usercaption">
+        <h3>{username}'s userpage</h3>
+        <Button variant="contained" 
+            onClick={setLogout}>Logout</Button></div>
       <List component="nav">
         <ListItem><Link to={url+"/calander"}>Calander</Link></ListItem>
         <ListItem><Link to={url+"/todolist"}>TodoList</Link></ListItem>
@@ -45,12 +46,14 @@ function Login(){
             <Redirect to="/login"/>
             <h2>Login</h2>
             <p>Username: </p>
-            <input value={username}
+            <input class="select"
+                  value={username}
                   onChange={(e) => setName(e.target.value)}></input>
             <p>Password: </p>
-            <input value={password}
+            <input class="select"
+                  value={password}
                   onChange={(e) => setpwd(e.target.value)}></input>
-            <Button variant="contained" 
+            <div class="button"><Button variant="contained" 
               onClick={async () => {
                   setClick(true)
                   const userinfo = { username: username, password: password  }
@@ -58,7 +61,7 @@ function Login(){
                   setMsg(msg)
                   if(msg.split(" ")[0] === 'correct'){ setLogin(true) }
                 }}
-              disabled={!password}>Login</Button>
+              disabled={!password}>Login</Button></div>
             {clicked? <div>{message}</div>:<></>}
           </div>)}
       </Router>

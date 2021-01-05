@@ -9,9 +9,10 @@ function Home(){
     return (
       <div className="Home_page">
         <h2>Home</h2>
+        <div class="button">
         <Button variant="contained"
           onClick={()=>{setClick(true)}}>
-          get list</Button>
+          get list</Button></div>
         {clicked? <div>{data.getUsers.map(e => (<div>{`${e.username}||${e.password}||${e.userclass}`}</div>))}</div>:<></>}
       </div>
     )

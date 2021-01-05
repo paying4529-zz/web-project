@@ -32,10 +32,10 @@ function Section({setTotal,statenow,clear,setClear}){
     }
     
     useEffect(()=>{
-        console.log(items)
         async function saveTodoToBack(){
             console.log("in save todo")
-            const todoitem = { username: username, itemslist: items, userclass:"group member" }
+            console.log(items)
+            const todoitem = { username: username, todolist: items, userclass:"group member" }
             ///////////////////////////// hard write userclass need to be changed!!!!!!!!!!!!!!!!!!!!!!!!
             let msg = await saveTodo(todoitem)
             console.log("msg",msg)
@@ -72,7 +72,8 @@ function Section({setTotal,statenow,clear,setClear}){
                 for (const userTodo of getTodos) {
                     console.log(userTodo)
                     if(userTodo.username===username){
-                        const itemlist = userTodo.itemslist
+                        console.log(userTodo)
+                        const itemlist = userTodo.todolist
                         if(itemlist.length>0){
                             const lastid = itemlist[itemlist.length-1].id
                             setId(lastid+1)

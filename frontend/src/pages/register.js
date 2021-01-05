@@ -22,19 +22,25 @@ function Register(){
       <div className="Register_page">
         <h2>Register</h2>
         <p>Username: </p>
-        <input value={username}
+        <input class="select"
+              value={username}
               onChange={(e) => {setName(e.target.value)
                                 setClick(false)}}></input>
         <p>Password: </p>
-        <input value={password}
+        <input class="select"
+              value={password}
               onChange={(e) => setpwd(e.target.value)}></input>
         <p>Class: </p>
-        <Select value={userclass}
+        <div class="select">
+          <Select value={userclass}
                 onChange={(e) => {
                   setClass(e)
                 }}
                 options={classoptions}/>
-        <Button variant="contained"
+        </div>
+        <div class="button">
+        <Button 
+          variant="contained"
           onClick={() => {
             setClick(true)
             const userinfo = { username: username,
@@ -42,7 +48,7 @@ function Register(){
                                userclass: userclass.value}
             createUser(userinfo)
           }}
-          disabled={!userclass}>Register</Button>
+          disabled={!userclass}>Register</Button></div>
         {clicked? <div>{isSuccess ? `add new user: ${username}`: `${username} already exist`}</div>:<></>}
       </div>
     )

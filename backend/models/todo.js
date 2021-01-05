@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const TodoSchema = new Schema({
     username: { type: String, required: true, unique: true },
     userclass: { type: String,required: true},
-    itemslist: [Schema.Types.Mixed],
+    todolist: [Schema.Types.Mixed],
 });
 const Todo = mongoose.model('Todo', TodoSchema);
 export default Todo;

@@ -8,16 +8,20 @@ import Home from "./pages/home"
 function App() {
   return (
     <Router>
-        <List component="nav">
-          <ListItem><Link to="/">Home</Link></ListItem>
-          <ListItem><Link to="/register">Register</Link></ListItem>
-          <ListItem><Link to="/login">Login</Link></ListItem>
-        </List>
-        <Switch>
-          <Route path="/register"><Register /></Route>
-          <Route path="/login"><Login /></Route>
-          <Route path="/"><Home /></Route>
-        </Switch>
+        <div class="nav_bar">
+          <List component="nav">
+            <ListItem><Link to="/">Home</Link></ListItem>
+            <ListItem><Link to="/register">Register</Link></ListItem>
+            <ListItem><Link to="/login">Login</Link></ListItem>
+          </List>
+        </div>
+        <div class="main_screen">
+          <Switch>
+            <Route path="/register"><Register /></Route>
+            <Route path="/login"><Login /></Route>
+            <Route path="/"><Home /></Route>
+          </Switch>
+        </div>
     </Router>
   );
 }

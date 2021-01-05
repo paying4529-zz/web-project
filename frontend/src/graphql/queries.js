@@ -14,7 +14,7 @@ const TODOS_QUERY = gql`
     getTodos(query: { username: $username }) {
       username
       userclass
-      itemslist{
+      todolist{
         value
         isComplete
         id

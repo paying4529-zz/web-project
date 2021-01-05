@@ -10,6 +10,8 @@ const instance = axios.create({ baseURL: 'http://localhost:4000' });
 
 const GetUsers = () => { 
     const {loading, error, data} = useQuery(USERS_QUERY)
+    console.log("getusers")
+    console.log(data)
     return {data}
 }
 

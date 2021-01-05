@@ -1,10 +1,34 @@
 .App {
   text-align: center;
 }
+.nav_bar{
+  height: 100%;
+  width: 10%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+  padding-left: 10px;
+  left: 0;
+}
 
+.main_screen{
+  height: 100%;
+  width: 90%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  right: 0;
+}
 .Register_page{
   text-align: center;
   background-color: #b489a6;
+}
+.select{
+  width: 250px;
+  margin: auto;
 }
 
 .Home_page{
@@ -31,4 +55,17 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.button{
+  padding: 20px;
+}
+
+.usercaption{
+  top: 0;
+  right: 0;
+  margin-top: 0;
+  display:table;
+  float: right;
+  width: fit-content;
 }
