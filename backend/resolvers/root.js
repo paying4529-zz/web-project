@@ -13,20 +13,30 @@ const Root = {
         console.log("username", username)
         const user = await User.find({"username": username})
         console.log("user", user)
-        if (user.length > 0)
-        {
+        if (user.length > 0) {
             return {
                 user: user[0],
                 success: true
             }
         }
-        else
-        {
-            return {
-                success: false
-            }
-        }
+        else return { success: false }  
 
+    },
+    getTodos: async (args, {User,Todo}, info) => {
+        console.log("query todo")
+        const {username} = args.query
+        const userinfo = await User.find({"username": username})
+        const userclass = userinfo[0].userclass
+        if(userclass==="general director"){
+            const data = await Todo.find({$or: [{"username": username},{userclass:"section manager"},{userclass:"group member"}]})
+            return data
+        }else if(userclass==="section manager"){
+            const data = await Todo.find({$or: [{"username": username},{userclass:"group member"}]})
+            return data
+        }else if(userclass==="group member"){
+            const data = await Todo.find({$or: [{"username": username}]})
+            return data
+        }
     },
 
     // mutation
@@ -36,9 +46,7 @@ const Root = {
         const {username, password, userclass} = args.data
         const data = await User.find({"username": username})
         if (data.length > 0){
-            return {
-                success: false
-            }
+            return { success: false }
         }
         else{
             const newUser = new User({
@@ -49,8 +57,7 @@ const Root = {
             const error = await newUser.save()
             return {
                 user: newUser,
-                success: true
-            }
+                success: true }
         }
     }
 

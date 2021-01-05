@@ -12,7 +12,7 @@ function Userpage({setLogout}){
   return(
     <Router>
       <div class="usercaption">
-        <h3>{username}'s userpage</h3>
+        <h4>Hello, {username}</h4>
         <Button variant="contained" 
             onClick={setLogout}>Logout</Button></div>
       <List component="nav">
@@ -29,12 +29,10 @@ function Userpage({setLogout}){
 
 function Login(){
   const [clicked, setClick] = useState(false)
-  // const [message, setMsg] = useState("")
-  // const [loginSuccess, setLogin] = useState(false)
   const [username, setName] = useState("")
   const [password, setpwd] = useState("") 
   const {loginSuccess, login} = UserLogin(username) 
-  const setLogout = () => login(false)
+  const setLogout = () => { login(false); setClick(false) }
   return (
     <Router>
       {loginSuccess?(
@@ -47,18 +45,21 @@ function Login(){
           <Redirect to="/login"/>
           <h2>Login</h2>
           <p>Username: </p>
-          <input value={username}
+          <input class="select"
+                value={username}
                 onChange={(e) => setName(e.target.value)}></input>
           <p>Password: </p>
-          <input value={password}
+          <input class="select"
+                value={password}
                 onChange={(e) => setpwd(e.target.value)}></input>
-          <Button variant="contained" 
+          <div class="button"><Button variant="contained" 
             onClick={() => {
                 setClick(true)
                 const userinfo = { username: username, password: password }
                 login(userinfo)
+                setpwd("")
               }}
-            disabled={!password}>Login</Button>
+            disabled={!password}>Login</Button></div>
           {clicked? <div>{loginSuccess? "login success": "wrong username or password"}</div>:<></>}
         </div>)}
     </Router>

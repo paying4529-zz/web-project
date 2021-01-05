@@ -11,7 +11,6 @@ const instance = axios.create({ baseURL: 'http://localhost:4000' });
 const GetUsers = () => { 
     const {loading, error, data} = useQuery(USERS_QUERY)
     console.log("getusers")
-    console.log(data)
     return {data}
 }
 
@@ -24,42 +23,33 @@ const NewUser = () => {
     const [addUser, {data}] = useMutation(CREATE_USER_MUTATION)
     const [isSuccess, setIsSuccess] = useState(false)
     useEffect(()=>{
-        if (data){
-            setIsSuccess(data.addUser.success)
-        }
+        if (data){ setIsSuccess(data.addUser.success) }
     }, [data])
     const createUser = (userinfo) => {
         const {username, password, userclass} = userinfo
         console.log("create user")
-        console.log(username, password, userclass)
-        addUser({
-            variables: {
+        addUser({ variables: {
                 username: username,
                 password: password,
                 userclass: userclass
-            }
-        })
+        }})
 
     }
-
     return {createUser, isSuccess}
 }
 
 const UserLogin = () => {
     // for login, loginSuccess (true, false), login: function
-    // const { data } = await instance.post('/users/login', userinfo)
     const [userName, setUserName] = useState("");
     const [passWord, setPassWord] = useState("")
     const [loginSuccess, setLoginSuccess] = useState(false);
     const {loading, error, data} = useQuery(ONE_USER_QUERY,  {variables: {username: userName}})
-    
     const login = (userinfo) => {
-        if (userinfo === false)
-        {
+        if (userinfo === false){
             setLoginSuccess(false);
-        }
-        else
-        {
+            setUserName("");
+            setPassWord("");
+        }else{
             const {username, password} = userinfo
             setUserName(username);
             setPassWord(password);
@@ -68,20 +58,13 @@ const UserLogin = () => {
 
     useEffect(() => {
         console.log("login data:", data)
-        if (data)
-        {
-            if (data.getOneUser.success === true && data.getOneUser.user.password === passWord)
-            {
+        if (data){
+            if (data.getOneUser.success === true && data.getOneUser.user.password === passWord){
                 setLoginSuccess(true)
-            }
-            else
-            {
+            }else{
                 setLoginSuccess(false)
             }
-        }
-
-    }, [data])
-    
+    }}, [data,login])
     return {loginSuccess, login}
 }
 

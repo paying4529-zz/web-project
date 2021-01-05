@@ -10,9 +10,7 @@ function Register(){
     const [password, setpwd] = useState("")  
     const [userclass, setClass] = useState("")
     const {createUser, isSuccess} = NewUser()
-    useEffect(()=>{
-      console.log("msg:", isSuccess)
-    })
+    // useEffect(()=>{ console.log("msg:", isSuccess) })
     const classoptions = [
       { value: "general director", label: "general director"},
       { value: "section manager", label: "section manager"},
@@ -31,23 +29,19 @@ function Register(){
               value={password}
               onChange={(e) => setpwd(e.target.value)}></input>
         <p>Class: </p>
-        <div class="select">
-          <Select value={userclass}
+        <div class="select"><Select value={userclass}
                 onChange={(e) => {
                   setClass(e)
                 }}
-                options={classoptions}/>
-        </div>
-        <div class="button">
-        <Button 
-          variant="contained"
-          onClick={() => {
-            setClick(true)
-            const userinfo = { username: username,
-                               password: password,
-                               userclass: userclass.value}
-            createUser(userinfo)
-          }}
+                options={classoptions}/></div>
+        <div class="button"><Button variant="contained"
+                onClick={() => {
+                  setClick(true)
+                  const userinfo = { username: username,
+                                    password: password,
+                                    userclass: userclass.value}
+                  createUser(userinfo)
+                }}
           disabled={!userclass}>Register</Button></div>
         {clicked? <div>{isSuccess ? `add new user: ${username}`: `${username} already exist`}</div>:<></>}
       </div>
