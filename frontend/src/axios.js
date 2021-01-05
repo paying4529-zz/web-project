@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 import { useQuery, useMutation } from '@apollo/client';
-import  {USERS_QUERY, TODOS_QUERY} from './graphql/queries'
+import  {USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY} from './graphql/queries'
 import {CREATE_USER_MUTATION} from './graphql/mutations'
 import { useState, useEffect } from 'react';
 
@@ -45,9 +45,44 @@ const NewUser = () => {
     return {createUser, isSuccess}
 }
 
-const userlogin = async(userinfo) => {
-    const { data } = await instance.post('/users/login', userinfo)
-    return data.msg
+const UserLogin = () => {
+    // for login, loginSuccess (true, false), login: function
+    // const { data } = await instance.post('/users/login', userinfo)
+    const [userName, setUserName] = useState("");
+    const [passWord, setPassWord] = useState("")
+    const [loginSuccess, setLoginSuccess] = useState(false);
+    const {loading, error, data} = useQuery(ONE_USER_QUERY,  {variables: {username: userName}})
+    
+    const login = (userinfo) => {
+        if (userinfo === false)
+        {
+            setLoginSuccess(false);
+        }
+        else
+        {
+            const {username, password} = userinfo
+            setUserName(username);
+            setPassWord(password);
+        }
+    }
+
+    useEffect(() => {
+        console.log("login data:", data)
+        if (data)
+        {
+            if (data.getOneUser.success === true && data.getOneUser.user.password === passWord)
+            {
+                setLoginSuccess(true)
+            }
+            else
+            {
+                setLoginSuccess(false)
+            }
+        }
+
+    }, [data])
+    
+    return {loginSuccess, login}
 }
 
 const saveTodo = async(todoitem) => {
@@ -62,4 +97,4 @@ const GetTodo = (username) => {
 }
 
 
-export { GetUsers, NewUser, userlogin, saveTodo, GetTodo, GetSubClass };
+export { GetUsers, NewUser, UserLogin, saveTodo, GetTodo, GetSubClass };

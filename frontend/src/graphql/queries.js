@@ -22,5 +22,15 @@ const TODOS_QUERY = gql`
     }
   }
 `
+const ONE_USER_QUERY = gql`
+  query getOneUser ($username: String!) {
+    getOneUser(username: $username) {
+      success
+      user {
+        password
+      }
+    }
+  }
+`
 
-export { USERS_QUERY, TODOS_QUERY}
+export { USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY}

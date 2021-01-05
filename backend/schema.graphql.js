@@ -2,12 +2,19 @@ import pkg from 'graphql'
 const  { buildSchema } = pkg
 const schema = buildSchema(`
     type Query {
-        getUsers: [User]
-        getTodos(query: getTodoInput): [User]
+        getUsers: [User!]
+        getOneUser(username: String!): getOneUserOutput!
+        getTodos: [Todo]
     }
 
     type Mutation {
         addUser(data: addUserInput): addUserOutput!
+    }
+
+    type Todo {
+        username: String!
+        userclass: String!
+        itemslist: [TodoItem]
     }
 
     type TodoItem {
@@ -20,7 +27,6 @@ const schema = buildSchema(`
         username: String!
         password: String!
         userclass: String!
-        todolist: [TodoItem]
     }
 
     type addUserOutput {
@@ -28,8 +34,9 @@ const schema = buildSchema(`
         success: Boolean!
     }
 
-    input getTodoInput {
-        username: String!
+    type getOneUserOutput {
+        user: User,
+        success: Boolean!
     }
 
     input addUserInput {
