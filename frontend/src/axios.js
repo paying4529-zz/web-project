@@ -14,9 +14,7 @@ const GetUsers = () => {
 }
 
 const GetSubClass = async (username) => { 
-    console.log("11111111")
     const { data } = await instance.post('/users/getsubclass', { username }); 
-    console.log(data)
     return data.contents;
 }
 
@@ -55,9 +53,11 @@ const saveTodo = async(todoitem) => {
     return data.msg
 }
 
-async function getTodo(username){
-    const { data } = await instance.post('/users/getTodo', { username })
+const GetTodo = (username) => { 
+    console.log("in get todo")
+    const {loading, error, data} = useQuery(TODOS_QUERY,{variables: { username }})
     return data
 }
 
-export { GetUsers, NewUser, userlogin, saveTodo, getTodo, GetSubClass };
+
+export { GetUsers, NewUser, userlogin, saveTodo, GetTodo, GetSubClass };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import List from "./List"
 import Input from "./Input"
-import { saveTodo, getTodo } from '../../axios'
+import { saveTodo, GetTodo } from '../../axios'
 import { useRouteMatch} from "react-router-dom";
 
 function Section({setTotal,statenow,clear,setClear}){
@@ -11,9 +11,10 @@ function Section({setTotal,statenow,clear,setClear}){
     const [id, setId] = useState(0)
     const [items, setItems] = useState([])
     const [clearid, setClearId] = useState(null)
+    const data = GetTodo(username)
     const setValue = (v) => {
         var newItems = items.slice();
-        newItems = newItems.concat({value: v, isComplete: false, id: id});
+        newItems = newItems.concat({value: v, isComplete: false, id: id, __typename: 'TodoItem'});
         setItems(newItems)
         setId(id+1)
     }
@@ -31,6 +32,18 @@ function Section({setTotal,statenow,clear,setClear}){
     }
     
     useEffect(()=>{
+        console.log(items)
+        async function saveTodoToBack(){
+            console.log("in save todo")
+            const todoitem = { username: username, itemslist: items, userclass:"group member" }
+            ///////////////////////////// hard write userclass need to be changed!!!!!!!!!!!!!!!!!!!!!!!!
+            let msg = await saveTodo(todoitem)
+            console.log("msg",msg)
+        }
+        if(!start){saveTodoToBack()}
+    },[items])
+
+    useEffect(()=>{
         if(clearid!=null){
             const newItems = items.slice();
             var index;
@@ -46,27 +59,31 @@ function Section({setTotal,statenow,clear,setClear}){
             const newItems = items.slice();
             const after = newItems.filter(e => !e.isComplete);
             setItems(after)
-            setClear(false);
+            setClear(false)
         }
-        async function saveTodoToBack(){
-            const todoitem = { username: username, itemslist: items  }
-            let msg = await saveTodo(todoitem)
-            console.log(msg)
-        }
-        if(start){ getTodoFromBack() }
-        else{ saveTodoToBack() }
         
-        async function getTodoFromBack(){  
-            const { msg, contents } = await getTodo(username)
-            if(msg==="success"){
-                if(contents[0]){
-                    const itemlist = contents[0].itemslist
-                    const lastid = itemlist[itemlist.length-1].id
-                    setId(lastid+1)
-                    setItems(itemlist)
-                }
+        if(start){ getTodoFromBack() }
+        // else{ saveTodoToBack() }
+        
+        function getTodoFromBack(){  
+            // console.log(data)
+            if(data){
+                const getTodos = data.getTodos
+                for (const userTodo of getTodos) {
+                    console.log(userTodo)
+                    if(userTodo.username===username){
+                        const itemlist = userTodo.itemslist
+                        if(itemlist.length>0){
+                            const lastid = itemlist[itemlist.length-1].id
+                            setId(lastid+1)
+                            setItems(itemlist)
+                        }                       
+                    }
+                  }
+                setStart(0)
             }
-            setStart(0)
+            
+            
         }
         
     })

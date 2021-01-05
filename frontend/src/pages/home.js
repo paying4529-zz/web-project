@@ -6,9 +6,6 @@ import { Button} from '@material-ui/core';
 function Home(){
     const [clicked, setClick] = useState(false)
     const {data} = GetUsers()
-    useEffect(() =>{
-      console.log("data:", data)}
-    )
     return (
       <div className="Home_page">
         <h2>Home</h2>

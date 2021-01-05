@@ -3,7 +3,7 @@ const  { buildSchema } = pkg
 const schema = buildSchema(`
     type Query {
         getUsers: [User!]
-        getTodos: [Todo]
+        getTodos(query: getTodoInput): [Todo]
     }
 
     type Mutation {
@@ -12,7 +12,7 @@ const schema = buildSchema(`
 
     type Todo {
         username: String!
-        userclass: String!
+        userclass: String
         itemslist: [TodoItem]
     }
 
@@ -31,6 +31,10 @@ const schema = buildSchema(`
     type addUserOutput {
         user: User,
         success: Boolean!
+    }
+
+    input getTodoInput {
+        username: String!
     }
 
     input addUserInput {

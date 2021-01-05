@@ -16,6 +16,7 @@ const {graphqlHTTP} = pkg_express
 
 import Root from './resolvers/root.js'
 import schema from './schema.graphql.js'
+import Todo from "./models/todo.js"
 
 dotenv.config();
 if (!process.env.MONGO_URL) {
@@ -50,6 +51,7 @@ db.once('open', () => {
         rootValue: Root,
         context: { // pass by args
             User: User,
+            Todo: Todo,
             Pubsub: pubsub
         },
         graphiql: true,
