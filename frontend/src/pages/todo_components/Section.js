@@ -11,7 +11,7 @@ function Section({setTotal,statenow,clear,setClear}){
     const [id, setId] = useState(0)
     const [items, setItems] = useState([])
     const [clearid, setClearId] = useState(null)
-    const data = GetTodo(username)
+    var data = GetTodo(username)
     const setValue = (v) => {
         var newItems = items.slice();
         newItems = newItems.concat({value: v, isComplete: false, id: id, __typename: 'TodoItem'});
@@ -39,6 +39,7 @@ function Section({setTotal,statenow,clear,setClear}){
             ///////////////////////////// hard write userclass need to be changed!!!!!!!!!!!!!!!!!!!!!!!!
             let msg = await saveTodo(todoitem)
             console.log("msg",msg)
+
         }
         if(!start){saveTodoToBack()}
     },[items])
@@ -61,12 +62,15 @@ function Section({setTotal,statenow,clear,setClear}){
             setItems(after)
             setClear(false)
         }
-        
-        if(start){ getTodoFromBack() }
-        // else{ saveTodoToBack() }
+    },[clearid,clear])
+
+    useEffect(()=>{ 
+        if(start){ getTodoFromBack() 
+            console.log("start")
+        }
         
         function getTodoFromBack(){  
-            // console.log(data)
+            console.log(data)
             if(data){
                 const getTodos = data.getTodos
                 for (const userTodo of getTodos) {
@@ -80,14 +84,10 @@ function Section({setTotal,statenow,clear,setClear}){
                             setItems(itemlist)
                         }                       
                     }
-                  }
+                }
                 setStart(0)
-            }
-            
-            
-        }
-        
-    })
+        }}
+    },[start, data, username])
 
     return (
         <section className="todo-app__main" id="main">

@@ -5,7 +5,8 @@ import { Button} from '@material-ui/core';
 
 function Home(){
     const [clicked, setClick] = useState(false)
-    const {data} = GetUsers()
+    const data = GetUsers()
+
     return (
       <div className="Home_page">
         <h2>Home</h2>

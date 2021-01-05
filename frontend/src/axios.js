@@ -11,7 +11,7 @@ const instance = axios.create({ baseURL: 'http://localhost:4000' });
 const GetUsers = () => { 
     const {loading, error, data} = useQuery(USERS_QUERY)
     console.log("getusers")
-    return {data}
+    return data
 }
 
 const GetSubClass = async (username) => { 
@@ -76,6 +76,7 @@ const saveTodo = async(todoitem) => {
 const GetTodo = (username) => { 
     console.log("in get todo")
     const {loading, error, data} = useQuery(TODOS_QUERY,{variables: { username }})
+    if(data){console.log(data)}
     return data
 }
 
