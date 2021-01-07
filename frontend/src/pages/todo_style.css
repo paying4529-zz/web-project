@@ -6,14 +6,36 @@ input[type='checkbox'] {
     visibility: hidden;
 }
 
+.my_todo{
+    height: 100%;
+    width: 55%;
+    z-index: 1;
+    overflow-x: hidden;
+    float: left;
+    position: relative;
+    margin: 0;
+    padding-left: 5%;
+}
+
+.sub_todo{
+    height: 100%;
+    width: 45%;
+    z-index: 1;
+    overflow-x: hidden;
+    float: right;
+    position: relative;
+}
+
 .todo-app__root {
-    margin: auto ;
-    width: 30em;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     color: #4d4d4d;
+    margin: 2%;
+    margin-right: 1%;
+    margin-top: 5%;
 }
 
 .todo-app__header {
@@ -67,6 +89,10 @@ input[type='checkbox'] {
     /* 5*5=25 */
     max-height: 20em;
     overflow-y: scroll;
+}
+
+.my {
+    max-height: 75%;
 }
 
 .todo-app__item {

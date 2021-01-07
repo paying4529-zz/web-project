@@ -4,7 +4,7 @@ import Header from "./Header";
 import Section from "./Section";
 import Footer from "./Footer";
 
-function SubTodoList({username}){
+function SubTodoList({username,my}){
     const [state, setState] = useState(0)
     const [total, setTotal] = useState(0)
     const [clear, setClear] = useState(false)
@@ -20,7 +20,9 @@ function SubTodoList({username}){
                 setTotal={setTotal} 
                 statenow={state}
                 clear={clear}
-                setClear={setClear}/>
+                setClear={setClear}
+                my={my}
+            />
             <Footer total={total} 
                 setState0={setState0} 
                 setState1={setState1} 

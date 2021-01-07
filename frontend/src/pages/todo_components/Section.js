@@ -4,14 +4,15 @@ import Input from "./Input"
 import { saveTodo, GetTodo } from '../../axios'
 import { useRouteMatch} from "react-router-dom";
 
-function Section({setTotal,statenow,clear,setClear}){
+function Section({setTotal,statenow,clear,setClear,my}){
     var { url } = useRouteMatch()
     const username = url.split("/")[1]
     const [start, setStart] = useState(1)
     const [id, setId] = useState(0)
     const [items, setItems] = useState([])
     const [clearid, setClearId] = useState(null)
-    var data = GetTodo(username)
+    const {data, setToGet, setUsername} = GetTodo()
+    
     const setValue = (v) => {
         var newItems = items.slice();
         newItems = newItems.concat({value: v, isComplete: false, id: id, __typename: 'TodoItem'});
@@ -39,9 +40,11 @@ function Section({setTotal,statenow,clear,setClear}){
             ///////////////////////////// hard write userclass need to be changed!!!!!!!!!!!!!!!!!!!!!!!!
             let msg = await saveTodo(todoitem)
             console.log("msg",msg)
-
+            setToGet(true)
         }
-        if(!start){saveTodoToBack()}
+        if(!start){
+            saveTodoToBack()
+        }
     },[items])
 
     useEffect(()=>{
@@ -64,29 +67,29 @@ function Section({setTotal,statenow,clear,setClear}){
         }
     },[clearid,clear])
 
+    function getTodoFromBack(){  
+        console.log("get todo from back")
+        if(data){
+            const getTodos = data.getTodos
+            for (const userTodo of getTodos) {
+                if(userTodo.username===username){
+                    const itemlist = userTodo.todolist
+                    if(itemlist.length>0){
+                        const lastid = itemlist[itemlist.length-1].id
+                        setId(lastid+1)
+                        setItems(itemlist)
+                    }                       
+                }
+            }
+            setStart(0)
+    }}
+
     useEffect(()=>{ 
         if(start){ getTodoFromBack() 
+            setUsername(username)
             console.log("start")
         }
         
-        function getTodoFromBack(){  
-            console.log(data)
-            if(data){
-                const getTodos = data.getTodos
-                for (const userTodo of getTodos) {
-                    console.log(userTodo)
-                    if(userTodo.username===username){
-                        console.log(userTodo)
-                        const itemlist = userTodo.todolist
-                        if(itemlist.length>0){
-                            const lastid = itemlist[itemlist.length-1].id
-                            setId(lastid+1)
-                            setItems(itemlist)
-                        }                       
-                    }
-                }
-                setStart(0)
-        }}
     },[start, data, username])
 
     return (
@@ -96,7 +99,8 @@ function Section({setTotal,statenow,clear,setClear}){
                 statenow={statenow}
                 clickk={click}
                 countTotal={countTotal} 
-                setClearId={setClearId} />
+                setClearId={setClearId} 
+                my={my}/>
         </section>
     );
 }

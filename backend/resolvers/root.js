@@ -22,9 +22,8 @@ const Root = {
         else return { success: false }  
 
     },
-    getTodos: async (args, {User,Todo}, info) => {
+    getTodos: async ({username}, {User,Todo}, info) => {
         console.log("query todo")
-        const {username} = args.query
         const userinfo = await User.find({"username": username})
         const userclass = userinfo[0].userclass
         if(userclass==="general director"){

@@ -25,6 +25,7 @@ const userLogin = (userinfo,res) => {
 };
 
 const saveTodo = (todoitem, res) => {
+    console.log(todoitem)
     const name = todoitem.username
     Todo.countDocuments({username: name}, (err, count) => {
         if (count){ 
@@ -32,12 +33,10 @@ const saveTodo = (todoitem, res) => {
             console.log("delete")
         }
         const todo = new Todo(todoitem);
-        
         todo.save((err) => {
             if(err){console.log(err)}
             else{
                 console.log("save")
-                console.log(todo)
                 const data = { msg: `${name}'s todo saved!!!`}
                 res.status(200).send(data)
             }
@@ -46,7 +45,7 @@ const saveTodo = (todoitem, res) => {
 };
 
 const getSubClass = async (username, res) => {
-    console.log(username)
+    // console.log(username)
     const result = await User.find({username: username},()=>{});
     const userClass = result[0].userclass
     if(userClass==="general director"){

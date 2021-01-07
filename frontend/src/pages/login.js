@@ -15,10 +15,12 @@ function Userpage({setLogout}){
         <h4>Hello, {username}</h4>
         <Button variant="contained" 
             onClick={setLogout}>Logout</Button></div>
+      <div class="nav_bar user">
       <List component="nav">
         <ListItem><Link to={url+"/calander"}>Calander</Link></ListItem>
         <ListItem><Link to={url+"/todolist"}>TodoList</Link></ListItem>
       </List>
+      </div>
       <Switch>
           <Route path={url+"/calander"}><Calander /></Route>
           <Route path={url+"/todolist"}><TodoList /></Route>

@@ -40,7 +40,7 @@ const NewUser = () => {
 
 const UserLogin = () => {
     // for login, loginSuccess (true, false), login: function
-    const [userName, setUserName] = useState("");
+    const [userName, setUserName] = useState("")
     const [passWord, setPassWord] = useState("")
     const [loginSuccess, setLoginSuccess] = useState(false);
     const {loading, error, data} = useQuery(ONE_USER_QUERY,  {variables: {username: userName}})
@@ -69,15 +69,28 @@ const UserLogin = () => {
 }
 
 const saveTodo = async(todoitem) => {
+    console.log(todoitem)
     const { data } = await instance.post('/users/saveTodo', todoitem)
     return data.msg
 }
 
-const GetTodo = (username) => { 
+const GetTodo = () => { 
+    const [username, setUsername] = useState("")
+    const [toget, setToGet] = useState(false)
+    
+    const {loading, error, data, refetch} = useQuery(TODOS_QUERY,{variables: { username }})
     console.log("in get todo")
-    const {loading, error, data} = useQuery(TODOS_QUERY,{variables: { username }})
-    if(data){console.log(data)}
-    return data
+    useEffect(() => {   
+        if(toget){
+            console.log("refetch")
+            console.log(username)
+            refetch()
+            setToGet(false)
+            console.log(data)
+        }
+    }, [toget])
+
+    return {data, setToGet, setUsername}
 }
 
 

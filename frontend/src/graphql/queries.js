@@ -11,7 +11,7 @@ const USERS_QUERY = gql`
 `
 const TODOS_QUERY = gql`
   query getTodos($username: String!) {
-    getTodos(query: { username: $username }) {
+    getTodos(username: $username) {
       username
       userclass
       todolist{

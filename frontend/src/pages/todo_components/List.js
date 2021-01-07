@@ -1,7 +1,7 @@
 import React from "react";
 import ItemNode from "./ItemNode";
 
-function List({items,statenow,clickk,countTotal,setClearId}){
+function List({items,statenow,clickk,countTotal,setClearId,my}){
     const checkState = (items,state) => {
         if(state===0){
             return items;
@@ -12,7 +12,7 @@ function List({items,statenow,clickk,countTotal,setClearId}){
         }
     }
     return (
-        <ul className="todo-app__list" id="todo-list">{
+        <ul className={my?"todo-app__list my":"todo-app__list"} id="todo-list">{
             checkState(items,statenow)
             .map(item => {
                 return <ItemNode value={item.value} 
