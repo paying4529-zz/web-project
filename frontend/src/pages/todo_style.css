@@ -128,7 +128,6 @@ input[type='checkbox'] {
     position: absolute;
     top: 2.5px;
     left: 2.5px;
-    z-index: 1;
     background: rgba(99, 99, 99, 0.698);
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.312);
 }

@@ -11,9 +11,9 @@ function Section({username,userclass, setTotal,statenow,clear,setClear,my}){
     const {data, setToGet, setUsername} = GetTodo()
 
     const click = (ID) => { 
-        const newItems = items.slice();
+        const newItems = items.slice()
         for(var i=0;i<ID+1;i++){
-            if(newItems[i].id===ID){  newItems[i].isComplete = !newItems[i].isComplete;  break;  }
+            if(newItems[i].order===ID){  newItems[i].isComplete = !newItems[i].isComplete;  break;  }
         }
         setItems(newItems)
         countTotal();

@@ -16,7 +16,7 @@ function List({items,statenow,clickk,countTotal,setClearId,my}){
             checkState(items,statenow)
             .map(item => {
                 return <ItemNode value={item.value} 
-                    id={item.id} 
+                    id={item.order} 
                     clickk={clickk} 
                     countTotal={countTotal}
                     setClearId={setClearId}
