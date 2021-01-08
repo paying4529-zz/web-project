@@ -17,7 +17,7 @@ const TODOS_QUERY = gql`
       todolist{
         value
         isComplete
-        id
+        order
       }
     }
   }

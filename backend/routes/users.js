@@ -25,7 +25,7 @@ const userLogin = (userinfo,res) => {
 };
 
 const saveTodo = (todoitem, res) => {
-    console.log(todoitem)
+    console.log("savetodo", todoitem)
     const name = todoitem.username
     Todo.countDocuments({username: name}, (err, count) => {
         if (count){ 

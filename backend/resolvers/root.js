@@ -23,19 +23,27 @@ const Root = {
 
     },
     getTodos: async ({username}, {User,Todo}, info) => {
-        console.log("query todo")
+        console.log("query todo", username)
         const userinfo = await User.find({"username": username})
         const userclass = userinfo[0].userclass
         if(userclass==="general director"){
-            const data = await Todo.find({$or: [{"username": username},{userclass:"section manager"},{userclass:"group member"}]})
+            const data = await Todo.find({$or: [{"username": username},{userclass:"section manager"},{userclass:"group member"}]})            
+            console.log(username, "query, data:", data)
+            // console.log(data[0].username, data[0].todolist[0])
+            // console.log(data[1].username, data[1].todolist[0])
             return data
         }else if(userclass==="section manager"){
             const data = await Todo.find({$or: [{"username": username},{userclass:"group member"}]})
-            return data
+            console.log(username, "query, data:", data)
+            // console.log(data[0].username, data[0].todolist[0])
+            // console.log(data[1].username, data[1].todolist[0])
+            return data    
         }else if(userclass==="group member"){
             const data = await Todo.find({$or: [{"username": username}]})
-            return data
+            console.log(username, "query, data:", data)
+            return data   
         }
+
     },
 
     // mutation

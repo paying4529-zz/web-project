@@ -4,21 +4,24 @@ import Input from "./Input"
 import { saveTodo, GetTodo } from '../../axios'
 import { useRouteMatch} from "react-router-dom";
 
-function Section({setTotal,statenow,clear,setClear,my}){
+function Section({username, setTotal,statenow,clear,setClear,my}){
     var { url } = useRouteMatch()
-    const username = url.split("/")[1]
+    // const username = username;
+    // const username = url.split("/")[1]
     const [start, setStart] = useState(1)
     const [id, setId] = useState(0)
     const [items, setItems] = useState([])
     const [clearid, setClearId] = useState(null)
     const {data, setToGet, setUsername} = GetTodo()
+
+
     
-    const setValue = (v) => {
-        var newItems = items.slice();
-        newItems = newItems.concat({value: v, isComplete: false, id: id, __typename: 'TodoItem'});
-        setItems(newItems)
-        setId(id+1)
-    }
+    // const setValue = (v) => {
+    //     var newItems = items.slice();
+    //     newItems = newItems.concat({value: v, isComplete: false, id: id, __typename: 'TodoItem'});
+    //     setItems(newItems)
+    //     setId(id+1)
+    // }
     const click = (ID) => { 
         const newItems = items.slice();
         for(var i=0;i<ID+1;i++){
@@ -32,27 +35,41 @@ function Section({setTotal,statenow,clear,setClear,my}){
         setTotal(total)
     }
     
-    useEffect(()=>{
-        async function saveTodoToBack(){
-            console.log("in save todo")
-            console.log(items)
-            const todoitem = { username: username, todolist: items, userclass:"group member" }
-            ///////////////////////////// hard write userclass need to be changed!!!!!!!!!!!!!!!!!!!!!!!!
-            let msg = await saveTodo(todoitem)
-            console.log("msg",msg)
-            setToGet(true)
-        }
-        if(!start){
-            saveTodoToBack()
-        }
-    },[items])
+    // useEffect(()=>{
+    //     async function saveTodoToBack(){
+    //         console.log("in save todo")
+    //         console.log(items)
+    //         const todoitem = { username: username, todolist: items, userclass:"group member" }
+    //         ///////////////////////////// hard write userclass need to be changed!!!!!!!!!!!!!!!!!!!!!!!!
+    //         let msg = await saveTodo(todoitem)
+    //         console.log("msg",msg)
+    //         setToGet(true)
+    //     }
+    //     if(!start){
+    //         saveTodoToBack()
+    //     }
+    // },[items])
+
+   const setValueAndSave = async (v) => {
+        console.log("in save todo")
+        var newItems = items.slice();
+        newItems = newItems.concat({value: v, isComplete: false, order: id, __typename: 'TodoItem'});
+        setItems(newItems)
+        setId(id+1)
+        console.log("username:", username, "items:", newItems)
+        const todoitem = { username: username, todolist: newItems, userclass:"group member" }
+        ///////////////////////////// hard write userclass need to be changed!!!!!!!!!!!!!!!!!!!!!!!!
+        let msg = await saveTodo(todoitem)
+        console.log("msg",msg)
+        setToGet(true)
+    }
 
     useEffect(()=>{
         if(clearid!=null){
             const newItems = items.slice();
             var index;
             for(var i=0;i<clearid+1;i++){
-                if(newItems[i].id===clearid){ index=i; break; }
+                if(newItems[i].order===clearid){ index=i; break; }
             }
             newItems.splice(index,1);
             setTotal(newItems.filter(e => !e.isComplete).length);
@@ -71,11 +88,12 @@ function Section({setTotal,statenow,clear,setClear,my}){
         console.log("get todo from back")
         if(data){
             const getTodos = data.getTodos
+            console.log("all todos:", getTodos)
             for (const userTodo of getTodos) {
                 if(userTodo.username===username){
                     const itemlist = userTodo.todolist
                     if(itemlist.length>0){
-                        const lastid = itemlist[itemlist.length-1].id
+                        const lastid = itemlist[itemlist.length-1].order
                         setId(lastid+1)
                         setItems(itemlist)
                     }                       
@@ -85,16 +103,17 @@ function Section({setTotal,statenow,clear,setClear,my}){
     }}
 
     useEffect(()=>{ 
-        if(start){ getTodoFromBack() 
+        if(start){ 
             setUsername(username)
-            console.log("start")
+            getTodoFromBack() 
+            console.log("start", username)
         }
         
-    },[start, data, username])
+    }, [start, data])
 
     return (
         <section className="todo-app__main" id="main">
-            <Input setValue={setValue}/>
+            <Input setValueAndSave={setValueAndSave}/>
             <List items={items} 
                 statenow={statenow}
                 clickk={click}

@@ -20,7 +20,7 @@ const schema = buildSchema(`
     type TodoItem {
         value: String!
         isComplete: Boolean!
-        id: Int!
+        order: Int!
     }
 
     type User {

@@ -69,7 +69,7 @@ const UserLogin = () => {
 }
 
 const saveTodo = async(todoitem) => {
-    console.log(todoitem)
+    console.log("axios saveTodo, items:", todoitem)
     const { data } = await instance.post('/users/saveTodo', todoitem)
     return data.msg
 }
@@ -89,6 +89,9 @@ const GetTodo = () => {
             console.log(data)
         }
     }, [toget])
+    useEffect(()=>{
+        console.log("axios/gettodo, username:", username, "data:", data)
+    })
 
     return {data, setToGet, setUsername}
 }
