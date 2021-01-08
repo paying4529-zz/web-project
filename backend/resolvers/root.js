@@ -6,7 +6,25 @@ const Root = {
         console.log("query, getUsers")
         return await User.find()
     },
-
+    getSubusers: async ({username}, {User}, info) => {
+        console.log("query, getSubuser")
+        const result = await User.find({"username": username})
+        const userClass = result[0].userclass
+        if(userClass==="general director"){
+            const userList = await User.find({$or:[{userclass:"section manager"},{userclass:"group member"}]}).limit(100)
+            console.log("subuser:",userList)
+            return userList
+        }
+        else if(userClass==="section manager"){
+            const userList = await User.find({userclass:"group member"}).limit(100)
+            console.log("subuser:",userList)
+            return userList
+        }
+        else if(userClass==="group member"){
+            const userList = []
+            return userList
+        }
+    },
     getOneUser: async ({username}, {User}, info) => {
         // for login, return user if username found, and whether success
         console.log("query, getOneUser")

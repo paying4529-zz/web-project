@@ -32,5 +32,14 @@ const ONE_USER_QUERY = gql`
     }
   }
 `
+const SUBUSER_QUERY = gql`
+  query getSubusers($username: String!) {
+    getSubusers(username: $username) {
+      username
+      userclass
+    }
+  }
+`
 
-export { USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY}
+
+export { USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY}

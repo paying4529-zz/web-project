@@ -4,7 +4,7 @@ import Header from "./Header";
 import Section from "./Section";
 import Footer from "./Footer";
 
-function SubTodoList({username,my}){
+function SubTodoList({username,userclass,my}){
     const [state, setState] = useState(0)
     const [total, setTotal] = useState(0)
     const [clear, setClear] = useState(false)
@@ -17,6 +17,7 @@ function SubTodoList({username,my}){
         <div className="todo-app__root">
             <Header text={`${username}'s TODOs`}/>
             <Section username={username}
+                userclass={userclass}
                 setTotal={setTotal} 
                 statenow={state}
                 clear={clear}

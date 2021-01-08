@@ -7,22 +7,20 @@ import { GetSubClass } from '../axios'
 function TodoList(){
     var { url } = useRouteMatch()
     const username = url.split("/")[1]
-    const [subClass,setSub] = useState([])
+    var data = GetSubClass(username)
+    const [subclass,setSubclass] = useState([])
     useEffect(()=>{
-        async function getsubclass(){
-            var subclass = await GetSubClass(username)
-            setSub(subclass)
-            console.log("subclass",subclass)
+        if(data){
+            setSubclass(data.getSubusers)
         }
-        getsubclass()
-    },[username])
+    },[data])
     return (
         <>
             <div class="my_todo">
                 <SubTodoList username={username} my={true}/>
             </div>
             <div class="sub_todo">
-                {subClass.map(name => {return <SubTodoList username={name} my={false}/>})}
+                {subclass.map(data => {return <SubTodoList username={data.username} userclass={data.userclass} my={false}/>})}
             </div>
         </>
     );

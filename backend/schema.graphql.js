@@ -3,6 +3,7 @@ const  { buildSchema } = pkg
 const schema = buildSchema(`
     type Query {
         getUsers: [User!]
+        getSubusers(username: String!): [User!]
         getOneUser(username: String!): getOneUserOutput!
         getTodos(username: String!): [User]
     }

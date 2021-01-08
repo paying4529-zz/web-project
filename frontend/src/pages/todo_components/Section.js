@@ -2,26 +2,14 @@ import React, { useEffect, useState } from "react";
 import List from "./List"
 import Input from "./Input"
 import { saveTodo, GetTodo } from '../../axios'
-import { useRouteMatch} from "react-router-dom";
 
-function Section({username, setTotal,statenow,clear,setClear,my}){
-    var { url } = useRouteMatch()
-    // const username = username;
-    // const username = url.split("/")[1]
+function Section({username,userclass, setTotal,statenow,clear,setClear,my}){
     const [start, setStart] = useState(1)
     const [id, setId] = useState(0)
     const [items, setItems] = useState([])
     const [clearid, setClearId] = useState(null)
     const {data, setToGet, setUsername} = GetTodo()
 
-
-    
-    // const setValue = (v) => {
-    //     var newItems = items.slice();
-    //     newItems = newItems.concat({value: v, isComplete: false, id: id, __typename: 'TodoItem'});
-    //     setItems(newItems)
-    //     setId(id+1)
-    // }
     const click = (ID) => { 
         const newItems = items.slice();
         for(var i=0;i<ID+1;i++){
@@ -35,32 +23,13 @@ function Section({username, setTotal,statenow,clear,setClear,my}){
         setTotal(total)
     }
     
-    // useEffect(()=>{
-    //     async function saveTodoToBack(){
-    //         console.log("in save todo")
-    //         console.log(items)
-    //         const todoitem = { username: username, todolist: items, userclass:"group member" }
-    //         ///////////////////////////// hard write userclass need to be changed!!!!!!!!!!!!!!!!!!!!!!!!
-    //         let msg = await saveTodo(todoitem)
-    //         console.log("msg",msg)
-    //         setToGet(true)
-    //     }
-    //     if(!start){
-    //         saveTodoToBack()
-    //     }
-    // },[items])
-
    const setValueAndSave = async (v) => {
-        console.log("in save todo")
         var newItems = items.slice();
         newItems = newItems.concat({value: v, isComplete: false, order: id, __typename: 'TodoItem'});
         setItems(newItems)
         setId(id+1)
-        console.log("username:", username, "items:", newItems)
-        const todoitem = { username: username, todolist: newItems, userclass:"group member" }
-        ///////////////////////////// hard write userclass need to be changed!!!!!!!!!!!!!!!!!!!!!!!!
+        const todoitem = { username: username, todolist: newItems, userclass: userclass }
         let msg = await saveTodo(todoitem)
-        console.log("msg",msg)
         setToGet(true)
     }
 
@@ -85,10 +54,8 @@ function Section({username, setTotal,statenow,clear,setClear,my}){
     },[clearid,clear])
 
     function getTodoFromBack(){  
-        console.log("get todo from back")
         if(data){
             const getTodos = data.getTodos
-            console.log("all todos:", getTodos)
             for (const userTodo of getTodos) {
                 if(userTodo.username===username){
                     const itemlist = userTodo.todolist
@@ -106,7 +73,6 @@ function Section({username, setTotal,statenow,clear,setClear,my}){
         if(start){ 
             setUsername(username)
             getTodoFromBack() 
-            console.log("start", username)
         }
         
     }, [start, data])
