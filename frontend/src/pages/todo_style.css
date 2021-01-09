@@ -89,10 +89,12 @@ input[type='checkbox'] {
     /* 5*5=25 */
     max-height: 20em;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .my {
     max-height: 75%;
+    overflow-x: hidden;
 }
 
 .todo-app__item {

@@ -14,8 +14,7 @@ const GetUsers = () => {
 }
 
 const GetSubClass = (username) => { 
-    const {loading, error, data, refetch} = useQuery(SUBUSER_QUERY,  {variables: {username: username}})
-    console.log(data)
+    const {loading, error, data} = useQuery(SUBUSER_QUERY,  {variables: {username: username}})
     return data
 }
 
@@ -67,7 +66,9 @@ const UserLogin = () => {
 }
 
 const saveTodo = async(todoitem) => {
+    console.log(todoitem)
     const { data } = await instance.post('/users/saveTodo', todoitem)
+    console.log("save")
     return data.msg
 }
 

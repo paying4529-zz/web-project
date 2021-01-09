@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
+    "@material-ui/data-grid": "^4.0.0-alpha.15",
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "react-bootstrap": "^1.4.0",

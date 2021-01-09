@@ -9,18 +9,24 @@ function TodoList(){
     const username = url.split("/")[1]
     var data = GetSubClass(username)
     const [subclass,setSubclass] = useState([])
+    const [myclass, setmyclass] = useState("")
     useEffect(()=>{
         if(data){
-            setSubclass(data.getSubusers)
+            const users = data.getSubusers
+            const subusers = users.filter(user => user.username!==username)
+            const me = users.filter(user => user.username===username)
+            setSubclass(subusers)
+            setmyclass(me[0].userclass)
         }
     },[data])
     return (
         <>
             <div class="my_todo">
-                <SubTodoList username={username} my={true}/>
+                <SubTodoList username={username} me={username} userclass={myclass}/>
             </div>
             <div class="sub_todo">
-                {subclass.map(data => {return <SubTodoList username={data.username} userclass={data.userclass} my={false}/>})}
+                {subclass.map(data => {
+                    return <SubTodoList username={data.username} userclass={data.userclass} me={username}/>})}
             </div>
         </>
     );

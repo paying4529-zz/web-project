@@ -19,6 +19,8 @@ const schema = buildSchema(`
     }
 
     type TodoItem {
+        fromName: String!
+        deadline: String
         value: String!
         isComplete: Boolean!
         order: Int!

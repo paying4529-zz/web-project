@@ -1,19 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import { TextField, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-function Input(props){
-    const handleKeyUp = (event) => {
-        var keyCode = event.keyCode ? event.keyCode : event.which;
-        if(keyCode === 13 && event.target.value !== ""){
-            console.log("Input: setValue, saveTodoToBack")
-            // props.setValue(event.target.value);
-            props.setValueAndSave(event.target.value);
-            event.target.value="";
-        }
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+        width: '250px',
+      },
+    },
+  }))
+function Input({setValueAndSave}){
+    const [deadline,setDeadline] = useState("")
+    const [todo, setTodo] = useState("")
+    const handleTodo = (event) => {
+        setTodo(event.target.value)
     }
+    const handleDeadline = (event) => {
+        setDeadline(event.target.value)
+    }
+    const send = () =>{
+        setValueAndSave(deadline,todo)
+    }
+    const classes = useStyles();
+    
     return (
-        <input onKeyUp={handleKeyUp} name="input" 
-            type="text" className="todo-app__input" 
-            placeholder="What needs to be done?"/>
+        <form className={classes.root} noValidate autoComplete="off">
+            <TextField onChange={handleDeadline}  name="input" label="Deadline" variant="outlined" />
+            <TextField onChange={handleTodo} name="input" label="What needs to be done?" variant="outlined" required={true}/>
+            <Button variant="contained" onClick={send}>send</Button>
+        </form>
+
     );
 }
 

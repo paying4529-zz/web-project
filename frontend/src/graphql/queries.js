@@ -15,6 +15,8 @@ const TODOS_QUERY = gql`
       username
       userclass
       todolist{
+        fromName
+        deadline
         value
         isComplete
         order

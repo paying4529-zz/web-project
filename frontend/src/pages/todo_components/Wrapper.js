@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-function Wrapper({id,clickk,complete}){
+function Wrapper({id,clickk}){
     return(
         <div className="todo-app__checkbox">
-            <label style={{backgroundColor: complete?"#F4D03F":"gray"}}>
-                <input id={id} 
+            <input id={id} 
                        type="checkbox" 
                        onClick={() => clickk(id)}></input>
-            </label>
         </div>
     );
 }

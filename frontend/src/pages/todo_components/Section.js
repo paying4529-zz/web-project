@@ -3,31 +3,20 @@ import List from "./List"
 import Input from "./Input"
 import { saveTodo, GetTodo } from '../../axios'
 
-function Section({username,userclass, setTotal,statenow,clear,setClear,my}){
+function Section({username, userclass, setTotal,statenow,me}){
     const [start, setStart] = useState(1)
     const [id, setId] = useState(0)
     const [items, setItems] = useState([])
     const [clearid, setClearId] = useState(null)
     const {data, setToGet, setUsername} = GetTodo()
-
-    const click = (ID) => { 
-        const newItems = items.slice()
-        for(var i=0;i<ID+1;i++){
-            if(newItems[i].order===ID){  newItems[i].isComplete = !newItems[i].isComplete;  break;  }
-        }
-        setItems(newItems)
-        countTotal();
-    }
-    const countTotal = () => {
-        var total = items.filter(e => !e.isComplete).length;
-        setTotal(total)
-    }
     
-   const setValueAndSave = async (v) => {
+   const setValueAndSave = async (deadline,todo) => {
+        console.log(todo,deadline)
         var newItems = items.slice();
-        newItems = newItems.concat({value: v, isComplete: false, order: id, __typename: 'TodoItem'});
+        newItems = newItems.concat({fromName: me, deadline: deadline, value: todo, isComplete: false, order: id, __typename: 'TodoItem'});
         setItems(newItems)
         setId(id+1)
+        console.log(userclass)
         const todoitem = { username: username, todolist: newItems, userclass: userclass }
         let msg = await saveTodo(todoitem)
         setToGet(true)
@@ -44,14 +33,11 @@ function Section({username,userclass, setTotal,statenow,clear,setClear,my}){
             setTotal(newItems.filter(e => !e.isComplete).length);
             setItems(newItems)
             setClearId(null)
+            const todoitem = { username: username, todolist: newItems, userclass: userclass }
+            let msg = saveTodo(todoitem)
+            setToGet(true)
         }
-        if(clear){
-            const newItems = items.slice();
-            const after = newItems.filter(e => !e.isComplete);
-            setItems(after)
-            setClear(false)
-        }
-    },[clearid,clear])
+    },[clearid])
 
     function getTodoFromBack(){  
         if(data){
@@ -82,10 +68,8 @@ function Section({username,userclass, setTotal,statenow,clear,setClear,my}){
             <Input setValueAndSave={setValueAndSave}/>
             <List items={items} 
                 statenow={statenow}
-                clickk={click}
-                countTotal={countTotal} 
                 setClearId={setClearId} 
-                my={my}/>
+                my={me===username}/>
         </section>
     );
 }

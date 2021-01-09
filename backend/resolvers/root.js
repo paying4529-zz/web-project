@@ -11,18 +11,17 @@ const Root = {
         const result = await User.find({"username": username})
         const userClass = result[0].userclass
         if(userClass==="general director"){
-            const userList = await User.find({$or:[{userclass:"section manager"},{userclass:"group member"}]}).limit(100)
+            const userList = await User.find({$or:[{username:username},{userclass:"section manager"},{userclass:"group member"}]}).limit(100)
             console.log("subuser:",userList)
             return userList
         }
         else if(userClass==="section manager"){
-            const userList = await User.find({userclass:"group member"}).limit(100)
+            const userList = await User.find({$or:[{username:username},{userclass:"group member"}]}).limit(100)
             console.log("subuser:",userList)
             return userList
         }
         else if(userClass==="group member"){
-            const userList = []
-            return userList
+            return result
         }
     },
     getOneUser: async ({username}, {User}, info) => {
