@@ -11,8 +11,8 @@ function SubTodoList({username,userclass,me}){
     })
     return (
         
-        <div className="todo-app__root">
-            <Header text={`${username}'s TODOs`}/>
+        <div className="todo-app__root" >
+            <Header userclass={userclass} text={`${username}'s TODOs`} />
             <Section username={username}
                 userclass={userclass}
                 setTotal={setTotal} 

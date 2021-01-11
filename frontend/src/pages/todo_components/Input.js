@@ -5,10 +5,22 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
-        margin: theme.spacing(1),
-        width: '250px',
+        margin: theme.spacing(0.2),
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
       },
     },
+    deadline: {
+        width: '22%',
+        padding: 0,
+    },
+    todo:{
+        width: '59%',
+    },
+    button: {
+        width: '10%',
+        marginTop: theme.spacing(2),
+    }
   }))
 function Input({setValueAndSave}){
     const [deadline,setDeadline] = useState("")
@@ -26,9 +38,9 @@ function Input({setValueAndSave}){
     
     return (
         <form className={classes.root} noValidate autoComplete="off">
-            <TextField onChange={handleDeadline}  name="input" label="Deadline" variant="outlined" />
-            <TextField onChange={handleTodo} name="input" label="What needs to be done?" variant="outlined" required={true}/>
-            <Button variant="contained" onClick={send}>send</Button>
+            <TextField className={classes.deadline} onChange={handleDeadline}  name="input" type="date" variant="outlined" />
+            <TextField className={classes.todo} onChange={handleTodo} name="input" label="What needs to be done?" variant="outlined" required={true} />
+            <Button className={classes.button} variant="contained" onClick={send}>send</Button>
         </form>
 
     );
