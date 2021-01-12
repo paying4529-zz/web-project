@@ -1,6 +1,6 @@
 import '../App.css';
-import { UserLogin } from '../axios'
-import React, { useState } from 'react'
+import { UserLogin,GetSubClass } from '../axios'
+import React, { useState,useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch, Link, Redirect, useParams, useRouteMatch } from "react-router-dom";
 import { Button, List, ListItem } from '@material-ui/core';
 import Calander from "./calander"
@@ -10,6 +10,18 @@ import UserHome from "./userhome"
 function Userpage({setLogout}){
   const { url } = useRouteMatch()
   const { username } = useParams()
+  var data = GetSubClass(username)
+  const [subclass,setSubclass] = useState([])
+  const [myclass, setmyclass] = useState("")
+  useEffect(()=>{
+      if(data){
+          const users = data.getSubusers
+          const subusers = users.filter(user => user.username!==username)
+          const me = users.filter(user => user.username===username)
+          setSubclass(subusers)
+          setmyclass(me[0].userclass)
+      }
+  },[data])
   return(
     <Router>
       <div class="usercaption">
@@ -26,9 +38,9 @@ function Userpage({setLogout}){
       </List>
       </div>
       <Switch>
-          <Route exact path={url}><UserHome /></Route>
-          <Route path={url+"/calander"}><Calander /></Route>
-          <Route path={url+"/todolist"}><TodoList /></Route>
+          <Route exact path={url}><UserHome myclass={myclass}/></Route>
+          <Route path={url+"/calander"}><Calander myclass={myclass}/></Route>
+          <Route path={url+"/todolist"}><TodoList myclass={myclass} subclass={subclass}/></Route>
       </Switch>
     </Router>
   )

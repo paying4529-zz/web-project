@@ -54,17 +54,6 @@
   background-color: #8997b4;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .button{
   padding: 20px;
 }
@@ -80,16 +69,19 @@
 }
 
 .title{
-  margin-top: 30px;
+  margin-top: 0px;
   margin-bottom: 5px;
 }
 
 .Countdown{
-  margin: 10px auto;
-  margin-left: 40px;
-  padding-bottom: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-bottom: 0;
+  padding: 20px 10px;
   display: block;
   float: left;
+  
 }
 
 .Countdown-col{
@@ -116,8 +108,25 @@
 }
 
 .pick{
+  display: inline-block;
+  clear: left;
+  padding-left:40px;
+}
+.column1{
+  width: 50%;
+  height: 100%;
+  float:left;
+}
+.column2{
+  width: 50%;
+  height: 100%;
+  float:right;
+}
+.addgroup{
+  width: 500px;
   align-content: center;
   display: inline-block;
-  padding-top: 20px;
-  float: center;
+  clear: right;
+  padding-inline: 50px;
+  padding-right: 100px;
 }

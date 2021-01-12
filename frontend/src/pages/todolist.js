@@ -1,26 +1,13 @@
 import './todo_style.css';
-import React, {  useEffect, useState } from "react";
+import React, { useState } from "react";
 import SubTodoList from "./todo_components/subtodolist";
 import { useRouteMatch} from "react-router-dom";
-import { GetSubClass } from '../axios'
 import {FormControl, MenuItem, InputLabel,Select, Chip, Input } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
-function TodoList(){
+function TodoList({myclass,subclass}){
     var { url } = useRouteMatch()
     const username = url.split("/")[1]
-    var data = GetSubClass(username)
-    const [subclass,setSubclass] = useState([])
-    const [myclass, setmyclass] = useState("")
-    useEffect(()=>{
-        if(data){
-            const users = data.getSubusers
-            const subusers = users.filter(user => user.username!==username)
-            const me = users.filter(user => user.username===username)
-            setSubclass(subusers)
-            setmyclass(me[0].userclass)
-        }
-    },[data])
     const [select, setSelect] = useState([])
     const [selectclass, setSelectclass] = useState([])
     const handleChange = (e) =>{
