@@ -17,6 +17,11 @@ function Userhome(){
     },[value])
     return (
       <div className="Home_page">
+        {showcountdown?<div className="Countdown">
+          <h3 className="title">Seminar is coming soon:</h3>
+          <Countdown enddate={value} />
+        </div>:<></>
+        }
         <div className="pick">
           <h3>Pick the date of your Seminar:</h3>
           <DatePicker
@@ -28,11 +33,7 @@ function Userhome(){
             yearPlaceholder="YYYY"
           />
         </div>
-        {showcountdown?<div className="Countdown">
-          <h3 className="title">Seminar is coming soon:</h3>
-          <Countdown enddate={value} />
-        </div>:<></>
-        }
+        
         
       </div>
     )

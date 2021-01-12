@@ -13,10 +13,10 @@ function Countdown({enddate}){
     })
     useEffect(() => {
         const interval = setInterval(() => {
-            const date = calculateCountdown(enddate)  ///////////
+            var date = calculateCountdown(enddate)  ///////////
             date? setTimeleft(date) : stop(interval)
         }, 1000);
-        
+        return ()=>stop(interval)       ////// necessary => component unmount 
     }, [enddate])
     const stop = (interval) =>{
         clearInterval(interval);
