@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch, Link, Redirect, useParams, useR
 import { Button, List, ListItem } from '@material-ui/core';
 import Calander from "./calander"
 import TodoList from "./todolist"
+import UserHome from "./userhome"
 
 function Userpage({setLogout}){
   const { url } = useRouteMatch()
@@ -14,14 +15,18 @@ function Userpage({setLogout}){
       <div class="usercaption">
         <h4>Hello, {username}</h4>
         <Button variant="contained" 
-            onClick={setLogout}>Logout</Button></div>
+            onClick={setLogout}>Logout</Button>
+      </div>
+      <Redirect exact from="/login" to={"/"+username}/>
       <div class="nav_bar user">
       <List component="nav">
+        <ListItem><Link to={url}>UserHome</Link></ListItem>
         <ListItem><Link to={url+"/calander"}>Calander</Link></ListItem>
         <ListItem><Link to={url+"/todolist"}>TodoList</Link></ListItem>
       </List>
       </div>
       <Switch>
+          <Route exact path={url}><UserHome /></Route>
           <Route path={url+"/calander"}><Calander /></Route>
           <Route path={url+"/todolist"}><TodoList /></Route>
       </Switch>

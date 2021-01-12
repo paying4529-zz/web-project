@@ -39,6 +39,7 @@
   height: 100%;
   text-align: center;
   background-color: #b4b389;
+  padding-top: 5px;
 }
 
 .login_page{
@@ -76,4 +77,46 @@
   display:table;
   position: fixed;
   width: fit-content;
+}
+
+.title{
+  margin-top: 40px;
+  margin-bottom: 5px;
+}
+
+.Countdown{
+  margin: 10px auto;
+  margin-left: 40px;
+  padding-bottom: 10px;
+  display: block;
+  float: left;
+}
+
+.Countdown-col{
+  display: inline-block;
+}
+
+.Countdown-col-element{
+  display: inline-block;
+  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Countdown-col-element strong{
+  font-size: 40px;
+}
+.userhome{
+  height: 100%;
+  width: 55%;
+  z-index: 1;
+  overflow-x: hidden;
+  float: right;
+  position: relative;
+}
+
+.pick{
+  align-content: center;
+  display: inline-block;
+  padding-top: 20px;
 }
