@@ -27,6 +27,8 @@
   right: 0;
 }
 .Register_page{
+  height: 100%;
+  padding-top: 5px;
   text-align: center;
   background-color: #b489a6;
 }
@@ -44,6 +46,7 @@
 
 .login_page{
   height: 100%;
+  padding-top: 5px;
   text-align: center;
   background-color: #89b4ae;
 }
