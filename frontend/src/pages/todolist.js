@@ -47,7 +47,7 @@ function TodoList({myclass,subclass}){
             <div class="my_todo">
                 <SubTodoList username={username} me={username} userclass={myclass}/>
             </div>
-            <div class="sub_todo">
+            {myclass!=="group member"?<div class="sub_todo">
                 <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel id="subuser">Select member to see their Todos</InputLabel>
                     <Select id="subuser" value={select} onChange={handleChange} label="Select member" multiple
@@ -62,7 +62,8 @@ function TodoList({myclass,subclass}){
                 {select.length!==0?(select.map((name,index) => <SubTodoList username={name} userclass={selectclass[index]} me={username}/> )):<></>}
                 {/* {subclass.map(data => {
                     return <SubTodoList username={data.username} userclass={data.userclass} me={username}/>})} */}
-            </div>
+            </div>:<></>}
+            
         </>
     );
 }
