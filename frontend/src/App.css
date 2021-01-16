@@ -81,9 +81,9 @@
   margin-top: 20px;
   margin-left: 30px;
   margin-bottom: 0;
-  padding: 20px 10px;
+  padding: 30px 10px;
   display: block;
-  float: left;
+  /* float: left; */
   
 }
 
@@ -111,7 +111,7 @@
 }
 
 .pick{
-  display: inline-block;
+  display: block;
   clear: left;
   padding-left:40px;
 }

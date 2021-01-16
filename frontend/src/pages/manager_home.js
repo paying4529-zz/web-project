@@ -18,13 +18,11 @@ const useStyles = makeStyles({
     padding:"10px",
   }
 })
-function Userhome_manager({myclass}){
+function Userhome_manager({enddate}){
     var { url } = useRouteMatch()
     const username = url.split("/")[-1]
     const [showcountdown, setShow] = useState(false)
-    const [enddate, onChange] = useState();           //////////////// need adding to backend
     const [groupOptions,setoptions] = useState([])    //////////////// need adding to backend
-
     useEffect(()=>{
       if(enddate){setShow(true)}
     },[enddate])
@@ -37,6 +35,7 @@ function Userhome_manager({myclass}){
         <div className="column1">
             {showcountdown?<Paper className="Countdown">
               <h3 className="title">Seminar is coming soon:</h3>
+              <h3 className="title">{enddate?enddate.split("T")[0]:""}</h3>
               <Countdown enddate={enddate} />
             </Paper>:<></>
             }

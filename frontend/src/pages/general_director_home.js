@@ -18,37 +18,41 @@ const useStyles = makeStyles({
     padding:"10px",
   }
 })
-function Userhome_director(){
+function Userhome_director({enddate,setEnddate}){
     var { url } = useRouteMatch()
     const username = url.split("/")[-1]
     const [showcountdown, setShow] = useState(false)
-    const [enddate, onChange] = useState();           //////////////// need adding to backend
+    const [enddate2, onChange] = useState("");           //////////////// need adding to backend
     const [groupOptions,setoptions] = useState([])    //////////////// need adding to backend
     const {newEnddate, isSuccess} = SetEnddate()
-    
     useEffect(()=>{
-      if(enddate){
-        setShow(true)
-        newEnddate(enddate)
-      }
+      console.log(enddate)
+      if(enddate){setShow(true)}
     },[enddate])
-    // useEffect(()=>{
-      // console.log(groupOptions)
-    // })
+    useEffect(()=>{
+      if(enddate2){
+        setEnddate(String(enddate2))
+        console.log(enddate2)
+        console.log(enddate)
+        newEnddate(String(enddate2))
+      }
+    },[enddate2])
+
     const classes = useStyles();
     return (
       <div className="Home_page">
         <div className="column1">
             {showcountdown?<Paper className="Countdown">
               <h3 className="title">Seminar is coming soon:</h3>
+              <h3 className="title">{enddate?enddate.slice(0,16):""}</h3>
               <Countdown enddate={enddate} />
             </Paper>:<></>
             }
-            <div className="pick" style={{float:showcountdown?"left":"center"}}>
+            <div className="pick">
               <h3>Pick the date of your seminar:</h3>
               <DatePicker
                 onChange={onChange}
-                value={enddate}
+                value={enddate2}
                 format="MM-dd-y"
                 dayPlaceholder="DD"
                 monthPlaceholder="MM"

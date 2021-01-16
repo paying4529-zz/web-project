@@ -52,11 +52,12 @@ const SetEnddate = () => {
         }
     }, [data])
     const newEnddate = async (date) => {
-        console.log(date)
-        const x = await setEnddate({ variables: {
-            enddate: date,
-        }})
-
+        if(date){
+            console.log(date)
+            const x = await setEnddate({ variables: {
+                enddate: date,
+            }})
+        }
     }
     return {newEnddate, isSuccess}
 }

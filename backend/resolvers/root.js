@@ -8,7 +8,9 @@ const Root = {
     },
     getEnddate: async (args, {Date}, info) => {
         console.log("query, getEnddate")
-        return await Date.find({})
+        const result = await Date.find({})
+        console.log(result[0])
+        return result[0]
     },
     getSubusers: async ({username}, {User}, info) => {
         console.log("query, getSubuser")
@@ -101,15 +103,29 @@ const Root = {
             console.log("before")
             const del = await Date.deleteOne({})
             console.log("after")
-            const error = await newDate.save()
-            console.log("save")
-            return { success: true }
+            const result = await newDate.save()
+            if(result){ 
+                console.log(result)
+                console.log("save") 
+                return { success: true }
+            }
+            else{ 
+                console.log("error") 
+                return { success: false }
+            }
         }
         else{
             const newDate = new Date({ enddate: eend })
-            const error = await newDate.save()
-            console.log(error)
-            return {  success: true }
+            const result = await newDate.save()
+            if(result){ 
+                console.log(result)
+                console.log("save") 
+                return { success: true }
+            }
+            else{ 
+                console.log("error") 
+                return { success: false }
+            }
         }
     }
 
