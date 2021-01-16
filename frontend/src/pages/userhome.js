@@ -4,6 +4,7 @@ import { useRouteMatch} from "react-router-dom";
 import Userhome_director from "./general_director_home"
 import Userhome_manager from "./manager_home"
 import Userhome_member from "./member_home"
+import { GetEnddate } from '../axios'
 
 function Userhome({myclass}){
     var { url } = useRouteMatch()
@@ -11,6 +12,15 @@ function Userhome({myclass}){
     useEffect(()=>{
       console.log(myclass)
     })
+    var data = GetEnddate()
+    useEffect(()=>{
+      if(data){
+        console.log(data.getEnddate)
+        if(data.getEnddate.enddate!==null){
+          console.log(data.getEnddate.enddate)
+        }
+      }
+    },[data])
     if(myclass.split(" ")[0]==="general"){
       return <Userhome_director />           
     }else if(myclass.split(" ")[0]==="section"){

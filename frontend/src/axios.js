@@ -2,14 +2,20 @@ import axios from 'axios'
 
 
 import { useQuery, useMutation } from '@apollo/client';
-import  {USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY,SUBUSER_QUERY} from './graphql/queries'
-import {CREATE_USER_MUTATION} from './graphql/mutations'
+import  {USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY} from './graphql/queries'
+import {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION} from './graphql/mutations'
 import { useState, useEffect } from 'react';
 
 const instance = axios.create({ baseURL: 'http://localhost:4000' });
 
 const GetUsers = () => { 
     const {loading, error, data} = useQuery(USERS_QUERY)
+    return data
+}
+
+const GetEnddate = () => { 
+    const {loading, error, data} = useQuery(ENDDATE_QUERY)
+    console.log("getenddate============")
     return data
 }
 
@@ -34,6 +40,25 @@ const NewUser = () => {
 
     }
     return {createUser, isSuccess}
+}
+
+const SetEnddate = () => {
+    const [setEnddate, {data}] = useMutation(SET_ENDDATE_MUTATION)
+    const [isSuccess, setIsSuccess] = useState(false)
+    useEffect(()=>{
+        if (data){ 
+            console.log(data)
+            setIsSuccess(data.setEnddate.success) 
+        }
+    }, [data])
+    const newEnddate = async (date) => {
+        console.log(date)
+        const x = await setEnddate({ variables: {
+            enddate: date,
+        }})
+
+    }
+    return {newEnddate, isSuccess}
 }
 
 const UserLogin = () => {
@@ -86,4 +111,4 @@ const GetTodo = () => {
 }
 
 
-export { GetUsers, NewUser, UserLogin, saveTodo, GetTodo, GetSubClass };
+export { GetUsers, NewUser, UserLogin, saveTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate};

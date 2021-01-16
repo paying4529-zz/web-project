@@ -6,10 +6,12 @@ const schema = buildSchema(`
         getSubusers(username: String!): [User!]
         getOneUser(username: String!): getOneUserOutput!
         getTodos(username: String!): [User]
+        getEnddate: Date
     }
 
     type Mutation {
         addUser(data: addUserInput): addUserOutput!
+        setEnddate(data: setEnddateInput): setEnddateOutput!
     }
 
     type Todo {
@@ -33,6 +35,10 @@ const schema = buildSchema(`
         todolist: [TodoItem]
     }
 
+    type Date {
+        enddate: String
+    }
+
     type addUserOutput {
         user: User,
         success: Boolean!
@@ -49,5 +55,12 @@ const schema = buildSchema(`
         userclass: String!
     }
 
+    input setEnddateInput {
+        enddate: String!
+    }
+    
+    type setEnddateOutput {
+        success: Boolean!
+    }
 `);
 export default schema

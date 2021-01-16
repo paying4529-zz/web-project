@@ -6,6 +6,10 @@ const Root = {
         console.log("query, getUsers")
         return await User.find()
     },
+    getEnddate: async (args, {Date}, info) => {
+        console.log("query, getEnddate")
+        return await Date.find({})
+    },
     getSubusers: async ({username}, {User}, info) => {
         console.log("query, getSubuser")
         const result = await User.find({"username": username})
@@ -82,6 +86,30 @@ const Root = {
             return {
                 user: newUser,
                 success: true }
+        }
+    },
+    setEnddate: async (args, {Date}, info) => {
+        // for register, add new user to db if username doesn't exist
+        console.log("mutation setEnddate")
+        const {enddate} = args.data
+        console.log(enddate)
+        const eend = String(enddate)
+        const data = await Date.find()
+        console.log(data.length)
+        if (data.length > 0){
+            const newDate = new Date({ enddate: eend })
+            console.log("before")
+            const del = await Date.deleteOne({})
+            console.log("after")
+            const error = await newDate.save()
+            console.log("save")
+            return { success: true }
+        }
+        else{
+            const newDate = new Date({ enddate: eend })
+            const error = await newDate.save()
+            console.log(error)
+            return {  success: true }
         }
     }
 

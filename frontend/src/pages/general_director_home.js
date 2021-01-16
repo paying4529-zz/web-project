@@ -6,6 +6,7 @@ import DatePicker from 'react-date-picker';
 import { Paper, Card, CardContent } from '@material-ui/core';
 import CreateSelect from "./createselect";
 import { makeStyles } from '@material-ui/core/styles';
+import { SetEnddate } from '../axios'
 
 const useStyles = makeStyles({
   root: {
@@ -17,18 +18,23 @@ const useStyles = makeStyles({
     padding:"10px",
   }
 })
-function Userhome_director({myclass}){
+function Userhome_director(){
     var { url } = useRouteMatch()
     const username = url.split("/")[-1]
     const [showcountdown, setShow] = useState(false)
     const [enddate, onChange] = useState();           //////////////// need adding to backend
     const [groupOptions,setoptions] = useState([])    //////////////// need adding to backend
+    const {newEnddate, isSuccess} = SetEnddate()
+    
     useEffect(()=>{
-      if(enddate){setShow(true)}
+      if(enddate){
+        setShow(true)
+        newEnddate(enddate)
+      }
     },[enddate])
-    useEffect(()=>{
-      console.log(groupOptions)
-    })
+    // useEffect(()=>{
+      // console.log(groupOptions)
+    // })
     const classes = useStyles();
     return (
       <div className="Home_page">

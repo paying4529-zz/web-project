@@ -9,6 +9,13 @@ const USERS_QUERY = gql`
     }
   }
 `
+const ENDDATE_QUERY = gql`
+query {
+  getEnddate {
+    enddate
+  }
+}
+`
 const TODOS_QUERY = gql`
   query getTodos($username: String!) {
     getTodos(username: $username) {
@@ -44,4 +51,4 @@ const SUBUSER_QUERY = gql`
 `
 
 
-export { USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY}
+export { USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY}

@@ -7,12 +7,25 @@ const CREATE_USER_MUTATION = gql`
         $userclass: String!
     ){
         addUser(data: {
-                username: $username
-                password: $password
-                userclass: $userclass
+            username: $username
+            password: $password
+            userclass: $userclass
         }) {
             success
         }
     }
 `
-export  {CREATE_USER_MUTATION}
+
+const SET_ENDDATE_MUTATION = gql`
+    mutation mutate (
+        $enddate: String!
+    ){
+        setEnddate(data: {
+            enddate: $enddate
+        }) {
+            success
+        }
+    }
+`
+
+export  {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION}
