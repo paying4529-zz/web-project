@@ -30,6 +30,13 @@ body > h1{
     color: var(--main);
     background: none;
 }
+
+#cal-month, #cal-year {
+    display: inline-block;
+    width: 10%;
+    float: right;
+}
+
 #cal-input{ 
     width: 57%;
 }

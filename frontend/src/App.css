@@ -53,6 +53,7 @@
 
 .user_page{
   height: 100%;
+  overflow: auto;
   text-align: center;
   background-color: #8997b4;
 }
