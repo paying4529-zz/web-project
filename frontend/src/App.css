@@ -134,3 +134,22 @@
   padding-inline: 50px;
   padding-right: 100px;
 }
+.twocolumns{
+  display: flex;
+  flex-wrap: wrap;
+  padding:5% 10%;
+}
+.card{
+  position: relative;
+  border-style: none;
+  opacity: 1;
+  margin:10px;
+  transition: opcacity 0.3s;
+  transition: display 0.4s;
+}
+.card:hover{
+  border-style: dotted;
+  opacity: 0.4;
+  margin: 8px;
+  text-decoration: line-through;
+}

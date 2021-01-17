@@ -3,19 +3,24 @@ import { NewUser } from '../axios'
 import React, { useState, useEffect } from 'react'
 import Select from "react-select"
 import { Button} from '@material-ui/core';
+import { GetClasses } from '../axios'
 
 function Register(){
     const [clicked, setClick] = useState(false)
     const [username, setName] = useState("")
     const [password, setpwd] = useState("")  
     const [userclass, setClass] = useState("")
+    const [groupOptions,setoptions] = useState([])  
     const {createUser, isSuccess} = NewUser()
-    // useEffect(()=>{ console.log("msg:", isSuccess) })
-    const classoptions = [
-      { value: "general director", label: "general director"},
-      { value: "section manager", label: "section manager"},
-      { value: "group member", label: "group member"},
-    ]
+    const {data} = GetClasses()
+    useEffect(()=>{
+      if(data){
+        if(data.getClasses){
+          const classoption = data.getClasses.classlist
+          if(classoption){setoptions(classoption)}
+        }
+      }
+    },[data])
     return (
       <div className="Register_page">
         <h2>Register</h2>
@@ -33,7 +38,7 @@ function Register(){
                 onChange={(e) => {
                   setClass(e)
                 }}
-                options={classoptions}/></div>
+                options={groupOptions}/></div>
         <div class="button"><Button variant="contained"
                 onClick={() => {
                   setClick(true)

@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   root: {
     width: 200,
     height: 40,
-    margin: "30px"
+    margin: 0,
   },
   content:{
     padding:"10px",
@@ -25,7 +25,7 @@ function Userhome_director({enddate,setEnddate}){
     const [enddate2, onChange] = useState("");         
     const [groupOptions,setoptions] = useState([])   
     const {newEnddate, isSuccess} = SetEnddate()
-    var data = GetClasses()
+    const {data,setToGet} = GetClasses()
     useEffect(()=>{
       if(data){
         console.log("get classes")
@@ -46,9 +46,12 @@ function Userhome_director({enddate,setEnddate}){
       }
     },[enddate2])
     const ssave = async () => {
-      console.log(groupOptions)
       let msg = await saveClass(groupOptions)
-      console.log(msg)
+      setToGet(true)
+    }
+    const ddelete = async (value)=>{
+      const newgroupOptions = groupOptions.filter(op => op.label!==value)
+      setoptions(newgroupOptions)
     }
     const classes = useStyles();
     return (
@@ -77,7 +80,11 @@ function Userhome_director({enddate,setEnddate}){
               <h3>Manage your organization</h3>
               <CreateSelect options={groupOptions} setoptions={setoptions} />
             </div>
-            {groupOptions.length!==0 ? groupOptions.map(group => <Card className={classes.root}> <CardContent className={classes.content}>{group.value}</CardContent></Card>):<></>}
+            <div className="twocolumns">
+              {groupOptions.length!==0 ? groupOptions.map(group =>
+              <div className="card" id={group.value} onClick={()=>ddelete(group.value)}><Card className={classes.root}><CardContent className={classes.content}>{group.value}</CardContent>
+              </Card></div>):<></>}
+            </div>
             <div class="button"><Button variant="contained"
                 onClick={ssave}
                 disabled={!groupOptions}>Save</Button></div>

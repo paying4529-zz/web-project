@@ -5,7 +5,9 @@ const createOption = (label) => ({
     value: label,
 })
 const defaultOptions = [
-    createOption('general director'),
+    createOption("general director"),
+    createOption("section manager"),
+    createOption("group member"),
 ]
 function CreateSelect({options,setoptions}){
     const [start, setStart] = useState(true)

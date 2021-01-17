@@ -46,7 +46,7 @@ const saveTodo = (todoitem, res) => {
 };
 
 const saveClass = (classlist, res) => {
-    Class.deleteMany({},(err,res)=>{
+    Class.deleteOne({},(err,res)=>{
         if(err){ console.log(err) }
         console.log("delete ",res.deletedCount," class")
     })

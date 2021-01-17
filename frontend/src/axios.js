@@ -14,8 +14,15 @@ const GetUsers = () => {
 }
 
 const GetClasses = () => { 
-    const {loading, error, data} = useQuery(CLASSES_QUERY)
-    return data
+    const {loading, error, data, refetch} = useQuery(CLASSES_QUERY)
+    const [toget, setToGet] = useState(false)
+    useEffect(() => {   
+        if(toget){
+            refetch()
+            setToGet(false)
+        }
+    }, [toget])
+    return {data,setToGet}
 }
 
 const GetEnddate = () => { 
