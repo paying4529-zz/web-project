@@ -138,7 +138,7 @@
 .twocolumns{
   display: flex;
   flex-wrap: wrap;
-  padding:5% 10%;
+  padding:5% 4%;
 }
 .card{
   position: relative;
