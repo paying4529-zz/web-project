@@ -122,6 +122,7 @@
   float:left;
 }
 .column2{
+  padding: 40px;
   width: 50%;
   height: 100%;
   float:right;
