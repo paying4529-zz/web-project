@@ -2,22 +2,8 @@ import '../App.css';
 import React, { useState,useEffect } from 'react'
 import { useRouteMatch} from "react-router-dom";
 import Countdown from './countdown';
-import DatePicker from 'react-date-picker';
-import { Paper, Card, CardContent } from '@material-ui/core';
-import CreateSelect from "./createselect";
-import { makeStyles } from '@material-ui/core/styles';
-import Userhome_generalDirector from "./general_director_home"
+import { Paper} from '@material-ui/core';
 
-const useStyles = makeStyles({
-  root: {
-    width: 200,
-    height: 40,
-    margin: "30px"
-  },
-  content:{
-    padding:"10px",
-  }
-})
 function Userhome_member({enddate}){
     var { url } = useRouteMatch()
     const username = url.split("/")[-1]
@@ -25,7 +11,6 @@ function Userhome_member({enddate}){
     useEffect(()=>{
       if(enddate){setShow(true)}
     },[enddate])
-    const classes = useStyles();
     return (
       <div className="Home_page">
         <div className="column1">
@@ -39,8 +24,6 @@ function Userhome_member({enddate}){
         <div className="column2">
             
         </div>
-        
-        
         
       </div>
     )

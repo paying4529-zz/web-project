@@ -1,6 +1,7 @@
 import express from "express"
 import User from '../models/user.js'
 import Todo from '../models/todo.js'
+import Class from '../models/class.js'
 
 const router =  express.Router();
 
@@ -30,13 +31,13 @@ const saveTodo = (todoitem, res) => {
     Todo.countDocuments({username: name}, (err, count) => {
         if (count){ 
             Todo.deleteOne({ username: name },()=>{}) 
-            console.log("delete")
+            console.log("delete todo")
         }
         const todo = new Todo(todoitem);
         todo.save((err) => {
             if(err){console.log(err)}
             else{
-                console.log("save")
+                console.log("save todo")
                 const data = { msg: `${name}'s todo saved!!!`}
                 res.status(200).send(data)
             }
@@ -45,7 +46,20 @@ const saveTodo = (todoitem, res) => {
 };
 
 const saveClass = (classlist, res) => {
-    console.log("saveclass", classlist)
+    Class.deleteMany({},(err,res)=>{
+        if(err){ console.log(err) }
+        console.log("delete ",res.deletedCount," class")
+    })
+    const newclasslist = new Class({classlist:classlist})
+    console.log(newclasslist)
+    newclasslist.save((err) => {
+        if(err){console.log(err)}
+        else{
+            console.log("save class")
+            const data = { msg: `new class list saved`}
+            res.status(200).send(data)
+        }
+    });
     
 };
 

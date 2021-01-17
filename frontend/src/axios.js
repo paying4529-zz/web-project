@@ -14,7 +14,6 @@ const GetUsers = () => {
 }
 
 const GetClasses = () => { 
-    console.log("get classes")
     const {loading, error, data} = useQuery(CLASSES_QUERY)
     return data
 }
@@ -105,9 +104,9 @@ const saveTodo = async(todoitem) => {
 }
 
 const saveClass = async(classlist) => {
+    console.log("save class")
     console.log(classlist)
     const { data } = await instance.post('/users/saveClass', classlist)
-    console.log("save class")
     return data.msg
 }
 

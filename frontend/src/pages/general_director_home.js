@@ -23,30 +23,33 @@ function Userhome_director({enddate,setEnddate}){
     const username = url.split("/")[-1]
     const [showcountdown, setShow] = useState(false)
     const [enddate2, onChange] = useState("");         
-    const [groupOptions,setoptions] = useState([])    //////////////// need adding to backend
+    const [groupOptions,setoptions] = useState([])   
     const {newEnddate, isSuccess} = SetEnddate()
-    const data = GetClasses()
+    var data = GetClasses()
     useEffect(()=>{
       if(data){
-        console.log("classes")
-        console.log(data.getClasses)
-        const classoption = data.getClasses
-        setoptions(classoption)
+        console.log("get classes")
+        console.log(data)
+        if(data.getClasses){
+          const classoption = data.getClasses.classlist
+          if(classoption){setoptions(classoption)}
+        }
       }
     },[data])
     useEffect(()=>{
-      console.log(enddate)
       if(enddate){setShow(true)}
     },[enddate])
     useEffect(()=>{
       if(enddate2){
         setEnddate(String(enddate2))
-        console.log(enddate2)
-        console.log(enddate)
         newEnddate(String(enddate2))
       }
     },[enddate2])
-
+    const ssave = async () => {
+      console.log(groupOptions)
+      let msg = await saveClass(groupOptions)
+      console.log(msg)
+    }
     const classes = useStyles();
     return (
       <div className="Home_page">
@@ -76,10 +79,7 @@ function Userhome_director({enddate,setEnddate}){
             </div>
             {groupOptions.length!==0 ? groupOptions.map(group => <Card className={classes.root}> <CardContent className={classes.content}>{group.value}</CardContent></Card>):<></>}
             <div class="button"><Button variant="contained"
-                onClick={() => {
-                  // let msg = await saveClass(groupOptions)
-                  // console.log(msg)
-                }}
+                onClick={ssave}
                 disabled={!groupOptions}>Save</Button></div>
         </div>
         

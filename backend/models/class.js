@@ -2,8 +2,12 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 const ClassSchema = new Schema({
-    group: { type: String},
-    classname: { type: String},
+    label: { type: String},
+    value: { type: String},
 });
-const Class = mongoose.model('Class', ClassSchema);
+const ClasslistSchema = new Schema({
+    classlist: [ClassSchema],
+});
+
+const Class = mongoose.model('Class', ClasslistSchema);
 export default Class;

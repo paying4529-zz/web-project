@@ -8,7 +8,7 @@ const schema = buildSchema(`
         getTodos(username: String!): [User]
         getEnddate: Date
         getCalendar(data: getCalendarInput!): [[String]]
-        getClasses: [Class]
+        getClasses: getClassOutput
     }
 
     type Mutation {
@@ -44,8 +44,8 @@ const schema = buildSchema(`
     }
 
     type Class {
-        group: String,
-        classname: String
+        label: String,
+        value: String
     }
 
     type addUserOutput {
@@ -88,6 +88,10 @@ const schema = buildSchema(`
     
     type setOutput {
         success: Boolean!
+    }
+
+    type getClassOutput{
+        classlist: [Class]
     }
 `);
 export default schema

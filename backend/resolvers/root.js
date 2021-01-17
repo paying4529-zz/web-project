@@ -8,7 +8,9 @@ const Root = {
     },
     getClasses: async (args, {Class}, info) => {
         console.log("query, getClasses")
-        return await Class.find()
+        const classlist = await Class.find()
+        console.log(classlist)
+        return classlist[classlist.length-1]
     },
     getEnddate: async (args, {Date}, info) => {
         console.log("query, getEnddate")

@@ -12,22 +12,16 @@ function Userhome({myclass}){
     var data = GetEnddate()
     const [enddate, setEnddate] = useState("")
     useEffect(()=>{
-      console.log(data)
       if(data){
         if(data.getEnddate){
-          if(data.getEnddate.enddate!==null){
-          console.log(data.getEnddate.enddate)
-          setEnddate(data.getEnddate.enddate)
-         }
-        }
-      }
-    },[data])
+          if(data.getEnddate.enddate!==null){ setEnddate(data.getEnddate.enddate) }
+    }}},[data])
     if(myclass.split(" ")[0]==="general"){
       return <Userhome_director enddate={enddate} setEnddate={setEnddate}/>           
     }else if(myclass.split(" ")[0]==="section"){
-      return <Userhome_manager enddate={enddate} />         //////////// add enddate to prop
+      return <Userhome_manager enddate={enddate} />        
     }else if(myclass.split(" ")[0]==="group"){
-      return <Userhome_member enddate={enddate} />          //////////// add enddate to prop
+      return <Userhome_member enddate={enddate} />       
     }else{
       return <></>
     }

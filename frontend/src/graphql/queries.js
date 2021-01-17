@@ -13,8 +13,10 @@ const USERS_QUERY = gql`
 const CLASSES_QUERY = gql`
   query {
     getClasses {
-      group
-      classname
+      classlist{
+        label
+        value
+      }
     }
   }
 `

@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import CreatableSelect from "react-select/creatable"
 const createOption = (label) => ({
-    label,
+    label: label,
     value: label,
 })
 const defaultOptions = [
