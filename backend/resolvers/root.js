@@ -52,14 +52,10 @@ const Root = {
         if(userclass==="general director"){
             const data = await Todo.find({$or: [{"username": username},{userclass:"section manager"},{userclass:"group member"}]})            
             console.log(username, "query, data:", data)
-            // console.log(data[0].username, data[0].todolist[0])
-            // console.log(data[1].username, data[1].todolist[0])
             return data
         }else if(userclass==="section manager"){
             const data = await Todo.find({$or: [{"username": username},{userclass:"group member"}]})
             console.log(username, "query, data:", data)
-            // console.log(data[0].username, data[0].todolist[0])
-            // console.log(data[1].username, data[1].todolist[0])
             return data    
         }else if(userclass==="group member"){
             const data = await Todo.find({$or: [{"username": username}]})
@@ -68,7 +64,19 @@ const Root = {
         }
 
     },
-
+    getCalendar: async(args, {Calendar}, info) => {
+        const {username, year, month} = args.data
+        const todoList = await Calendar.find({$and: [{username: username}, {year: year}, {month: month}]})
+        console.log(`root/getCalendar, args.data: ${args.data}, todoList: ${todoList}`)
+        if (todoList.length > 0)
+        {
+            return todoList[0].todolist
+        }
+        else
+        {
+            return []
+        }
+    },
     // mutation
     addUser: async (args, {User}, info) => {
         // for register, add new user to db if username doesn't exist
@@ -127,6 +135,21 @@ const Root = {
                 return { success: false }
             }
         }
+    },
+
+    addCalendar: async(args, {Calendar}, info) => {
+        const {username, year, month, todoList} = args.data;
+        await Calendar.update(
+            {$and:[{"username": username}, {year: year}, {month: month}]},
+            {
+                username: username,
+                year: year,
+                month: month,
+                todolist: todoList
+            },
+            { upsert: true }  
+        )
+        return true
     }
 
 }

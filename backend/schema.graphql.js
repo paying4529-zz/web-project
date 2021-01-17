@@ -7,11 +7,13 @@ const schema = buildSchema(`
         getOneUser(username: String!): getOneUserOutput!
         getTodos(username: String!): [User]
         getEnddate: Date
+        getCalendar(data: getCalendarInput!): [[String]]
     }
 
     type Mutation {
         addUser(data: addUserInput): addUserOutput!
         setEnddate(data: setEnddateInput): setEnddateOutput!
+        addCalendar(data: addCalendarInput): Boolean!
     }
 
     type Todo {
@@ -57,6 +59,19 @@ const schema = buildSchema(`
 
     input setEnddateInput {
         enddate: String!
+    }
+
+    input getCalendarInput {
+        username: String
+        year: Int
+        month: Int
+    }
+
+    input addCalendarInput {
+        username: String
+        year: Int
+        month: Int
+        todoList: [[String]]
     }
     
     type setEnddateOutput {

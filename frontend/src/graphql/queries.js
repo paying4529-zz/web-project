@@ -49,6 +49,14 @@ const SUBUSER_QUERY = gql`
     }
   }
 `
+const CALENDAR_QUERY = gql`
+  query getCalendar($username: String, $year: Int, $month: Int) {
+    getCalendar(data: {
+      username: $username,
+      year: $year,
+      month: $month
+    })
+  }
+`
 
-
-export { USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY}
+export { USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY,  CALENDAR_QUERY }

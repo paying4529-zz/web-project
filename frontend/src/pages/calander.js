@@ -3,6 +3,7 @@ import { useRouteMatch } from "react-router-dom";
 import React from 'react';
 import Select from "react-select";
 import { useState, useEffect } from 'react';
+import { GetCalendar } from '../axios';
 
 function Calander(){
     var { url } = useRouteMatch()
@@ -27,15 +28,17 @@ function Calander(){
                           {value: 12, label: "December"}];
     const [month, setMonth] = useState(1);
     const [year, setYear] = useState(2021);
-    const [startDay, setStartDay] = useState(); // which day in a week does the month start, 0 stands for Sunday
+    const [startDay, setStartDay] = useState(0); // which day in a week does the month start, 0 stands for Sunday
     const [monthLong, setMonthLong] = useState(31); // how long is the month
     const [chosenDate, setChosenDate] = useState([-1, -1]); // chosen month, date
     const [chosenDateList, setChosenDateList] = useState([]); // a boolean list for indetifying if the date box is chosen
     const [todoList, setTodoList] = useState(Array(monthLong).fill([])); // a list that contains #dayInAMonth sublists
     const [inputTodo, setInputTodo] = useState("");
+    const {data, setRefetch} = GetCalendar(username);
     useEffect(() => {
         setStartDay(new Date(year, month - 1, 1).getDay());
         setMonthLong(new Date(year, month, 0).getDate());
+        setRefetch({username: username, year: year, month: month});
     }, [month, year])
     useEffect(() => {
         setChosenDateList(() => {
@@ -118,6 +121,7 @@ function Calander(){
                                                 tmp[chosenDate[1] - 1] = [...tmp[chosenDate[1] - 1], inputTodo];
                                                 setTodoList(tmp);
                                                 setChosenDate([-1, -1]);
+                                                setRefetch({username: username, year: year, month: month})
                                              }
                                            }}
                             >Add to Calendar</button>

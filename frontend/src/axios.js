@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 import { useQuery, useMutation } from '@apollo/client';
-import  {USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY} from './graphql/queries'
+import  {USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, CALENDAR_QUERY} from './graphql/queries'
 import {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION} from './graphql/mutations'
 import { useState, useEffect } from 'react';
 
@@ -111,5 +111,29 @@ const GetTodo = () => {
     return {data, setToGet, setUsername}
 }
 
+const GetCalendar = (username_init) => {
+    const [username, setUsername] = useState(username_init)
+    const [year, setYear] = useState(2021)
+    const [month, setMonth] = useState(1)
+    const {loading, error, data, refetch} = useQuery(CALENDAR_QUERY, {variables: {username: username_init, year: 2021, month: 1}})
+    const setRefetch = ({username, year, month}) => {
+        console.log("axios/refetch calendar,", username, year, month)
+        setUsername(username)
+        setYear(year)
+        setMonth(month)
+    }
+    useEffect(() => {
+        // console.log("refetch!", username, year, month)
+        refetch({variables: {username: username, year: year, month: month}})
+        // if (!loading) {refetch({variables: {username: username, year: year, month: month}})} // avoid apollo client error when intializing (too fast refetch)
+        // else {console.log("avoid refetch QQ")}
+        
+    }, [username, year, month])
+    useEffect(() => {
+        console.log(username, year, month, "axios/getcalendar, data:", data)
+    }, [data])
+    return {data, setRefetch}
+}
 
-export { GetUsers, NewUser, UserLogin, saveTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate};
+
+export { GetUsers, NewUser, UserLogin, saveTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar};

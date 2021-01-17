@@ -18,6 +18,7 @@ import Root from './resolvers/root.js'
 import schema from './schema.graphql.js'
 import Todo from "./models/todo.js"
 import Date from "./models/date.js"
+import Calendar from "./models/calendar.js"
 
 dotenv.config();
 if (!process.env.MONGO_URL) {
@@ -54,6 +55,7 @@ db.once('open', () => {
             User: User,
             Todo: Todo,
             Date: Date,
+            Calendar: Calendar,
             Pubsub: pubsub
         },
         graphiql: true,
