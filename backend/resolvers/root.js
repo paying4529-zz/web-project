@@ -71,7 +71,7 @@ const Root = {
     getCalendar: async(args, {Calendar}, info) => {
         const {username, year, month} = args.data
         const todoList = await Calendar.find({$and: [{username: username}, {year: year}, {month: month}]})
-        console.log(`root/getCalendar, args.data: ${args.data}, todoList: ${todoList}`)
+        console.log(`root/getCalendar, todoList: ${todoList}`, username, year, month, args)
         if (todoList.length > 0)
         {
             return todoList[0].todolist
@@ -142,17 +142,18 @@ const Root = {
     },
 
     addCalendar: async(args, {Calendar}, info) => {
+        console.log("root/addCalendar")
         const {username, year, month, todoList} = args.data;
-        await Calendar.update(
-            {$and:[{"username": username}, {year: year}, {month: month}]},
-            {
-                username: username,
-                year: year,
-                month: month,
-                todolist: todoList
-            },
-            { upsert: true }  
-        )
+        const oldCalendar = await Calendar.find({$and:[{username: username}, {year: year}, {month: month}]})
+
+        if (oldCalendar.length > 0)
+        {
+            console.log("old found")
+            const del = await Calendar.deleteOne({$and:[{username: username}, {year: year}, {month: month}]})
+        }
+       const newCalendar = await Calendar.create({username: username, year: year, month: month, todolist: todoList})
+       console.log("calendar created:", newCalendar)
+  
         return true
     }
 

@@ -60,12 +60,16 @@ const SUBUSER_QUERY = gql`
   }
 `
 const CALENDAR_QUERY = gql`
-  query getCalendar($username: String, $year: Int, $month: Int) {
-    getCalendar(data: {
-      username: $username,
-      year: $year,
-      month: $month
-    })
+  query getCalendar(
+      $username: String
+      $year: Int
+      $month: Int
+      ) {
+        getCalendar(data: {
+          username: $username
+          year: $year
+          month: $month
+        })
   }
 `
 

@@ -32,9 +32,9 @@ function Calander(){
     const [monthLong, setMonthLong] = useState(31); // how long is the month
     const [chosenDate, setChosenDate] = useState([-1, -1]); // chosen month, date
     const [chosenDateList, setChosenDateList] = useState([]); // a boolean list for indetifying if the date box is chosen
-    const [todoList, setTodoList] = useState(Array(monthLong).fill([])); // a list that contains #dayInAMonth sublists
+    // const [todoList, setTodoList] = useState(Array(monthLong).fill([])); // a list that contains #dayInAMonth sublists
     const [inputTodo, setInputTodo] = useState("");
-    const {data, setRefetch} = GetCalendar(username);
+    const {data, setRefetch, addToCalendar} = GetCalendar(); // data: a list that contains #dayInAMonth sublists
     useEffect(() => {
         setStartDay(new Date(year, month - 1, 1).getDay());
         setMonthLong(new Date(year, month, 0).getDate());
@@ -52,11 +52,12 @@ function Calander(){
     }, [chosenDate])
     useEffect(() => {
         console.log(`chosenDate: ${chosenDate}`);
-        console.log(`todoList: ${todoList}`);
+        console.log(`data: ${data}`);
     }, [chosenDateList])
+
     useEffect(() => {
-        console.log(`todoList: ${todoList}`);
-    }, [todoList])
+        console.log("data:", data)
+    }, [data])
 
     let calendar = [];
     var date = 1;
@@ -74,14 +75,19 @@ function Calander(){
                 else
                 {
                     let todos = [];
-                    for (var i = 0; i < todoList[date - 1].length; i++)
+                    if (data && data.getCalendar.length > 0) // data: avoid initialing undefined, data.getCalendar.length: avoid empty array (default return when no data exist)
                     {
-                        todos.push(<div class='date'>{todoList[date - 1][i]}</div>)
+                        
+                        for (var i = 0; i < data.getCalendar[date - 1].length; i++)
+                        {
+                            todos.push(<div class='date'>{data.getCalendar[date - 1][i]}</div>)
+                        }
                     }
                     week.push(<td class={chosenDateList[date - 1]?'date clicked':'date'} id={`${month}_${date}`}
-                               onClick={(e) => setChosenDate([e.target.id.split('_')[0], e.target.id.split('_')[1]])}>
-                               {date}{todos}</td>);
+                    onClick={(e) => setChosenDate([e.target.id.split('_')[0], e.target.id.split('_')[1]])}>
+                    {date}{todos}</td>);
                     date++;
+                   
                 }
 
             }
@@ -90,13 +96,17 @@ function Calander(){
                 if (date <= monthLong)
                 {
                     let todos = [];
-                    for (var i = 0; i < todoList[date - 1].length; i++)
+                    if (data && data.getCalendar.length > 0)
                     {
-                        todos.push(<div class='date'>{todoList[date - 1][i]}</div>)
+                        for (var i = 0; i < data.getCalendar[date - 1].length; i++)
+                        {
+                            todos.push(<div class='date'>{data.getCalendar[date - 1][i]}</div>)
+                        }
+                        
                     }
                     week.push(<td class={chosenDateList[date - 1]?'date clicked':'date'} id={`${month}_${date}`}
-                              onClick={(e) => setChosenDate([e.target.id.split('_')[0], e.target.id.split('_')[1]])}>
-                              {date}{todos}</td>);
+                                  onClick={(e) => setChosenDate([e.target.id.split('_')[0], e.target.id.split('_')[1]])}>
+                                  {date}{todos}</td>);
                     date++;
                 }
                 else
@@ -116,12 +126,16 @@ function Calander(){
                     <button id="cal-button" 
                             onClick={() => { if (inputTodo !== "" && chosenDate[1] !== -1)
                                              {
-                                                let tmp = todoList;
+                                                let tmp = data.getCalendar;
                                                 console.log("original todolist:", tmp, "index:", chosenDate[1] - 1);
+                                                if (tmp.length === 0)
+                                                {
+                                                    tmp = Array(monthLong).fill([]);
+                                                }
                                                 tmp[chosenDate[1] - 1] = [...tmp[chosenDate[1] - 1], inputTodo];
-                                                setTodoList(tmp);
+                                                // setTodoList(tmp);
                                                 setChosenDate([-1, -1]);
-                                                setRefetch({username: username, year: year, month: month})
+                                                addToCalendar({username: username, year: year, month: month, todolist: tmp})
                                              }
                                            }}
                             >Add to Calendar</button>
