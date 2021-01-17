@@ -819,6 +819,11 @@ react-calendar@^3.0.0:
     merge-class-names "^1.1.1"
     prop-types "^15.6.0"
 
+react-datasheet@^1.4.8:
+  version "1.4.8"
+  resolved "https://registry.yarnpkg.com/react-datasheet/-/react-datasheet-1.4.8.tgz#ce83e62963febce5c7f4efb0aaea50896d4e42db"
+  integrity sha512-ohgGD1uLcJKTzeyubWi1s8VdwjNfBxpAz1x/N+io+6XQB1AIzipW5gXlDTpC7AbSUWRiJPzc4ytd20gU6xAoHw==
+
 react-date-picker@^8.0.6:
   version "8.0.6"
   resolved "https://registry.yarnpkg.com/react-date-picker/-/react-date-picker-8.0.6.tgz#e5f0cf515c7e0a9381ae45094f141a8d934c4358"

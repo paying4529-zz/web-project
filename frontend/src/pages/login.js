@@ -6,6 +6,7 @@ import { Button, List, ListItem } from '@material-ui/core';
 import Calander from "./calander"
 import TodoList from "./todolist"
 import UserHome from "./userhome"
+import FlowChart from "./flowchart"
 
 function Userpage({setLogout}){
   const { url } = useRouteMatch()
@@ -35,12 +36,14 @@ function Userpage({setLogout}){
         <ListItem><Link to={url}>UserHome</Link></ListItem>
         <ListItem><Link to={url+"/calander"}>Calander</Link></ListItem>
         <ListItem><Link to={url+"/todolist"}>TodoList</Link></ListItem>
+        <ListItem><Link to={url+"/flowchart"}>FlowChart</Link></ListItem>
       </List>
       </div>
       <Switch>
           <Route exact path={url}><UserHome myclass={myclass}/></Route>
           <Route path={url+"/calander"}><Calander myclass={myclass}/></Route>
           <Route path={url+"/todolist"}><TodoList myclass={myclass} subclass={subclass}/></Route>
+          <Route path={url+"/flowchart"}><FlowChart myclass={myclass} subclass={subclass}/></Route>
       </Switch>
     </Router>
   )
