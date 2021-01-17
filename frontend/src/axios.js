@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 import { useQuery, useMutation } from '@apollo/client';
-import  {USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, CALENDAR_QUERY} from './graphql/queries'
+import  {USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, CALENDAR_QUERY, CLASSES_QUERY} from './graphql/queries'
 import {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION} from './graphql/mutations'
 import { useState, useEffect } from 'react';
 
@@ -13,9 +13,15 @@ const GetUsers = () => {
     return data
 }
 
+const GetClasses = () => { 
+    console.log("get classes")
+    const {loading, error, data} = useQuery(CLASSES_QUERY)
+    return data
+}
+
 const GetEnddate = () => { 
     const {loading, error, data} = useQuery(ENDDATE_QUERY)
-    console.log("getenddate============")
+    // console.log("get enddate")
     return data
 }
 
@@ -47,13 +53,13 @@ const SetEnddate = () => {
     const [isSuccess, setIsSuccess] = useState(false)
     useEffect(()=>{
         if (data){ 
-            console.log(data)
+            // console.log(data)
             setIsSuccess(data.setEnddate.success) 
         }
     }, [data])
     const newEnddate = async (date) => {
         if(date){
-            console.log(date)
+            // console.log(date)
             const x = await setEnddate({ variables: {
                 enddate: date,
             }})
@@ -98,6 +104,13 @@ const saveTodo = async(todoitem) => {
     return data.msg
 }
 
+const saveClass = async(classlist) => {
+    console.log(classlist)
+    const { data } = await instance.post('/users/saveClass', classlist)
+    console.log("save class")
+    return data.msg
+}
+
 const GetTodo = () => { 
     const [username, setUsername] = useState("")
     const [toget, setToGet] = useState(false)
@@ -136,4 +149,4 @@ const GetCalendar = (username_init) => {
 }
 
 
-export { GetUsers, NewUser, UserLogin, saveTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar};
+export { GetUsers, NewUser, UserLogin, saveTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, saveClass};

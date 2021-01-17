@@ -44,6 +44,21 @@ const saveTodo = (todoitem, res) => {
     });
 };
 
+const saveClass = (classlist, res) => {
+    console.log("saveclass", classlist)
+    
+};
+
+router.post("/saveClass", (req, res)=>{
+    if(res){
+        var classlist = req.body
+        saveClass(classlist, res)
+    }else{
+        const data = { msg: 'Fail to save class' }
+        res.status(403).send(data)  
+    }
+})
+
 router.post("/saveTodo", (req, res)=>{
     if(res){
         var todoitem = req.body

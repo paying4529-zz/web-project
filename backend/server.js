@@ -19,6 +19,7 @@ import schema from './schema.graphql.js'
 import Todo from "./models/todo.js"
 import Date from "./models/date.js"
 import Calendar from "./models/calendar.js"
+import Class from "./models/class.js"
 
 dotenv.config();
 if (!process.env.MONGO_URL) {
@@ -56,6 +57,7 @@ db.once('open', () => {
             Todo: Todo,
             Date: Date,
             Calendar: Calendar,
+            Class: Class,
             Pubsub: pubsub
         },
         graphiql: true,

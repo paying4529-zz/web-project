@@ -3,10 +3,10 @@ import React, { useState,useEffect } from 'react'
 import { useRouteMatch} from "react-router-dom";
 import Countdown from './countdown';
 import DatePicker from 'react-date-picker';
-import { Paper, Card, CardContent } from '@material-ui/core';
+import { Paper, Card, CardContent, Button } from '@material-ui/core';
 import CreateSelect from "./createselect";
 import { makeStyles } from '@material-ui/core/styles';
-import { SetEnddate } from '../axios'
+import { SetEnddate, GetClasses, saveClass } from '../axios'
 
 const useStyles = makeStyles({
   root: {
@@ -22,9 +22,18 @@ function Userhome_director({enddate,setEnddate}){
     var { url } = useRouteMatch()
     const username = url.split("/")[-1]
     const [showcountdown, setShow] = useState(false)
-    const [enddate2, onChange] = useState("");           //////////////// need adding to backend
+    const [enddate2, onChange] = useState("");         
     const [groupOptions,setoptions] = useState([])    //////////////// need adding to backend
     const {newEnddate, isSuccess} = SetEnddate()
+    const data = GetClasses()
+    useEffect(()=>{
+      if(data){
+        console.log("classes")
+        console.log(data.getClasses)
+        const classoption = data.getClasses
+        setoptions(classoption)
+      }
+    },[data])
     useEffect(()=>{
       console.log(enddate)
       if(enddate){setShow(true)}
@@ -66,7 +75,12 @@ function Userhome_director({enddate,setEnddate}){
               <CreateSelect options={groupOptions} setoptions={setoptions} />
             </div>
             {groupOptions.length!==0 ? groupOptions.map(group => <Card className={classes.root}> <CardContent className={classes.content}>{group.value}</CardContent></Card>):<></>}
-            
+            <div class="button"><Button variant="contained"
+                onClick={() => {
+                  // let msg = await saveClass(groupOptions)
+                  // console.log(msg)
+                }}
+                disabled={!groupOptions}>Save</Button></div>
         </div>
         
         

@@ -6,6 +6,10 @@ const Root = {
         console.log("query, getUsers")
         return await User.find()
     },
+    getClasses: async (args, {Class}, info) => {
+        console.log("query, getClasses")
+        return await Class.find()
+    },
     getEnddate: async (args, {Date}, info) => {
         console.log("query, getEnddate")
         const result = await Date.find({})

@@ -28,4 +28,18 @@ const SET_ENDDATE_MUTATION = gql`
     }
 `
 
-export  {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION}
+const ADD_CLASS_MUTATION = gql`
+    mutation mutate (
+        $group: String!
+        $classname: String!
+    ){
+        addClass(data: {
+            group: $group
+            classname: $classname
+        }) {
+            success
+        }
+    }
+`
+
+export  {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CLASS_MUTATION}
