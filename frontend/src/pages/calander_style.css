@@ -29,6 +29,12 @@ body > h1{
     margin-top: 0;
 }
 
+#cal-import {
+    display: inline-block;
+    float: left;
+    margin-top: 0;
+}
+
 #cal-input{ 
     width: 57%;
 }
@@ -77,16 +83,59 @@ body > h1{
 }
 
 
-.date:hover{
+.cal-todo-row:hover, .date:hover{
     background-color: var(--hover);
+    /* cursor: pointer; */
 }
 
-.date.clicked{
+.cal-tod-row.clicked, .date.clicked{
     background-color:var(--box);
     color:var(--text);
 }
 
+.cal-todo-row {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    border-radius: 10%;
+}
 
+.cal-todo-task {
+    display: inline;
+    width: 80%;
+    padding-left: 15%;
+    text-align: center;
+    vertical-align: center;
+    border-radius: 10%;
+    transition: 0.1s;
+    word-break:break-word;
+}
+
+.cal-x {
+    display: inline;
+    opacity: 0;
+    vertical-align: center;
+    height: 20px;
+    transition: 0.1s;
+}
+
+.cal-x:hover {
+    opacity: 1;
+    cursor: pointer;
+    border: 5px;
+}
+
+.cal-todolist {
+    text-align: center;
+    vertical-align: center;
+    border-radius: 10%;
+    transition: 0.1s;
+    word-break:break-word;
+    background-color: #483D8B;
+}
+.cal-todolist:hover {
+    opacity: 0.8;
+}
 /*****************Themes*****************/
 .Theme-black {
     padding: 20px;

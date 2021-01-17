@@ -163,6 +163,50 @@ const GetCalendar = () => {
     }, [JSON.stringify(data)])
     return {data, setRefetch, addToCalendar}
 }
+const GetTodoCal = () => { 
 
+    const [username, setUserNameTodo] = useState("")
+    const [month, setMonthTodo] = useState(0)
+    const [year, setYearTodo] = useState(0)
+    const [monthLong, setMonthLongTodo] = useState(0)
 
-export { GetUsers, NewUser, UserLogin, saveTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, saveClass};
+    const [todolist, setTodoList] = useState([])
+    const {loading, error, data, refetch} = useQuery(TODOS_QUERY,{variables: { username: username}}) // b.c. the user is fixed, only need to query once
+ 
+    const updateTodoCal = ({username, month, year, monthLong}) => {
+        setUserNameTodo(username);
+        setMonthTodo(month);
+        setYearTodo(year);
+        setMonthLongTodo(monthLong);
+    }
+    useEffect(() => {
+        updateCallback(username, month, year, monthLong);
+    }, [data, month, year])
+
+    const updateCallback = (username, month, year, monthLong) => {
+        let tmp = Array(monthLong).fill([]);
+        if (data)
+        {
+            for (var i = 0; i < data.getTodos.length; i++)
+            {
+                if (data.getTodos[i].username == username)
+                {
+                    for (var j = 0; j < data.getTodos[i].todolist.length; j++)
+                    {
+                        const deadline = data.getTodos[i].todolist[j].deadline;
+                        const value = data.getTodos[i].todolist[j].value;
+                        const [_year, _month, _date] = deadline.split('-');
+                        if (_month == month && _year == year)
+                        {
+                            tmp[parseInt(_date) - 1] = [...tmp[parseInt(_date) - 1], value];
+                        }
+                    }
+                }
+            }
+        }
+        setTodoList(tmp);
+    }
+    return {todolist, updateTodoCal}
+}
+
+export { GetUsers, NewUser, UserLogin, saveTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, saveClass, GetTodoCal};
