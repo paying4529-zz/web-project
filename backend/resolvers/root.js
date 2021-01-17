@@ -157,7 +157,6 @@ const Root = {
        console.log("calendar created:", newCalendar)
   
         return true
-    }
-
+    },
 }
 export default Root

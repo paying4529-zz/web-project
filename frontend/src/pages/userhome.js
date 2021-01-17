@@ -11,16 +11,17 @@ function Userhome({myclass}){
     const username = url.split("/")[-1]
     var data = GetEnddate()
     const [enddate, setEnddate] = useState("")
+    const mycll = myclass.split(" ")
     useEffect(()=>{
       if(data){
         if(data.getEnddate){
           if(data.getEnddate.enddate!==null){ setEnddate(data.getEnddate.enddate) }
     }}},[data])
-    if(myclass.split(" ")[0]==="general"){
+    if(mycll[mycll.length-1]==="director"){
       return <Userhome_director enddate={enddate} setEnddate={setEnddate}/>           
-    }else if(myclass.split(" ")[0]==="section"){
+    }else if(mycll[mycll.length-1]==="manager"){
       return <Userhome_manager enddate={enddate} />        
-    }else if(myclass.split(" ")[0]==="group"){
+    }else if(mycll[mycll.length-1]==="member"){
       return <Userhome_member enddate={enddate} />       
     }else{
       return <></>

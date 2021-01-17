@@ -18,6 +18,21 @@ const schema = buildSchema(`
         addClass(data: addClassInput): setOutput!
     }
 
+    type Subscription {
+        sendTodoDone(manager: String!): TodoSubPayload!
+    }
+
+    enum MutationType{
+        CREATED
+        MODIFIED
+        DELETED
+    }
+      
+    type TodoSubPayload {
+        mutation: MutationType!
+        todo: TodoItem!
+    }
+
     type Todo {
         username: String!
         userclass: String!
