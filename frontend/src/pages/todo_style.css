@@ -39,10 +39,10 @@ input[type='checkbox'] {
     margin-top: 5%;
 }
 
-.group.todo-app__title{
+.member.todo-app__title{
     color: #f1bccb;
 }
-.section.todo-app__title{
+.manager.todo-app__title{
     color: #a3dd9c;
 }
 .todo-app__header {

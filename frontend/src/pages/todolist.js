@@ -6,6 +6,7 @@ import {FormControl, MenuItem, InputLabel,Select, Chip, Input } from '@material-
 import { makeStyles } from '@material-ui/core/styles';
 
 function TodoList({myclass,subclass}){
+    const clss = myclass.split(" ")
     var { url } = useRouteMatch()
     const username = url.split("/")[1]
     const [select, setSelect] = useState([])
@@ -47,7 +48,7 @@ function TodoList({myclass,subclass}){
             <div class="my_todo">
                 <SubTodoList username={username} me={username} userclass={myclass}/>
             </div>
-            {myclass!=="group member"?<div class="sub_todo">
+            {clss[clss.length-1]!=="member"?<div class="sub_todo">
                 <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel id="subuser">Select member to see their Todos</InputLabel>
                     <Select id="subuser" value={select} onChange={handleChange} label="Select member" multiple
