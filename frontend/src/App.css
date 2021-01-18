@@ -154,3 +154,21 @@
   margin: 8px;
   text-decoration: line-through;
 }
+.cell{
+  padding:5px 2px;
+}
+.time{
+  float: center;
+  color:#dabc12;
+  font-weight: 500;
+}
+.noon{
+  border-top: 2px;
+  border-bottom: 2px;
+  background-color: #615e4a;
+  color: white
+}
+.group{
+  background-color: #5c5121;
+  color:white
+}

@@ -30,8 +30,10 @@ const saveTodo = (todoitem, res) => {
     const name = todoitem.username
     Todo.countDocuments({username: name}, (err, count) => {
         if (count){ 
-            Todo.deleteOne({ username: name },()=>{}) 
-            console.log("delete todo")
+            Todo.deleteOne({ username: name },(err,res)=>{
+                if(err){ console.log(err) }
+                console.log("delete ",res.deletedCount," todo")
+            })
         }
         const todo = new Todo(todoitem);
         todo.save((err) => {

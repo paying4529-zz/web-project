@@ -14,6 +14,6 @@ function FlowChart(){
         }
       }
     },[data])
-    return <div style={{padding:"50px"}}><Sheet groups={groups}/></div>
+    return <div style={{padding:"50px"}}>{groups.length==0?<></>:<Sheet groups={groups}/>}</div>
 }
 export default FlowChart;
