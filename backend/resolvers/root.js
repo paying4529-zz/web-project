@@ -158,5 +158,27 @@ const Root = {
   
         return true
     },
+
+    addTodo: async(args, {Todo}, info) => {
+        const {username, userclass, todolist} = args.data
+        console.log("root/addTodo", username, userclass, todolist)
+        const oldTodo = await Todo.find({username: username})
+        if (oldTodo.length > 0)
+        {
+            const del = await Todo.deleteOne({username: username})
+        }
+        const newTodo = await Todo.create({username: username, userclass: userclass, todolist: todolist})
+
+        // return todolist
+        return true
+    },
+    
+    //subscription
+    subTodo: {
+        subscribe: ({userclass}, {Pubsub}, info) => {
+            return Pubsub.asyncIterator(`todo-${userclass}`)
+        }
+    }
+
 }
 export default Root

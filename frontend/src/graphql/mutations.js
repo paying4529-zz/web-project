@@ -56,4 +56,20 @@ const ADD_CALENDAR_MUTATION = gql`
         })
     }
 `
-export  {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CLASS_MUTATION,  ADD_CALENDAR_MUTATION}
+
+
+const ADD_TODO_MUTATION = gql`
+    mutation mutate(
+        $username: String!
+        $userclass: String!
+        $todolist: [todoItemInput]
+    ) {
+        addTodo(data: {
+            username: $username
+            userclass: $userclass
+            todolist: $todolist
+        })
+    }
+`
+export  {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CLASS_MUTATION,  
+        ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION}

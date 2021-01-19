@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import List from "./List"
 import Input from "./Input"
-import { saveTodo, GetTodo } from '../../axios'
+import {MutateTodo, GetTodo } from '../../axios'
 
 function Section({username, userclass, setTotal,statenow,me}){
     const [start, setStart] = useState(1)
@@ -9,11 +9,12 @@ function Section({username, userclass, setTotal,statenow,me}){
     const [items, setItems] = useState([])
     const [clearid, setClearId] = useState(null)
     const {data, setToGet, setUsername} = GetTodo()
+    const {saveTodo} = MutateTodo()
     
    const setValueAndSave = async (deadline,todo) => {
         console.log(todo,deadline)
         var newItems = items.slice();
-        newItems = newItems.concat({fromName: me, deadline: deadline, value: todo, isComplete: false, order: id, __typename: 'TodoItem'});
+        newItems = newItems.concat({fromName: me, deadline: deadline, value: todo, isComplete: false, order: id});
         setItems(newItems)
         setId(id+1)
         console.log(userclass)

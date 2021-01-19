@@ -16,10 +16,12 @@ const schema = buildSchema(`
         setEnddate(data: setEnddateInput): setOutput!
         addCalendar(data: addCalendarInput): Boolean!
         addClass(data: addClassInput): setOutput!
+        addTodo(data: addTodoInput): Boolean!
     }
 
     type Subscription {
         sendTodoDone(manager: String!): TodoSubPayload!
+        subTodo(userclass: String!): TodoSubPayload
     }
 
     enum MutationType{
@@ -40,6 +42,15 @@ const schema = buildSchema(`
     }
 
     type TodoItem {
+        fromName: String!
+        deadline: String
+        value: String!
+        isComplete: Boolean!
+        order: Int!
+    }
+
+
+    input todoItemInput {
         fromName: String!
         deadline: String
         value: String!
@@ -99,6 +110,12 @@ const schema = buildSchema(`
         year: Int
         month: Int
         todoList: [[String]]
+    }
+
+    input addTodoInput {
+        username: String!
+        userclass: String!
+        todolist: [todoItemInput]
     }
     
     type setOutput {
