@@ -82,7 +82,7 @@ function Login(){
                 setpwd("")
               }}
             disabled={!password}>Login</Button></div>
-          {clicked? <div>{loginSuccess? "login success": "wrong username or password"}</div>:<></>}
+          {/* {clicked? <div>{loginSuccess? "login success": "wrong username or password"}</div>:<></>} */}
         </div>)}
     </Router>
   )

@@ -1,17 +1,17 @@
-// import express from 'express'
 import bodyParser from "body-parser"
 import cors from 'cors'
-import usersRouter from './routes/users.js'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv-defaults'
 
 import User from './models/user.js'
 import express from 'express'
-import pkg_yoga from 'graphql-yoga'
-const {PubSub} = pkg_yoga
+// import pkg_yoga from 'graphql-yoga'
+// const {PubSub} = pkg_yoga
 import pkg_express from 'express-graphql'
 const {graphqlHTTP} = pkg_express
 
+import path from "path"
+const __dirname = path.resolve();
 
 import Root from './resolvers/root.js'
 import schema from './schema.graphql.js'
@@ -39,14 +39,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/users', usersRouter);
-
-
 const port = process.env.PORT || 4000
 
 db.once('open', () => {
     // be careful not to listen twice
-    const pubsub = new PubSub()
+    // const pubsub = new PubSub()
     app.use('/graphql', graphqlHTTP({
         schema: schema,
         rootValue: Root,
@@ -56,10 +53,14 @@ db.once('open', () => {
             Date: Date,
             Calendar: Calendar,
             Class: Class,
-            Pubsub: pubsub
+            // Pubsub: pubsub
         },
         graphiql: true,
     }));
+    app.use(express.static("public"));
+    app.get('*', function (req, res) {
+        res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+    });
     app.listen(port, () =>
         console.log(`Example app listening on port ${port}!`)
     )
