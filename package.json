@@ -15,7 +15,7 @@
   },
   "type": "module",
   "scripts": {
-    "server": "nodemon server.js"
+    "server": "node server.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",
