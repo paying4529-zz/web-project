@@ -16,6 +16,26 @@ const CREATE_USER_MUTATION = gql`
     }
 `
 
+const CREATE_JOB_MUTATION = gql`
+    mutation mutate (
+        $time: String
+        $member: String
+        $group: String
+        $job: String
+        $place: String
+        $note: String
+    ){
+        addJob(data: {
+            time: $time
+            member: $member
+            group: $group
+            job: $job
+            place: $place
+            note: $note
+        })
+    }
+`
+
 const SET_ENDDATE_MUTATION = gql`
     mutation mutate (
         $enddate: String!
@@ -74,4 +94,4 @@ const ADD_TODO_MUTATION = gql`
     }
 `
 export  {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CLASS_MUTATION,  
-        ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION}
+        ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION, CREATE_JOB_MUTATION}

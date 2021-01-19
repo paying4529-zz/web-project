@@ -9,7 +9,7 @@ const schema = buildSchema(`
         getEnddate: Date
         getCalendar(data: getCalendarInput!): [[String]]
         getClasses: getClassOutput
-        getSheet: Sheet
+        getJob: [Job]
     }
 
     type Mutation {
@@ -18,7 +18,7 @@ const schema = buildSchema(`
         addCalendar(data: addCalendarInput): Boolean!
         addClass(data: addClassInput): Boolean!
         addTodo(data: addTodoInput): Boolean!
-        addSheet(data: addSheetInput): Boolean!
+        addJob(data: addJobInput): Boolean!
     }
 
     type Subscription {
@@ -52,29 +52,22 @@ const schema = buildSchema(`
         id: Int
     }
 
-    type SheetCol {
-        value: String
-        readOnly: Boolean
-        width: Int
-        colSpan: Int
-        className: String
+    type Job {
+        time: String
+        member: String
+        group: String
+        job: String
+        place: String
+        note: String
     }
 
-    type Sheet {
-        sheet: [[SheetCol]]
-    }
-
-    input sheetColInput {
-        value: String
-        readOnly: Boolean
-        width: Int
-        colSpan: Int
-        className: String
-    }
-
-    input addSheetInput {
-        sheet: [[sheetColInput]]
-        mutation: String!
+    input addJobInput {
+        time: String
+        member: String
+        group: String
+        job: String
+        place: String
+        note: String
     }
 
     input todoItemInput {

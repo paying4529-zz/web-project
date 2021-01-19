@@ -18,6 +18,12 @@ const Root = {
         console.log(result[0])
         return result[0]
     },
+    getJob: async (args, {Job}, info) => {
+        console.log("query, getJob")
+        const result = await Job.find({})
+        console.log(result[0])
+        return result[0]
+    },
     getSubusers: async ({username}, {User}, info) => {
         console.log("query, getSubuser")
         const result = await User.find({"username": username})
@@ -186,6 +192,29 @@ const Root = {
         console.log('add one')
         const newclasslist = await Class.create({classlist:classlist})
         return true
+    },
+
+    addJob: async(args, {Job}, info) => {
+        const {time, member, group, job, place, note} = args.data
+        console.log("root/addJob", member,job)
+        const data = await Job.find({$and:[{member: member},{time: time}]})
+        if (data.length > 0){
+            console.log('del one')
+            const del = await Job.deleteOne({$and:[{member: member},{time: time}]})
+        }
+        else{
+            const newJob = new Job({
+                time: time,
+                member: member,
+                group: group,
+                job: job,
+                place: place,
+                note: note,
+            })
+            const error = await newJob.save()
+            console.log('add one')
+            return true
+        }
     },
     
     // //subscription

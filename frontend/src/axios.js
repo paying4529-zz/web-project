@@ -1,10 +1,16 @@
 import { useQuery, useMutation } from '@apollo/client';
-import  {USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, CALENDAR_QUERY, CLASSES_QUERY} from './graphql/queries'
-import {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION,ADD_CLASS_MUTATION } from './graphql/mutations'
+import  {JOB_QUERY, USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, CALENDAR_QUERY, CLASSES_QUERY} from './graphql/queries'
+import {CREATE_JOB_MUTATION, CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION,ADD_CLASS_MUTATION } from './graphql/mutations'
 import { useState, useEffect } from 'react';
 
 const GetUsers = () => { 
     const {loading, error, data} = useQuery(USERS_QUERY)
+    return data
+}
+
+const GetJobs = () => { 
+    const {loading, error, data} = useQuery(JOB_QUERY)
+    console.log(data)
     return data
 }
 
@@ -50,6 +56,28 @@ const NewUser = () => {
 
     }
     return {createUser, isSuccess}
+}
+
+const NewJob = () => {
+    const [addJob, {data}] = useMutation(CREATE_JOB_MUTATION)
+    const [isSuccess, setIsSuccess] = useState(false)
+    useEffect(()=>{
+        if (data){ setIsSuccess(data.addJob.success) }
+    }, [data])
+    const createJob = (jobinfo) => {
+        console.log("axios",jobinfo)
+        const {time, member, group, job, place, note} = jobinfo
+        addJob({ variables: {
+            time: time,
+            member: member,
+            group: group,
+            job: job,
+            place: place,
+            note: note,
+        }})
+
+    }
+    return {createJob, isSuccess}
 }
 
 const SetEnddate = () => {
@@ -227,4 +255,4 @@ const GetTodoCal = () => {
     return {todolist, updateTodoCal}
 }
 
-export { GetUsers, NewUser, UserLogin, MutateTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, MutateClass, GetTodoCal};
+export { GetJobs, NewJob, GetUsers, NewUser, UserLogin, MutateTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, MutateClass, GetTodoCal};
