@@ -47,6 +47,9 @@ const schema = buildSchema(`
         value: String!
         isComplete: Boolean!
         order: Int!
+        id: Int
+
+ 
     }
 
 
@@ -56,6 +59,8 @@ const schema = buildSchema(`
         value: String!
         isComplete: Boolean!
         order: Int!
+        id: Int
+
     }
 
     type User {
@@ -116,6 +121,8 @@ const schema = buildSchema(`
         username: String!
         userclass: String!
         todolist: [todoItemInput]
+        mutation: String!
+        todoitem: todoItemInput
     }
     
     type setOutput {

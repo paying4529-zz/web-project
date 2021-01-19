@@ -107,14 +107,16 @@ const MutateTodo = () => {
 
     const [addTodo] = useMutation(ADD_TODO_MUTATION)
     
-    const saveTodo = (todoitem) => {
-        const {username, userclass, todolist} = todoitem
-        console.log("axios/saveTodo, todoitem", todoitem)
+    const saveTodo = (addtodoinput) => {
+        const {username, userclass, todolist, mutation, todoitem} = addtodoinput
+        console.log("axios/saveTodo, todoitem", addtodoinput)
         addTodo({
             variables: {
                 username: username,
                 userclass: userclass,
-                todolist: todolist
+                todolist: todolist,
+                mutation: mutation,
+                todoitem: todoitem
             }
         })
     }

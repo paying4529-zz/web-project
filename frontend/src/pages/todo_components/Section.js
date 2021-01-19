@@ -2,24 +2,30 @@ import React, { useEffect, useState } from "react";
 import List from "./List"
 import Input from "./Input"
 import {MutateTodo, GetTodo } from '../../axios'
+import uuid from 'uuid/v4';
 
 function Section({username, userclass, setTotal,statenow,me}){
     const [start, setStart] = useState(1)
-    const [id, setId] = useState(0)
+    const [order, setOrder] = useState(0)
     const [items, setItems] = useState([])
     const [clearid, setClearId] = useState(null)
     const {data, setToGet, setUsername} = GetTodo()
     const {saveTodo} = MutateTodo()
-    
+
    const setValueAndSave = async (deadline,todo) => {
         console.log(todo,deadline)
         var newItems = items.slice();
-        newItems = newItems.concat({fromName: me, deadline: deadline, value: todo, isComplete: false, order: id});
+        const newItem = {fromName: me, deadline: deadline, value: todo, isComplete: false, order: order};
+        
+        newItems.forEach((e) => {delete e.__typename})
+        newItems = newItems.concat(newItem);
+
         setItems(newItems)
-        setId(id+1)
+        setOrder(order+1)
         console.log(userclass)
-        const todoitem = { username: username, todolist: newItems, userclass: userclass }
-        let msg = await saveTodo(todoitem)
+        const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "CREATED", todoitem: newItem}
+        console.log("Section, addtodoinput:", addtodoinput)
+        let msg = await saveTodo(addtodoinput)
         setToGet(true)
     }
 
@@ -30,12 +36,14 @@ function Section({username, userclass, setTotal,statenow,me}){
             for(var i=0;i<clearid+1;i++){
                 if(newItems[i].order===clearid){ index=i; break; }
             }
+            const delItem = newItems[index];
+            delete delItem.__typename;
             newItems.splice(index,1);
             setTotal(newItems.filter(e => !e.isComplete).length);
             setItems(newItems)
             setClearId(null)
-            const todoitem = { username: username, todolist: newItems, userclass: userclass }
-            let msg = saveTodo(todoitem)
+            const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "DELETED", todoitem: delItem}
+            let msg = saveTodo(addtodoinput)
             setToGet(true)
         }
     },[clearid])
@@ -48,7 +56,7 @@ function Section({username, userclass, setTotal,statenow,me}){
                     const itemlist = userTodo.todolist
                     if(itemlist.length>0){
                         const lastid = itemlist[itemlist.length-1].order
-                        setId(lastid+1)
+                        setOrder(lastid+1)
                         setItems(itemlist)
                     }                       
                 }

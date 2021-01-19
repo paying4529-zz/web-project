@@ -160,13 +160,15 @@ const Root = {
     },
 
     addTodo: async(args, {Todo}, info) => {
-        const {username, userclass, todolist} = args.data
+        const {username, userclass, todolist, mutation, todoitem} = args.data
         console.log("root/addTodo", username, userclass, todolist)
         const oldTodo = await Todo.find({username: username})
         if (oldTodo.length > 0)
         {
+            console.log('del one')
             const del = await Todo.deleteOne({username: username})
         }
+        console.log('add one')
         const newTodo = await Todo.create({username: username, userclass: userclass, todolist: todolist})
 
         // return todolist
