@@ -14,9 +14,12 @@ const GetClasses = () => {
     useEffect(() => {   
         if(toget){
             refetch()
-            setToGet(false)
+            if(!data){
+                refetch()
+                setToGet(false)
+            }
         }
-    }, [toget])
+    }, [toget,data])
     return {data,setToGet}
 }
 

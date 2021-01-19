@@ -155,20 +155,21 @@
   text-decoration: line-through;
 }
 .cell{
-  padding:5px 2px;
+  padding:8px !important;;
 }
 .time{
   float: center;
-  color:#dabc12;
-  font-weight: 500;
+  color:#ebd248;
+  font-weight: 500 !important;
+  background-color: #23292e !important;
 }
-.noon{
+.noon.cell {
   border-top: 2px;
   border-bottom: 2px;
-  background-color: #615e4a;
+  background-color: #ce286d !important;
   color: white
 }
 .group{
-  background-color: #5c5121;
-  color:white
+  background-color: #daba05 !important;
+  color:white !important;
 }

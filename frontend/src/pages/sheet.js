@@ -19,16 +19,16 @@ function Sheet({groups}){
         readOnly: readOnly,
         width: width,
         colSpan: colSpan,
-        className: "cell "+className
+        className: className
     })
     const createfirstRow = (group) => {
-        const col1 = [createColumn("",width,true)]
+        const col1 = [createColumn("",width,true,"time")]
         const col2 = []
         for (var i=0;i<group.length;i++){
             col2.push(createColumn(group[i],width*2,true,"group",2))
         }
         const row1 = col1.concat(col2)
-        const col3 = [createColumn("time slot",width,true)]
+        const col3 = [createColumn("time slot",width,true,"time")]
         const col4 = []
         for (var i=0;i<group.length;i++){
             col4.push(createColumn("job",width,true))
@@ -58,10 +58,10 @@ function Sheet({groups}){
                 row2.push(r)
             }
             setGrid(row1.concat(row2))
+            console.log(row1.concat(row2))
             setStart(false)
         }
     },[start,groups])
-        
     return (
         <ReactDataSheet
           data={grid}
