@@ -30,15 +30,11 @@ const SET_ENDDATE_MUTATION = gql`
 
 const ADD_CLASS_MUTATION = gql`
     mutation mutate (
-        $group: String!
-        $classname: String!
+        $classlist: [[String]]
     ){
         addClass(data: {
-            group: $group
-            classname: $classname
-        }) {
-            success
-        }
+            classlist: $classlist
+        })
     }
 `
 const ADD_CALENDAR_MUTATION = gql`

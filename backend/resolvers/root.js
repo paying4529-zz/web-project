@@ -165,22 +165,35 @@ const Root = {
         const oldTodo = await Todo.find({username: username})
         if (oldTodo.length > 0)
         {
-            console.log('del one')
+            // console.log('del one')
             const del = await Todo.deleteOne({username: username})
         }
-        console.log('add one')
+        // console.log('add one')
         const newTodo = await Todo.create({username: username, userclass: userclass, todolist: todolist})
 
-        // return todolist
+        return true
+    },
+
+    addClass: async(args, {Class}, info) => {
+        const {classlist, mutation} = args.data
+        console.log("root/addClass", classlist)
+        const oldClass = await Class.find({})
+        if (oldClass.length > 0)
+        {
+            console.log('del one')
+            const del = await Class.deleteOne({})
+        }
+        console.log('add one')
+        const newclasslist = await Class.create({classlist:classlist})
         return true
     },
     
-    //subscription
-    subTodo: {
-        subscribe: ({userclass}, {Pubsub}, info) => {
-            return Pubsub.asyncIterator(`todo-${userclass}`)
-        }
-    }
+    // //subscription
+    // subTodo: {
+    //     subscribe: ({userclass}, {Pubsub}, info) => {
+    //         return Pubsub.asyncIterator(`todo-${userclass}`)
+    //     }
+    // }
 
 }
 export default Root

@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { useQuery, useMutation } from '@apollo/client';
 import  {USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, CALENDAR_QUERY, CLASSES_QUERY} from './graphql/queries'
-import {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION } from './graphql/mutations'
+import {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION,ADD_CLASS_MUTATION } from './graphql/mutations'
 import { useState, useEffect } from 'react';
 
 const instance = axios.create({ baseURL: 'http://localhost:4000' });
@@ -104,9 +104,7 @@ const UserLogin = () => {
 }
 
 const MutateTodo = () => {
-
     const [addTodo] = useMutation(ADD_TODO_MUTATION)
-    
     const saveTodo = (addtodoinput) => {
         const {username, userclass, todolist, mutation, todoitem} = addtodoinput
         console.log("axios/saveTodo, todoitem", addtodoinput)
@@ -124,11 +122,19 @@ const MutateTodo = () => {
     return {saveTodo}
 }
 
-const saveClass = async(classlist) => {
-    console.log("save class")
-    console.log(classlist)
-    const { data } = await instance.post('/users/saveClass', classlist)
-    return data.msg
+const MutateClass = () => {
+    const [addClass] = useMutation(ADD_CLASS_MUTATION)
+    const saveClass = (addclassinput) => {
+        const {classlist, mutation} = addclassinput
+        console.log("axios/saveclass, classlist", addclassinput)
+        addClass({
+            variables: {
+                classlist: classlist,
+                mutation: mutation,
+            }
+        })
+    }
+    return {saveClass}
 }
 
 const GetTodo = () => { 
@@ -223,4 +229,4 @@ const GetTodoCal = () => {
     return {todolist, updateTodoCal}
 }
 
-export { GetUsers, NewUser, UserLogin, MutateTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, saveClass, GetTodoCal};
+export { GetUsers, NewUser, UserLogin, MutateTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, MutateClass, GetTodoCal};

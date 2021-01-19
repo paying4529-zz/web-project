@@ -15,7 +15,7 @@ const schema = buildSchema(`
         addUser(data: addUserInput): addUserOutput!
         setEnddate(data: setEnddateInput): setOutput!
         addCalendar(data: addCalendarInput): Boolean!
-        addClass(data: addClassInput): setOutput!
+        addClass(data: addClassInput): Boolean!
         addTodo(data: addTodoInput): Boolean!
     }
 
@@ -79,6 +79,11 @@ const schema = buildSchema(`
         value: String
     }
 
+    input ClassInput {
+        label: String,
+        value: String
+    }
+
     type addUserOutput {
         user: User,
         success: Boolean!
@@ -100,9 +105,10 @@ const schema = buildSchema(`
     }
 
     input addClassInput {
-        group: String
-        classname: String
+        classlist: [ClassInput]
+        mutation: String!
     }
+
 
     input getCalendarInput {
         username: String

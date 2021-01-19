@@ -6,7 +6,7 @@ import DatePicker from 'react-date-picker';
 import { Paper, Card, CardContent, Button } from '@material-ui/core';
 import CreateSelect from "./createselect";
 import { makeStyles } from '@material-ui/core/styles';
-import { SetEnddate, GetClasses, saveClass } from '../axios'
+import { SetEnddate, GetClasses, MutateClass } from '../axios'
 
 const useStyles = makeStyles({
   root: {
@@ -26,6 +26,7 @@ function Userhome_director({enddate,setEnddate}){
     const [groupOptions,setoptions] = useState([])   
     const {newEnddate, isSuccess} = SetEnddate()
     const {data,setToGet} = GetClasses()
+    const {saveClass} = MutateClass()
     useEffect(()=>{
       if(data){
         console.log("get classes")
@@ -46,7 +47,10 @@ function Userhome_director({enddate,setEnddate}){
       }
     },[enddate2])
     const ssave = async () => {
-      let msg = await saveClass(groupOptions)
+      var newItems = groupOptions.slice();
+      newItems.forEach((e) => {delete e.__typename})
+      const addclassinput = {classlist:newItems, mutation: "MODIFIED"}
+      let msg = await saveClass(addclassinput)
       setToGet(true)
     }
     const ddelete = async (value)=>{
