@@ -30,10 +30,12 @@ const SET_ENDDATE_MUTATION = gql`
 
 const ADD_CLASS_MUTATION = gql`
     mutation mutate (
-        $classlist: [[String]]
+        $mutation: String!
+        $classlist: [ClassInput]
     ){
         addClass(data: {
             classlist: $classlist
+            mutation: $mutation
         })
     }
 `
