@@ -13,7 +13,7 @@ body > h1{
 @media screen and (min-width: 400px){
     #cal-month, #cal-year {
         display: block;
-        width: 10%;
+        width: 150px;
         float: right;
         margin: 10px;
         margin-top: 0;
@@ -24,14 +24,14 @@ body > h1{
     #cal-button{
         width: 30%;
     }
-    #cal-input, #cal-button{
+    #cal-input, #cal-button, #cal-import{
         height: 7vh;
         display: inline-block;
         border: 1px solid var(--main);
         border-radius: 10px;
         padding: 1vh;
-        margin: 20px 10px 40px 30px;
-        /* vertical-align: top; */
+        margin: 20px 10px 15px 30px;
+        vertical-align: top;
         color: var(--main);
         background: none;
         overflow: hidden;
@@ -41,6 +41,13 @@ body > h1{
         display: block;
         float: left;
         margin-top: 0;
+        margin-left: 35px;
+        height: 7vh;
+        padding: 1vh;
+        width: 30%;
+    }
+    .Theme-black {
+        padding: 10px 40px;
     }
 }
 
@@ -50,52 +57,53 @@ body > h1{
         width: 150px;
         float: right;
         margin: 10px;
-        margin-top: 0;
+        margin-top: 10px;
     }
     #cal-input{ 
+        float:center;
         width: 90%;
         padding: 3vh;
         height: 7vh;
         margin: 5px;
+        font-size: medium;
     }
     #cal-button{
+        float: left;
+        display: flex;
         width: 30%;
         padding: 1vh;
+        padding-top: 10px;
         height: 9vh;
-        margin: 5px;
-        margin-top: 10px;
+        margin: 5px 0 0 10px;
     }
-    #cal-input, #cal-button{
-        display: flex;
+    #cal-input, #cal-button, #cal-import{
         border: 1px solid var(--main);
         border-radius: 10px;
         vertical-align: top;
         color: var(--main);
         background: none;
         overflow: hidden;
-        font-size: medium;
+        
     }
     #cal-import {
+        height: 7vh;
+        padding: 1vh;
+        padding-top: 10px;
         display: flex;
         float: left;
-        margin: 0;
+        margin: 8px 0 20px 10px;
+        width: 30%;
+    }
+    .Theme-black {
+        padding: 20px;
+    }
+    #Cal-main{
+        font-size: 10px;
     }
 }
 
-
-
-
-
-#cal-input:focus, #cal-button:focus{
-    border-color: #e7e97e;
-    outline-color: #e7e97e;
-}
-
-
-#cal-button:hover{
-    background: var(--hover);
-}
 #Cal-main {
+    float: center;
     position: relative;
     width: 100%;
     border: 1px solid var(--main);
@@ -104,6 +112,16 @@ body > h1{
     color: var(--main);
     font-family: 'Signika', sans-serif;
 }
+#cal-input:focus, #cal-button:focus, #cal-import:focus{
+    border-color: #e7e97e;
+    outline-color: #e7e97e;
+}
+
+
+#cal-button:hover, #cal-import:hover{
+    background: var(--hover);
+}
+
 .Cal-title-row > * {
     height: 5vh;
     text-align: center;
@@ -180,7 +198,6 @@ body > h1{
 }
 /*****************Themes*****************/
 .Theme-black {
-    padding: 20px;
     --main: rgb(255, 255, 255);
     --box: rgba(255, 255, 255, 0.486);
     --text: rgb(215,96,93);

@@ -5,8 +5,6 @@ import Select from "react-select";
 import { useState, useEffect } from 'react';
 import { GetCalendar, GetTodoCal } from '../axios';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import x from './img/x.png'
 
 
@@ -114,8 +112,6 @@ function Calander(){
         }
         calendar.push(<tr class="Cal-content-row">{week}</tr>)
     }
-    // ***** button ***** //
-    const useStyles = makeStyles((theme) => ({ button: {  margin: theme.spacing(1), }, }));
 
     return(<div class="Theme-black">
                 <h1>{username}'s Calendar</h1>
@@ -133,19 +129,15 @@ function Calander(){
                                                 setChosenDate([-1, -1]);
                                                 addToCalendar({username: username, year: year, month: month, todolist: tmp})
                                     }}}>Add to Calendar</button>
+                    
                     <Select id="cal-year" options={yearoptions} placeholder={2021} 
                             onChange={(e)=>{setYear(e.value)
                                             setChosenDate([-1, -1])}}/>
                     <Select id="cal-month" options={monthoptions} placeholder={"January"}
                             onChange={(e)=>{setMonth(e.value)
                                             setChosenDate([-1, -1])}}/>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        className={useStyles().button}
-                        id="cal-import"
-                        onClick={() => {setShowTodo(!showTodo)}}>
-                        {showTodo ? 'Hide Todo':'Import Todo'}</Button>
+                    <button id="cal-import" onClick={() => {setShowTodo(!showTodo)}}
+                            >{showTodo ? 'Hide Todo':'Import Todo'}</button>
                 </div>
                 <div>
                     <table id='Cal-main'>
