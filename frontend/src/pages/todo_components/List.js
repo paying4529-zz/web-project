@@ -2,8 +2,6 @@ import React from "react";
 import {Table, TableContainer, TableCell, TableHead, TableRow, TableBody, Paper, Checkbox, IconButton, Tooltip } from '@material-ui/core'
 import x from "../img/delete.png"
 
-
-
 function List({items,statenow,setClearId,my}){
     const checkState = (items,state) => {
         if(state===0){
@@ -28,14 +26,14 @@ function List({items,statenow,setClearId,my}){
             <Table className={my?"todo-app__list my":"todo-app__list"}>
             <TableHead>
                 <TableRow>
-                    <TableCell style={{ width: "11%",overflowX:"hidden" }} >Done</TableCell>
+                    {my?<TableCell style={{ width: "11%",overflowX:"hidden" }} >Done</TableCell>:<></>}
                     {columns.map(c=>{return <TableCell style={{ width: c.width,overflowX:"hidden" }}>{c.headerName}</TableCell>})}
                 </TableRow>
             </TableHead>
             <TableBody>
                 {checkState(items,statenow).map(item => { 
                     return <TableRow>
-                        <Tooltip title="Delete" onClick={() => setClearId(item.order)}><IconButton aria-label="delete"><img className={"todo-app__item-x"} src={x} /></IconButton></Tooltip>
+                        {my?<Tooltip title="Delete" onClick={() => setClearId(item.order)}><IconButton aria-label="delete"><img className={"todo-app__item-x"} src={x} /></IconButton></Tooltip>:<></>}
                         {columns.map(c=>{
                         const field = c.field
                         return <TableCell style={{ width: c.width, textAlign: "center" }}>{item[field]}</TableCell>})}</TableRow>})}

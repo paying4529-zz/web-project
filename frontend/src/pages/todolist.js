@@ -5,8 +5,6 @@ import { useRouteMatch} from "react-router-dom";
 import {FormControl, MenuItem, InputLabel,Select, Chip, Input, Button, Snackbar, IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
-import { display } from '@material-ui/system';
-
 import { SubMsg } from '../axios.js'
 
 function TodoList({myclass,subclass}){
