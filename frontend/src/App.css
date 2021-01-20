@@ -155,7 +155,7 @@
   text-decoration: line-through;
 }
 .cell{
-  padding:8px !important;;
+  padding:10px 8px !important;;
 }
 .time{
   float: center;
