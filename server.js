@@ -27,7 +27,7 @@ mongoose.connect(process.env.MONGO_URL, dbOptions)
 const db = mongoose.connection;
 
 const app = express();
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(cors());
 
 const port = process.env.PORT || 4000
@@ -35,12 +35,12 @@ const port = process.env.PORT || 4000
 db.once('open', () => {
     // be careful not to listen twice
     
-    /* 這幾行會讓playground開不起來
+
     app.use(express.static("public")); // *****
     app.get('*', function (req, res) {
         res.sendFile(path.resolve(__dirname, 'public', 'index.html')); // *****
     });
-    */
+
    
     SERVER.applyMiddleware({
         app: app
