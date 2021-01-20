@@ -5,26 +5,40 @@
 input[type='checkbox'] {
     visibility: hidden;
 }
-
+@media screen and (min-width: 650px){
+    .my_todo{
+        height: 100%;
+        width: 55%;
+        z-index: 1;
+        overflow-x: hidden;
+        float: left;
+        position: relative;
+        margin: 0;
+        padding-left: 5%;
+    }
+    .sub_todo{
+        height: 100%;
+        width: 45%;
+        z-index: 1;
+        overflow-x: hidden;
+        float: right;
+        position: relative;
+        padding-top: 30px;
+    }
+}
 .my_todo{
-    height: 100%;
-    width: 55%;
     z-index: 1;
     overflow-x: hidden;
-    float: left;
     position: relative;
     margin: 0;
     padding-left: 5%;
 }
-
 .sub_todo{
-    height: 100%;
-    width: 45%;
     z-index: 1;
     overflow-x: hidden;
-    float: right;
     position: relative;
     padding-top: 30px;
+    padding-bottom: 50px;
 }
 
 .todo-app__root {

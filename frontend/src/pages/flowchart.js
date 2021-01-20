@@ -69,11 +69,11 @@ function FlowChart({myclass, username}){
       let msg = await createJob(addjobinput)
       setToGet(true)
     }
-    return <div style={{padding:"50px"}} className={myclass.includes("member")?"disable":""}>
+    return <div style={{padding:"6%"}} className={myclass.includes("member")?"disable":""}>
       {!myclass.includes("member")?<h2 className="title" style={{marginBottom:"40px"}}>Double click to edit the flowchart...</h2>:<></>}
       {uniqueclass.length==0?<></>:<Sheet grid={grid} setGrid={setGrid} groups={uniqueclass} selectrow={selectrow} setRow={setRow} mission={mission} setMission={setMission}/>}
-      {!myclass.includes("member")?(<><Button variant="contained" color="primary" style={{margin:"10px"}} onClick={()=>setMission(1)}>add member row</Button>
-      <Button variant="contained" color="primary" style={{margin:"10px"}} onClick={save}>save sheet</Button></>):(<></>)}
+      {!myclass.includes("member")?(<><Button variant="contained" color="primary" style={{margin:"10px",marginTop:"30px"}} onClick={()=>setMission(1)}>add member row</Button>
+      <Button variant="contained" color="primary" style={{margin:"10px",marginTop:"30px"}} onClick={save}>save sheet</Button></>):(<></>)}
        {/* {uniqueclass.map(g=>{return<Button variant="contained" color="primary" style={{margin:"10px"}} >{g}</Button>})} */}
       </div>
 }

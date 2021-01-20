@@ -1,31 +1,56 @@
 .App {
   text-align: center;
 }
-.nav_bar{
-  height: 100%;
-  width: 10%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-  padding-left: 10px;
-  left: 0;
+
+@media screen and (min-width: 650px){
+  .nav_bar{
+    height: 100%;
+    width: 10%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    padding-left: 10px;
+    left: 0;
+  }
+  .main_screen{
+    height: 100%;
+    width: 90%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    right: 0;
+  }
+  .usercaption{
+    bottom: 0;
+    left: 0;
+    padding: 15px;
+    z-index: 100;
+    display:table;
+    position: fixed;
+    width: fit-content;
+  }
+  .column1{
+    width: 50%;
+    height: 100%;
+    float:left;
+  }
+  .column2{
+    padding: 40px;
+    width: 50%;
+    height: 100%;
+    float:right;
+  }
 }
+
 .user{
   top: 130px;
   padding-top: 10px;
 }
 
-.main_screen{
-  height: 100%;
-  width: 90%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  right: 0;
-}
+
 .Register_page{
   height: 100%;
   padding-top: 5px;
@@ -62,16 +87,6 @@
   padding: 20px;
 }
 
-.usercaption{
-  bottom: 0;
-  left: 0;
-  padding: 15px;
-  z-index: 100;
-  display:table;
-  position: fixed;
-  width: fit-content;
-}
-
 .title{
   margin-top: 0px;
   margin-bottom: 5px;
@@ -84,8 +99,6 @@
   margin-bottom: 0;
   padding: 30px 10px;
   display: block;
-  /* float: left; */
-  
 }
 
 .Countdown-col{
@@ -116,17 +129,7 @@
   clear: left;
   padding-left:40px;
 }
-.column1{
-  width: 50%;
-  height: 100%;
-  float:left;
-}
-.column2{
-  padding: 40px;
-  width: 50%;
-  height: 100%;
-  float:right;
-}
+
 .addgroup{
   width: 500px;
   align-content: center;
