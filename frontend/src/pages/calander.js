@@ -42,9 +42,6 @@ function Calander(){
     const {data, setRefetch, addToCalendar} = GetCalendar(); // data: a list that contains #dayInAMonth sublists
     const {todolist, updateTodoCal} = GetTodoCal();
     
-    // useEffect(() => {
-    //    console.log("todo:", todolist)
-    // }, [todolist])
     useEffect(async () => {
         setStartDay(new Date(year, month - 1, 1).getDay());
         setMonthLong(new Date(year, month, 0).getDate());
@@ -62,10 +59,6 @@ function Calander(){
             return tmp;
         })
     }, [chosenDate])
-
-    // useEffect(() => {
-    //     console.log("data:", data)
-    // }, [JSON.stringify(data)])
 
     let calendar = [];
     var date = 1;
@@ -128,7 +121,6 @@ function Calander(){
                 <h1>{username}'s Calendar</h1>
                 <div>
                     <input type="text" placeholder="Type something..." id="cal-input" onChange={(e) => {setInputTodo(e.target.value)}}></input>
-                    <input type="color" id="cal-color"></input>
                     <button id="cal-button" 
                             onClick={() => { if (inputTodo !== "" && chosenDate[1] !== -1){
                                                 let tmp = data.getCalendar;

@@ -8,7 +8,7 @@ import CreateSelect from "./createselect";
 import { SetEnddate, GetClasses, MutateClass } from '../axios'
 
 
-function Userhome_director({enddate,setEnddate}){
+function Userhome_director({setToGetdate,enddate,setEnddate}){
     var { url } = useRouteMatch()
     const username = url.split("/")[-1]
     const [showcountdown, setShow] = useState(false)
@@ -18,15 +18,10 @@ function Userhome_director({enddate,setEnddate}){
     const {data,setToGet} = GetClasses()
     const {saveClass} = MutateClass()
     useEffect(()=>{
-      if(data){
-        console.log("get classes")
-        console.log(data)
-        if(data.getClasses){
+      if(data){if(data.getClasses){
           const classoption = data.getClasses.classlist
           if(classoption){setoptions(classoption)}
-        }
-      }
-    },[data])
+    }}},[data])
     useEffect(()=>{
       if(enddate){setShow(true)}
     },[enddate])
@@ -34,8 +29,8 @@ function Userhome_director({enddate,setEnddate}){
       if(enddate2){
         setEnddate(String(enddate2))
         newEnddate(String(enddate2))
-      }
-    },[enddate2])
+        setToGetdate(true)
+    }},[enddate2])
     const ssave = async () => {
       var newItems = groupOptions.slice();
       newItems.forEach((e) => {delete e.__typename})
@@ -81,9 +76,6 @@ function Userhome_director({enddate,setEnddate}){
                 onClick={ssave}
                 disabled={!groupOptions}>Save</Button></div>
         </div>
-        
-        
-        
       </div>
     )
   }

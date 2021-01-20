@@ -9,7 +9,7 @@ import { GetEnddate } from '../axios'
 function Userhome({myclass}){
     var { url } = useRouteMatch()
     const username = url.split("/")[-1]
-    var data = GetEnddate()
+    var {data,setToGet} = GetEnddate()
     const [enddate, setEnddate] = useState("")
     const mycll = myclass.split(" ")
     useEffect(()=>{
@@ -18,7 +18,7 @@ function Userhome({myclass}){
           if(data.getEnddate.enddate!==null){ setEnddate(data.getEnddate.enddate) }
     }}},[data])
     if(mycll[mycll.length-1]==="director"){
-      return <Userhome_director enddate={enddate} setEnddate={setEnddate}/>           
+      return <Userhome_director enddate={enddate} setToGetdate={setToGet} setEnddate={setEnddate}/>           
     }else if(mycll[mycll.length-1]==="manager"){
       return <Userhome_manager enddate={enddate} />        
     }else if(mycll[mycll.length-1]==="member"){

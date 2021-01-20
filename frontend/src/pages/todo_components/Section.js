@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import List from "./List"
 import Input from "./Input"
 import {MutateTodo, GetTodo } from '../../axios'
-import uuid from 'uuid/v4';
 
 function Section({username, userclass, setTotal,statenow,me}){
     const [start, setStart] = useState(1)
@@ -31,18 +30,20 @@ function Section({username, userclass, setTotal,statenow,me}){
 
     useEffect(()=>{
         if(clearid!=null){
-            const newItems = items.slice();
+            var newItems = items.slice();
             var index;
             for(var i=0;i<clearid+1;i++){
                 if(newItems[i].order===clearid){ index=i; break; }
             }
-            const delItem = newItems[index];
-            delete delItem.__typename;
             newItems.splice(index,1);
             setTotal(newItems.filter(e => !e.isComplete).length);
             setItems(newItems)
             setClearId(null)
-            const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "DELETED", todoitem: delItem}
+            newItems = newItems.map(ii=>{
+                delete ii.__typename;
+                return ii
+            })
+            const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "DELETED", todoitem: newItems[index]}
             let msg = saveTodo(addtodoinput)
             setToGet(true)
         }

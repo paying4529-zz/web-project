@@ -32,17 +32,27 @@ const GetClasses = () => {
             refetch()
             if(!data){
                 refetch()
-                setToGet(false)
             }
+            setToGet(false)   
         }
     }, [toget,data])
     return {data,setToGet}
 }
 
 const GetEnddate = () => { 
-    const {loading, error, data} = useQuery(ENDDATE_QUERY)
+    const {loading, error, data, refetch} = useQuery(ENDDATE_QUERY)
     // console.log("get enddate")
-    return data
+    const [toget, setToGet] = useState(false)
+    useEffect(() => {   
+        if(toget){
+            refetch()
+            if(!data){
+                refetch()
+                setToGet(false)
+            }
+        }
+    }, [toget,data])
+    return {data,setToGet}
 }
 
 const GetSubClass = (username) => { 
@@ -87,13 +97,13 @@ const SetEnddate = () => {
     const [isSuccess, setIsSuccess] = useState(false)
     useEffect(()=>{
         if (data){ 
-            // console.log(data)
+            console.log(data)
             setIsSuccess(data.setEnddate.success) 
         }
     }, [data])
     const newEnddate = async (date) => {
         if(date){
-            // console.log(date)
+            console.log(date)
             const x = await setEnddate({ variables: {
                 enddate: date,
             }})
