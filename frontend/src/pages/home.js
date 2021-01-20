@@ -11,7 +11,6 @@ function Home(){
     return (
       <div className="Home_page">
         <h2>Home</h2>
-        <h1>try</h1>
         <div class="button">
         <Button variant="contained"
           onClick={()=>{setClick(true)}}>

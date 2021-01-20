@@ -30,7 +30,7 @@ function FlowChart({myclass, username}){
                 }})}
                 else{
                   g = g.map(gg=>{
-                    if(gg.className.includes("mmee")){ gg.className=gg.className.replace("mmee","") }
+                    if(gg.className.includes("mmee")){ gg.className=gg.className.replaceAll("mmee","") }
                     return gg
                 })}
               }else if(g.length==4){
@@ -40,7 +40,7 @@ function FlowChart({myclass, username}){
                 })}
                 else{
                   g = g.map(gg=>{
-                    if(gg.className.includes("mmee")){gg.className=gg.className.replace("mmee","")}
+                    if(gg.className.includes("mmee")){gg.className=gg.className.replaceAll("mmee","")}
                     return gg
                 })}
               }

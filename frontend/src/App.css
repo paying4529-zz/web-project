@@ -160,6 +160,7 @@ html,body,#root{
   }
   .usercaption{
     top: 0;
+    right:0;
     padding: 15px;
     z-index: 100;
     display:table;
