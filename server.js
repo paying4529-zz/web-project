@@ -3,22 +3,13 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv-defaults'
 
-import User from './models/user.js'
 import express from 'express'
-// import pkg_yoga from 'graphql-yoga'
-// const {PubSub} = pkg_yoga
-import pkg_express from 'express-graphql'
-const {graphqlHTTP} = pkg_express
+import http from 'http'
 
 import path from "path"
 const __dirname = path.resolve();
 
-import Root from './resolvers/root.js'
-import schema from './schema.graphql.js'
-import Todo from "./models/todo.js"
-import Date from "./models/date.js"
-import Calendar from "./models/calendar.js"
-import Class from "./models/class.js"
+import SERVER from './schema.js'
 
 dotenv.config();
 if (!process.env.MONGO_URL) {
@@ -36,32 +27,28 @@ mongoose.connect(process.env.MONGO_URL, dbOptions)
 const db = mongoose.connection;
 
 const app = express();
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(cors());
 
 const port = process.env.PORT || 4000
+const subscriptionsEndpoint = `ws://localhost:${port}/subscriptions`;
 
 db.once('open', () => {
     // be careful not to listen twice
-    // const pubsub = new PubSub()
-    app.use('/graphql', graphqlHTTP({
-        schema: schema,
-        rootValue: Root,
-        context: { // pass by args
-            User: User,
-            Todo: Todo,
-            Date: Date,
-            Calendar: Calendar,
-            Class: Class,
-            // Pubsub: pubsub
-        },
-        graphiql: true,
-    }));
-    app.use(express.static("public"));
+    
+    /* 這幾行會讓playground開不起來
+    app.use(express.static("public")); // *****
     app.get('*', function (req, res) {
-        res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+        res.sendFile(path.resolve(__dirname, 'public', 'index.html')); // *****
     });
-    app.listen(port, () =>
-        console.log(`Example app listening on port ${port}!`)
-    )
+    */
+   
+    SERVER.applyMiddleware({
+        app: app
+    })
+    const httpServer = http.createServer(app);
+    SERVER.installSubscriptionHandlers(httpServer);
+    httpServer.listen(port, () => {
+        console.log(`The server has started on port ${port}`)
+    })
 });
