@@ -14,7 +14,7 @@ import TYPEDEFS from "./types.js"
 import RESOLVERS from "./resolvers/resolvers.js"
 
 const port = process.env.PORT || 4000
-const subscriptionsEndpoint = `ws://localhost:${port}/subscriptions`;
+const subscriptionsEndpoint = `ws://localhost:${port}/graphql`;
 const pubsub = new PubSub()
 
 const SERVER = new ApolloServer({

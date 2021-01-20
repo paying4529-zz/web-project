@@ -160,7 +160,7 @@ const RESOLVERS = {
         },
     
         async addTodo(parent, args, {Todo, Pubsub}, info) {
-            const {username, userclass, todolist, mutation, todoitem} = args.data
+            const {username, userclass, todolist, mutation} = args.data
             console.log("root/addTodo", username, userclass, todolist)
             const oldTodo = await Todo.find({username: username})
             if (oldTodo.length > 0)
@@ -171,7 +171,26 @@ const RESOLVERS = {
             // console.log('add one')
             const newTodo = await Todo.create({username: username, userclass: userclass, todolist: todolist})
             console.log("publish!")
-            Pubsub.publish('todo', {subTodo: true})
+
+            Pubsub.publish(`todo-${username}`, {subTodo: {
+                mutation: mutation,
+                todolist: todolist
+            }})
+            // userclass: 'general director', 'section manager', 'group member'
+            /*
+            const publishclass = {
+                'general director': ['general director'],
+                'section manager': ['general director', 'section manager'],
+                'group member': ['general director', 'section manager', 'group memeber']
+            }
+            for (var i = 0; i < publishclass[userclass].length; i++)
+            {
+                Pubsub.publish(`todo-${publishclass[userclass][i]}`, {subTodo: {
+                                                mutation: mutation,
+                                                todoitem: todoitem
+                }})
+            }
+            */
             return true
         },
     
@@ -192,9 +211,9 @@ const RESOLVERS = {
     },
     Subscription: {
         subTodo: {
-            subscribe(parent, args, context, info) {
-                console.log("subscribe!")
-                return context.Pubsub.asyncIterator('todo')
+            subscribe(parent, {username}, context, info) {
+                console.log("subscribe!", username)
+                return context.Pubsub.asyncIterator(`todo-${username}`)
             }
         }
     }

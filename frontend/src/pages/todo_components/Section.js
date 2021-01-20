@@ -23,7 +23,7 @@ function Section({username, userclass, setTotal,statenow,me}){
         setItems(newItems)
         setOrder(order+1)
         console.log(userclass)
-        const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "CREATED", todoitem: newItem}
+        const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "CREATED"}
         console.log("Section, addtodoinput:", addtodoinput)
         let msg = await saveTodo(addtodoinput)
         setToGet(true)
@@ -42,7 +42,7 @@ function Section({username, userclass, setTotal,statenow,me}){
             setTotal(newItems.filter(e => !e.isComplete).length);
             setItems(newItems)
             setClearId(null)
-            const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "DELETED", todoitem: delItem}
+            const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "DELETED"}
             let msg = saveTodo(addtodoinput)
             setToGet(true)
         }
@@ -71,6 +71,11 @@ function Section({username, userclass, setTotal,statenow,me}){
         }
         
     }, [start, data])
+
+    useEffect(() => {
+        console.log("getTodoFromBack")
+        getTodoFromBack()
+    }, [JSON.stringify(data)])
 
     return (
         <section className="todo-app__main" id="main">

@@ -31,7 +31,6 @@ const app = express();
 app.use(cors());
 
 const port = process.env.PORT || 4000
-const subscriptionsEndpoint = `ws://localhost:${port}/subscriptions`;
 
 db.once('open', () => {
     // be careful not to listen twice

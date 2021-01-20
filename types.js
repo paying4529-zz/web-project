@@ -21,8 +21,7 @@ type Mutation {
 }
 
 type Subscription {
-    sendTodoDone(manager: String!): TodoSubPayload!
-    subTodo(userclass: String!): Boolean
+    subTodo(username: String!): TodoSubPayload!
 }
 
 enum MutationType{
@@ -32,8 +31,8 @@ enum MutationType{
 }
   
 type TodoSubPayload {
-    mutation: String
-    todoitem: TodoItem
+    mutation: String!
+    todolist: [TodoItem]
 }
 
 type Todo {
@@ -49,8 +48,6 @@ type TodoItem {
     isComplete: Boolean!
     order: Int!
     id: Int
-
-
 }
 
 
@@ -129,7 +126,6 @@ input addTodoInput {
     userclass: String!
     todolist: [todoItemInput]
     mutation: String!
-    todoitem: todoItemInput
 }
 
 type setOutput {
