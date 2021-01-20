@@ -13,13 +13,13 @@ const USERS_QUERY = gql`
 const JOB_QUERY = gql`
   query {
     getJob {
-      Job {
-        time
-        member
-        group
-        job
-        place
-        note
+      joblist {
+        value
+        readOnly
+        width
+        colSpan
+        rowSpan
+        className
       }
     }
   }

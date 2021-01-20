@@ -9,9 +9,18 @@ const GetUsers = () => {
 }
 
 const GetJobs = () => { 
-    const {loading, error, data} = useQuery(JOB_QUERY)
-    console.log(data)
-    return data
+    const {loading, error, data, refetch} = useQuery(JOB_QUERY)
+    const [toget, setToGet] = useState(false)
+    useEffect(() => {   
+        if(toget){
+            refetch()
+            if(!data){
+                refetch()
+                setToGet(false)
+            }
+        }
+    }, [toget,data])
+    return {job:data,setToGet}
 }
 
 const GetClasses = () => { 
@@ -59,25 +68,17 @@ const NewUser = () => {
 }
 
 const NewJob = () => {
-    const [addJob, {data}] = useMutation(CREATE_JOB_MUTATION)
-    const [isSuccess, setIsSuccess] = useState(false)
-    useEffect(()=>{
-        if (data){ setIsSuccess(data.addJob.success) }
-    }, [data])
+    const [addJob] = useMutation(CREATE_JOB_MUTATION)
     const createJob = (jobinfo) => {
+        const {joblist, mutation} = jobinfo
         console.log("axios",jobinfo)
-        const {time, member, group, job, place, note} = jobinfo
         addJob({ variables: {
-            time: time,
-            member: member,
-            group: group,
-            job: job,
-            place: place,
-            note: note,
+            joblist: joblist,
+            mutation: mutation,
         }})
 
     }
-    return {createJob, isSuccess}
+    return {createJob}
 }
 
 const SetEnddate = () => {
@@ -231,19 +232,14 @@ const GetTodoCal = () => {
 
     const updateCallback = (username, month, year, monthLong) => {
         let tmp = Array(monthLong).fill([]);
-        if (data)
-        {
-            for (var i = 0; i < data.getTodos.length; i++)
-            {
-                if (data.getTodos[i].username == username)
-                {
-                    for (var j = 0; j < data.getTodos[i].todolist.length; j++)
-                    {
+        if (data){
+            for (var i = 0; i < data.getTodos.length; i++){
+                if (data.getTodos[i].username == username){
+                    for (var j = 0; j < data.getTodos[i].todolist.length; j++){
                         const deadline = data.getTodos[i].todolist[j].deadline;
                         const value = data.getTodos[i].todolist[j].value;
                         const [_year, _month, _date] = deadline.split('-');
-                        if (_month == month && _year == year)
-                        {
+                        if (_month == month && _year == year){
                             tmp[parseInt(_date) - 1] = [...tmp[parseInt(_date) - 1], value];
                         }
                     }

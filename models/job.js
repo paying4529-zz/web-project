@@ -1,16 +1,17 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
-const SheetColSchema = new Schema({
+const JobSchema = new Schema({
     value: { type: String},
     readOnly: { type: Boolean},
     width: { type: Number},
     colSpan: { type: Number},
+    rowSpan: { type: Number},
     className: { type: String},
 });
-const sheetSchema = new Schema({
-    sheet: [[SheetColSchema]],
+const JoblistSchema = new Schema({
+    joblist: [[JobSchema]],
 });
 
-const Sheet = mongoose.model('Sheet', sheetSchema);
-export default Sheet;
+const Job = mongoose.model('Job', JoblistSchema);
+export default Job;

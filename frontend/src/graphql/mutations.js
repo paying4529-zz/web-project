@@ -18,20 +18,12 @@ const CREATE_USER_MUTATION = gql`
 
 const CREATE_JOB_MUTATION = gql`
     mutation mutate (
-        $time: String
-        $member: String
-        $group: String
-        $job: String
-        $place: String
-        $note: String
+        $mutation: String!
+        $joblist: [JobInput]
     ){
         addJob(data: {
-            time: $time
-            member: $member
-            group: $group
-            job: $job
-            place: $place
-            note: $note
+            joblist: $joblist
+            mutation: $mutation
         })
     }
 `

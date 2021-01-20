@@ -9,7 +9,7 @@ const schema = buildSchema(`
         getEnddate: Date
         getCalendar(data: getCalendarInput!): [[String]]
         getClasses: getClassOutput
-        getJob: [Job]
+        getJob: getJobOutput
     }
 
     type Mutation {
@@ -53,21 +53,26 @@ const schema = buildSchema(`
     }
 
     type Job {
-        time: String
-        member: String
-        group: String
-        job: String
-        place: String
-        note: String
+        value: String
+        readOnly: Boolean
+        className: String
+        colSpan: Number
+        rowSpan: Number
+        width: Number
+    }
+
+    input JobInput {
+        value: String
+        readOnly: Boolean
+        className: String
+        colSpan: Number
+        rowSpan: Number
+        width: Number
     }
 
     input addJobInput {
-        time: String
-        member: String
-        group: String
-        job: String
-        place: String
-        note: String
+        joblist: [[JobInput]]
+        mutation: String
     }
 
     input todoItemInput {
@@ -153,6 +158,9 @@ const schema = buildSchema(`
 
     type getClassOutput{
         classlist: [Class]
+    }
+    type getJobOutput{
+        joblist: [Job]
     }
 `);
 export default schema

@@ -195,26 +195,17 @@ const Root = {
     },
 
     addJob: async(args, {Job}, info) => {
-        const {time, member, group, job, place, note} = args.data
-        console.log("root/addJob", member,job)
-        const data = await Job.find({$and:[{member: member},{time: time}]})
-        if (data.length > 0){
+        const {joblist, mutation} = args.data
+        console.log("root/addJob",joblist)
+        const oldjob = await Job.find({})
+        if (oldjob.length > 0)
+        {
             console.log('del one')
-            const del = await Job.deleteOne({$and:[{member: member},{time: time}]})
+            const del = await Job.deleteOne({})
         }
-        else{
-            const newJob = new Job({
-                time: time,
-                member: member,
-                group: group,
-                job: job,
-                place: place,
-                note: note,
-            })
-            const error = await newJob.save()
-            console.log('add one')
-            return true
-        }
+        console.log('add one')
+        const newjoblist = await Job.create({joblist:joblist})
+        return true
     },
     
     // //subscription

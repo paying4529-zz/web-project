@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import '../App.css';
 import ReactDataSheet from 'react-datasheet';
 import 'react-datasheet/lib/react-datasheet.css';
-import { GetJobs, NewJob } from '../axios'
 
-function Sheet({groups,selectrow,setRow,mission,setMission}){
+
+function Sheet({grid,setGrid,groups,selectrow,setRow,mission,setMission}){
     const [start,setStart]=useState(true)
     const timeslot = ["8:00 ~ 10:00","10:00 ~ 12:00","12:00 ~ 13:00","13:00 ~ 15:00","15:00 ~ 17:00"]
-    const {createJob, isSuccess} = NewJob()
+    
     var width = Math.floor(1000/4)
-    const [grid,setGrid] = useState([[]])
+    
     useEffect(()=>{
         if(mission==1){
             var timerow = selectrow
@@ -37,6 +37,7 @@ function Sheet({groups,selectrow,setRow,mission,setMission}){
             setMission(0)
         }
     },[mission])
+
     const createColumn = (value,width=width,readOnly=false,className="",colSpan=1,rowSpan=1) => ({
         value: value,
         readOnly: readOnly,
