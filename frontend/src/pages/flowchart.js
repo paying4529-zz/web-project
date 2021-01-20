@@ -5,7 +5,7 @@ import { GetClasses } from '../axios'
 import { Button } from '@material-ui/core';
 import { GetJobs, NewJob } from '../axios'
 
-function FlowChart(){
+function FlowChart({myclass, username}){
     const [groups,setgroups] = useState([])   
     const [uniqueclass,setClass] = useState([])
     const [selectrow, setRow] = useState(0)
@@ -19,9 +19,34 @@ function FlowChart(){
           const newgrid = job.getJob.joblist
           if(newgrid){
             console.log("load new")
-            setGrid(newgrid)
-          }
-    }}},[job])
+            var newgrid2 = newgrid.slice()
+            for(var g of newgrid2){
+              if(g.length==6){
+                if(g[2].value==username){
+                  g = g.map(gg=>{
+                    if(!gg.className.includes("time")){
+                      gg.className=gg.className+" mmee"
+                      return gg
+                }})}
+                else{
+                  g = g.map(gg=>{
+                    if(gg.className.includes("mmee")){ gg.className=gg.className.replace("mmee","") }
+                    return gg
+                })}
+              }else if(g.length==4){
+                if(g[0].value==username){
+                  g = g.map(gg=>{ gg.className=gg.className+" mmee"
+                  return gg
+                })}
+                else{
+                  g = g.map(gg=>{
+                    if(gg.className.includes("mmee")){gg.className=gg.className.replace("mmee","")}
+                    return gg
+                })}
+              }
+            }
+            setGrid(newgrid2)
+    }}}},[job])
     useEffect(()=>{
       if(data){ if(data.getClasses){
           const newgroup = data.getClasses.classlist
@@ -44,12 +69,12 @@ function FlowChart(){
       let msg = await createJob(addjobinput)
       setToGet(true)
     }
-    return <div style={{padding:"50px"}}>
-      <h2 className="title" style={{marginBottom:"40px"}}>Double click to edit the flowchart...</h2>
+    return <div style={{padding:"50px"}} className={myclass.includes("member")?"disable":""}>
+      {!myclass.includes("member")?<h2 className="title" style={{marginBottom:"40px"}}>Double click to edit the flowchart...</h2>:<></>}
       {uniqueclass.length==0?<></>:<Sheet grid={grid} setGrid={setGrid} groups={uniqueclass} selectrow={selectrow} setRow={setRow} mission={mission} setMission={setMission}/>}
-      <Button variant="contained" color="primary" style={{margin:"10px"}} onClick={()=>setMission(1)}>add member row</Button>
-      <Button variant="contained" color="primary" style={{margin:"10px"}} onClick={save}>save sheet</Button>
-      {/* {uniqueclass.map(g=>{return<Button variant="contained" color="primary" style={{margin:"10px"}} >{g}</Button>})} */}
+      {!myclass.includes("member")?(<><Button variant="contained" color="primary" style={{margin:"10px"}} onClick={()=>setMission(1)}>add member row</Button>
+      <Button variant="contained" color="primary" style={{margin:"10px"}} onClick={save}>save sheet</Button></>):(<></>)}
+       {/* {uniqueclass.map(g=>{return<Button variant="contained" color="primary" style={{margin:"10px"}} >{g}</Button>})} */}
       </div>
 }
 export default FlowChart;

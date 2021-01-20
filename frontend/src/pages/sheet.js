@@ -8,7 +8,6 @@ function Sheet({grid,setGrid,groups,selectrow,setRow,mission,setMission}){
     const [start,setStart]=useState(true)
     const timeslot = ["8:00 ~ 10:00","10:00 ~ 12:00","12:00 ~ 13:00","13:00 ~ 15:00","15:00 ~ 17:00"]
     var width = Math.floor(1000/4)
-    
     useEffect(()=>{
         if(mission==1){
             var timerow = selectrow
@@ -71,14 +70,16 @@ function Sheet({grid,setGrid,groups,selectrow,setRow,mission,setMission}){
     
     useEffect(()=>{
         if(start){
-            const row1 = createfirstRow(groups)
-            const row2 = []
-            for(var i=0;i<timeslot.length;i++){
-                const r = createRow(timeslot[i],groups.length)
-                row2.push(r)
+            if(grid.length==0){
+                const row1 = createfirstRow(groups)
+                const row2 = []
+                for(var i=0;i<timeslot.length;i++){
+                    const r = createRow(timeslot[i],groups.length)
+                    row2.push(r)
+                }
+                const newsheet = row1.concat(row2)
+                setGrid(newsheet)
             }
-            const newsheet = row1.concat(row2)
-            setGrid(newsheet)
             setStart(false)
         }
     },[start,groups])

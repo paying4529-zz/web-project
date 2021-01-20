@@ -43,7 +43,7 @@ function Userpage({setLogout}){
           <Route exact path={url}><UserHome myclass={myclass}/></Route>
           <Route path={url+"/calander"}><Calander myclass={myclass}/></Route>
           <Route path={url+"/todolist"}><TodoList myclass={myclass} subclass={subclass}/></Route>
-          <Route path={url+"/flowchart"}><FlowChart myclass={myclass} subclass={subclass}/></Route>
+          <Route path={url+"/flowchart"}><FlowChart username={username} myclass={myclass}/></Route>
       </Switch>
     </Router>
   )

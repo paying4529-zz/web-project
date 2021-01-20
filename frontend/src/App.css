@@ -164,12 +164,18 @@
   background-color: #23292e !important;
 }
 .noon.cell {
-  border-top: 2px;
+  border-top: 5px solid;
   border-bottom: 2px;
-  background-color: #ce286d !important;
-  color: white
+  /* background-color: #ce286d !important; */
+  /* color: white */
 }
 .group{
   background-color: #daba05 !important;
   color:white !important;
+}
+.disable{
+  pointer-events: none;
+}
+.mmee{
+  background-color: #ce286d !important;
 }
