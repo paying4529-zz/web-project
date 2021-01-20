@@ -7,7 +7,6 @@ import 'react-datasheet/lib/react-datasheet.css';
 function Sheet({grid,setGrid,groups,selectrow,setRow,mission,setMission}){
     const [start,setStart]=useState(true)
     const timeslot = ["8:00 ~ 10:00","10:00 ~ 12:00","12:00 ~ 13:00","13:00 ~ 15:00","15:00 ~ 17:00"]
-    
     var width = Math.floor(1000/4)
     
     useEffect(()=>{

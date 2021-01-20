@@ -15,18 +15,15 @@ function FlowChart(){
     const {job,setToGet} = GetJobs()
     const [grid,setGrid] = useState([[]])
     useEffect(()=>{
-      if(job){
-        console.log("get classes")
-        console.log(job)
-        if(job.getJob){
+      if(job){if(job.getJob){
           const newgrid = job.getJob.joblist
-          if(newgrid){setGrid(newgrid)}
-        }
-      }
-    },[job])
+          if(newgrid){
+            console.log("load new")
+            setGrid(newgrid)
+          }
+    }}},[job])
     useEffect(()=>{
-      if(data){
-        if(data.getClasses){
+      if(data){ if(data.getClasses){
           const newgroup = data.getClasses.classlist
           if(newgroup){
             setgroups(newgroup)
@@ -39,12 +36,10 @@ function FlowChart(){
             }
             setClass(newclass)
           }
-        }
-      }
-    },[data])
+  }}},[data])
     const save = async () => {
       var newItems = grid.slice();
-      newItems.forEach((e) => {delete e.__typename})
+      newItems.forEach((e) => {e.forEach((ee)=>{delete ee.__typename})})
       const addjobinput = {joblist:newItems, mutation: "MODIFIED"}
       let msg = await createJob(addjobinput)
       setToGet(true)

@@ -19,7 +19,7 @@ const CREATE_USER_MUTATION = gql`
 const CREATE_JOB_MUTATION = gql`
     mutation mutate (
         $mutation: String!
-        $joblist: [JobInput]
+        $joblist: [[JobInput]]
     ){
         addJob(data: {
             joblist: $joblist

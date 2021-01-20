@@ -56,18 +56,18 @@ const schema = buildSchema(`
         value: String
         readOnly: Boolean
         className: String
-        colSpan: Number
-        rowSpan: Number
-        width: Number
+        colSpan: Int
+        rowSpan: Int
+        width: Int
     }
 
     input JobInput {
         value: String
         readOnly: Boolean
         className: String
-        colSpan: Number
-        rowSpan: Number
-        width: Number
+        colSpan: Int
+        rowSpan: Int
+        width: Int
     }
 
     input addJobInput {
@@ -160,7 +160,7 @@ const schema = buildSchema(`
         classlist: [Class]
     }
     type getJobOutput{
-        joblist: [Job]
+        joblist: [[Job]]
     }
 `);
 export default schema

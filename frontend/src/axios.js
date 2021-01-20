@@ -10,8 +10,9 @@ const GetUsers = () => {
 
 const GetJobs = () => { 
     const {loading, error, data, refetch} = useQuery(JOB_QUERY)
-    const [toget, setToGet] = useState(false)
+    const [toget, setToGet] = useState(true)
     useEffect(() => {   
+        console.log("getjob")
         if(toget){
             refetch()
             if(!data){
