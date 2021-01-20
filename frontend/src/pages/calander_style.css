@@ -9,8 +9,18 @@ body > h1{
     text-align: center;
     color: var(--main);
 }
+
+@media screen and (min-width: 400px){
+    #cal-month, #cal-year {
+        display: block;
+        width: 10%;
+        float: right;
+        margin: 10px;
+        margin-top: 0;
+    }
+}
 #cal-input, #cal-color, #cal-button{
-    height: 5vh;
+    height: 7vh;
     display: inline-block;
     border: 1px solid var(--main);
     border-radius: 10px;
@@ -19,18 +29,18 @@ body > h1{
     vertical-align: top;
     color: var(--main);
     background: none;
+    overflow: hidden;
 }
 
 #cal-month, #cal-year {
-    display: inline-block;
-    width: 10%;
+    display: block;
+    width: 150px;
     float: right;
     margin: 10px;
     margin-top: 0;
 }
-
 #cal-import {
-    display: inline-block;
+    display: block;
     float: left;
     margin-top: 0;
 }

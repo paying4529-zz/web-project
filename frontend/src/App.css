@@ -1,8 +1,12 @@
 .App {
   text-align: center;
+  
 }
 
-@media screen and (min-width: 650px){
+html,body,#root{
+  height: 100%;
+}
+@media screen and (min-width: 400px){
   .nav_bar{
     height: 100%;
     width: 10%;
@@ -43,14 +47,132 @@
     height: 100%;
     float:right;
   }
+  .card{
+    width: 200px;
+    position: relative;
+    border-style: none;
+    opacity: 1;
+    margin:10px;
+    transition: opcacity 0.3s;
+    transition: display 0.4s;
+  }
+  .cardd{
+    margin: 0;
+    height:45px;
+    padding:10px !important;
+  }
+  .card:hover{
+    border-style: dotted;
+    opacity: 0.4;
+    margin: 8px;
+    text-decoration: line-through;
+  }
+  .addgroup{
+    width: 500px;
+    align-content: center;
+    display: inline-block;
+    clear: right;
+    padding-inline: 50px;
+    padding-right: 100px;
+  }
+  .pick{
+    display: block;
+    clear: left;
+    padding-left:40px;
+  }
+  .Countdown{
+    margin: 20px 10px 0 30px;
+    padding: 40px 40px;
+    display: block;
+    float:center;
+  }
+  .navitem{
+    width: fit-content;
+    height: fit-content;
+  }
+  .Countdown-col-element strong{
+    font-size: 40px;
+  }
+}
+@media screen and (max-width: 400px){
+  nav{
+    width: 100%;
+  }
+  li{
+    display: inline-flex;
+    width: fit-content !important;
+    flex-wrap: nowrap;
+  }
+  .Countdown{
+    margin: 20px 20px 0px 20px;
+    padding: 30px 10px;
+    display: block;
+  }
+  .Countdown-col-element strong{
+    font-size: 30px;
+  }
+  .cardd{
+    margin: 0;
+    height:65px;
+    padding:10px !important;
+  }
+  .pick{
+    display: block;
+    clear: left;
+    padding:20px;
+  }
+  .addgroup{
+    width: 300px;
+    align-content: center;
+    display: inline-block;
+    clear: right;
+    padding-inline: 10px;
+  }
+  .card{
+    width: 125px;
+    height: 70px;
+    overflow: hidden;
+    position: relative;
+    border-style: none;
+    opacity: 1;
+    margin:10px;
+    transition: opcacity 0.3s;
+    transition: display 0.4s;
+  }
+  .card:hover{
+    border-style: dotted;
+    opacity: 0.4;
+    margin: 8px;
+    text-decoration: line-through;
+  }
+  .nav_bar{
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 1;
+    overflow-x: hidden;
+    justify-content:space-around;
+  }
+  .main_screen{
+    height: 100%;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+  }
+  .usercaption{
+    top: 0;
+    padding: 15px;
+    z-index: 100;
+    display:table;
+    position: fixed;
+    width: fit-content;
+    flex-wrap: nowrap
+  }
 }
 
 .user{
   top: 130px;
   padding-top: 10px;
 }
-
-
 .Register_page{
   height: 100%;
   padding-top: 5px;
@@ -92,15 +214,6 @@
   margin-bottom: 5px;
 }
 
-.Countdown{
-  margin-right: 10px;
-  margin-top: 20px;
-  margin-left: 30px;
-  margin-bottom: 0;
-  padding: 30px 10px;
-  display: block;
-}
-
 .Countdown-col{
   display: inline-block;
 }
@@ -112,9 +225,6 @@
   flex-direction: column;
 }
 
-.Countdown-col-element strong{
-  font-size: 40px;
-}
 .userhome{
   height: 100%;
   width: 55%;
@@ -124,39 +234,12 @@
   position: relative;
 }
 
-.pick{
-  display: block;
-  clear: left;
-  padding-left:40px;
-}
-
-.addgroup{
-  width: 500px;
-  align-content: center;
-  display: inline-block;
-  clear: right;
-  padding-inline: 50px;
-  padding-right: 100px;
-}
 .twocolumns{
   display: flex;
   flex-wrap: wrap;
   padding:5% 4%;
 }
-.card{
-  position: relative;
-  border-style: none;
-  opacity: 1;
-  margin:10px;
-  transition: opcacity 0.3s;
-  transition: display 0.4s;
-}
-.card:hover{
-  border-style: dotted;
-  opacity: 0.4;
-  margin: 8px;
-  text-decoration: line-through;
-}
+
 .cell{
   padding:10px 8px !important;;
 }

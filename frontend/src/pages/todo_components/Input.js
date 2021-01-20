@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
     todo:{
         width: '59%',
+        overflowX:"hidden"
     },
     button: {
         width: '10%',

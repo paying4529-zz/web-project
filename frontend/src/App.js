@@ -8,11 +8,11 @@ import Home from "./pages/home"
 function App() {
   return (
     <Router>
-        <div class="nav_bar">
+        <div className="nav_bar">
           <List component="nav">
-            <ListItem><Link to="/">Home</Link></ListItem>
-            <ListItem><Link to="/register">Register</Link></ListItem>
-            <ListItem><Link to="/login">Login</Link></ListItem>
+            <ListItem ><Link to="/">Home</Link></ListItem>
+            <ListItem ><Link to="/register">Register</Link></ListItem>
+            <ListItem ><Link to="/login">Login</Link></ListItem>
           </List>
         </div>
         <div class="main_screen">

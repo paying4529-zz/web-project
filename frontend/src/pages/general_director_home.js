@@ -5,19 +5,9 @@ import Countdown from './countdown';
 import DatePicker from 'react-date-picker';
 import { Paper, Card, CardContent, Button } from '@material-ui/core';
 import CreateSelect from "./createselect";
-import { makeStyles } from '@material-ui/core/styles';
 import { SetEnddate, GetClasses, MutateClass } from '../axios'
 
-const useStyles = makeStyles({
-  root: {
-    width: 200,
-    height: 40,
-    margin: 0,
-  },
-  content:{
-    padding:"10px",
-  }
-})
+
 function Userhome_director({enddate,setEnddate}){
     var { url } = useRouteMatch()
     const username = url.split("/")[-1]
@@ -57,7 +47,6 @@ function Userhome_director({enddate,setEnddate}){
       const newgroupOptions = groupOptions.filter(op => op.label!==value)
       setoptions(newgroupOptions)
     }
-    const classes = useStyles();
     return (
       <div className="Home_page">
         <div className="column1">
@@ -75,8 +64,7 @@ function Userhome_director({enddate,setEnddate}){
                 format="MM-dd-y"
                 dayPlaceholder="DD"
                 monthPlaceholder="MM"
-                yearPlaceholder="YYYY"
-              />
+                yearPlaceholder="YYYY"/>
             </div>
         </div>
         <div className="column2">
@@ -86,7 +74,7 @@ function Userhome_director({enddate,setEnddate}){
             </div>
             <div className="twocolumns">
               {groupOptions.length!==0 ? groupOptions.map(group =>
-              <div className="card" id={group.value} onClick={()=>ddelete(group.value)}><Card className={classes.root}><CardContent className={classes.content}>{group.value}</CardContent>
+              <div className="card" id={group.value} onClick={()=>ddelete(group.value)}><Card ><CardContent className="cardd">{group.value}</CardContent>
               </Card></div>):<></>}
             </div>
             <div class="button"><Button variant="contained"

@@ -28,8 +28,8 @@ function List({items,statenow,setClearId,my}){
             <Table className={my?"todo-app__list my":"todo-app__list"}>
             <TableHead>
                 <TableRow>
-                    <TableCell style={{ width: "11%" }} >Done</TableCell>
-                    {columns.map(c=>{return <TableCell style={{ width: c.width }}>{c.headerName}</TableCell>})}
+                    <TableCell style={{ width: "11%",overflowX:"hidden" }} >Done</TableCell>
+                    {columns.map(c=>{return <TableCell style={{ width: c.width,overflowX:"hidden" }}>{c.headerName}</TableCell>})}
                 </TableRow>
             </TableHead>
             <TableBody>
