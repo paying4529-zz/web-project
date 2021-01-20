@@ -23,7 +23,9 @@ type Mutation {
 }
 
 type Subscription {
+    subMsg(username: String!): MsgSubPayload!
     subTodo(username: String!): TodoSubPayload!
+    
 }
 
 enum MutationType{
@@ -35,6 +37,12 @@ enum MutationType{
 type TodoSubPayload {
     mutation: String!
     todolist: [TodoItem]
+}
+
+type MsgSubPayload {
+    sender: String!
+    mutation: String!
+    todoitem: TodoItem!
 }
 
 type Todo {
@@ -150,6 +158,7 @@ input addTodoInput {
     userclass: String!
     todolist: [todoItemInput]
     mutation: String!
+    todoitem: todoItemInput
 }
 
 type setOutput {

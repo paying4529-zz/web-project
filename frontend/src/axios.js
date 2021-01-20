@@ -1,7 +1,7 @@
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation, useSubscription } from '@apollo/client';
 import  {JOB_QUERY, USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, CALENDAR_QUERY, CLASSES_QUERY} from './graphql/queries'
 import {CREATE_JOB_MUTATION, CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION,ADD_CLASS_MUTATION } from './graphql/mutations'
-import { TODO_SUBSCRIPTION } from './graphql/subscription'
+import { TODO_SUBSCRIPTION, MSG_SUBSCRIPTION } from './graphql/subscription'
 import { useState, useEffect } from 'react';
 
 const GetUsers = () => { 
@@ -145,7 +145,7 @@ const UserLogin = () => {
 const MutateTodo = () => {
     const [addTodo] = useMutation(ADD_TODO_MUTATION)
     const saveTodo = (addtodoinput) => {
-        const {username, userclass, todolist, mutation} = addtodoinput
+        const {username, userclass, todolist, mutation, todoitem} = addtodoinput
         console.log("axios/saveTodo, todoitem", addtodoinput)
         addTodo({
             variables: {
@@ -153,6 +153,7 @@ const MutateTodo = () => {
                 userclass: userclass,
                 todolist: todolist,
                 mutation: mutation,
+                todoitem: todoitem,
             }
         })
     }
@@ -283,4 +284,29 @@ const GetTodoCal = () => {
     return {todolist, updateTodoCal}
 }
 
-export { GetJobs, NewJob, GetUsers, NewUser, UserLogin, MutateTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, MutateClass, GetTodoCal};
+const SubMsg = (username) => {
+    const { data, loading } = useSubscription(
+        MSG_SUBSCRIPTION,
+        { variables: { username } }
+      );
+    const [msg, setMsg] = useState("")
+    const clearMsg = () => {
+        setMsg("")
+    }
+    useEffect(() => {
+        if (data)
+        {
+            if (data.subMsg.mutation === "CREATED")
+            {
+                setMsg(`${data.subMsg.sender} creates a TODO ${data.subMsg.todoitem.value}`)
+            }
+            else if (data.subMsg.mutation === "DELETED")
+            {
+                setMsg(`${data.subMsg.sender} finished a TODO ${data.subMsg.todoitem.value}`)
+            }
+        }
+    }, [data])
+    return {msg, clearMsg}
+}
+
+export { GetJobs, NewJob, GetUsers, NewUser, UserLogin, MutateTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, MutateClass, GetTodoCal, SubMsg};

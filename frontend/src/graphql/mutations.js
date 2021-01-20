@@ -74,12 +74,14 @@ const ADD_TODO_MUTATION = gql`
         $userclass: String!
         $todolist: [todoItemInput]
         $mutation: String!
+        $todoitem: todoItemInput!
     ) {
         addTodo(data: {
             username: $username
             userclass: $userclass
             todolist: $todolist
             mutation: $mutation
+            todoitem: $todoitem
         })
     }
 `

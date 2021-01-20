@@ -110,17 +110,38 @@ const RESOLVERS = {
         },
     
         async addTodo(parent, args, {Todo, Pubsub}, info) {
-            const {username, userclass, todolist, mutation} = args.data
+            const {username, userclass, todolist, mutation, todoitem} = args.data
             console.log("root/addTodo", username, userclass, todolist)
             const oldTodo = await Todo.find({username: username})
             if (oldTodo.length > 0){ const del = await Todo.deleteOne({username: username}) }
             const newTodo = await Todo.create({username: username, userclass: userclass, todolist: todolist})
-            console.log("publish!")
-
+            console.log(`publish! todo-${username}`)
             Pubsub.publish(`todo-${username}`, {subTodo: {
                 mutation: mutation,
                 todolist: todolist
             }})
+           
+            if (username !== todoitem.fromName) {
+                if (mutation === "CREATED")
+                {
+                    console.log(`publish! msg-${username}`)
+                    Pubsub.publish(`msg-${username}`, {subMsg: {
+                        mutation: mutation,
+                        sender: todoitem.fromName,
+                        todoitem: todoitem
+                    }})
+                }
+                else if (mutation === "DELETED")
+                {
+                
+                    console.log(`publish! msg-${todoitem.fromName}`)
+                    Pubsub.publish(`msg-${todoitem.fromName}`, {subMsg: {
+                        mutation: mutation,
+                        sender:username,
+                        todoitem: todoitem
+                    }})
+                }
+            }
             // userclass: 'general director', 'section manager', 'group member'
             /*
             const publishclass = {
@@ -164,7 +185,13 @@ const RESOLVERS = {
                 console.log("subscribe!", username)
                 return context.Pubsub.asyncIterator(`todo-${username}`)
             }
-        }
+        },
+        subMsg: {
+            subscribe(parent, {username}, context, info) {
+                console.log(`subscribe! msg-${username}`)
+                return context.Pubsub.asyncIterator(`msg-${username}`)
+            }
+        },
     }
 }
 

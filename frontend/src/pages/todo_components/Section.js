@@ -35,6 +35,8 @@ function Section({username, userclass, setTotal,statenow,me}){
             for(var i=0;i<clearid+1;i++){
                 if(newItems[i].order===clearid){ index=i; break; }
             }
+            const delItem = newItems[index];
+            delete delItem.__typename;
             newItems.splice(index,1);
             setTotal(newItems.filter(e => !e.isComplete).length);
             setItems(newItems)
@@ -43,7 +45,7 @@ function Section({username, userclass, setTotal,statenow,me}){
                 delete ii.__typename;
                 return ii
             })
-            const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "DELETED", todoitem: newItems[index]}
+            const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "DELETED", todoitem: delItem}
             let msg = saveTodo(addtodoinput)
             setToGet(true)
         }

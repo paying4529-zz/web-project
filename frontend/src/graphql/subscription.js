@@ -15,4 +15,15 @@ const TODO_SUBSCRIPTION = gql`
 
     }
 `
-export {TODO_SUBSCRIPTION }
+const MSG_SUBSCRIPTION = gql`
+    subscription subMsg($username: String!){
+        subMsg(username: $username) {
+            mutation
+            sender
+            todoitem {
+                value
+            }
+        }
+    }
+`
+export { TODO_SUBSCRIPTION, MSG_SUBSCRIPTION }
