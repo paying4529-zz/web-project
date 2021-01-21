@@ -1,6 +1,6 @@
 # Group 44 Web-programing final project
 # HierarchiOrg!
-This is an App for hierarchical orginizing. It is expected to applied to any activities or organizations that have hierarchical structure, where members have differnet authority. People can conveniently send and receive information, and orgainize their plans by this app.
+This is an app for hierarchical organizing. It is expected to applied to any activities or organizations that have hierarchical structure, where members have differnet authority. People can conveniently send and receive information, and orgainize their plans by this app.
 ## Usage
   1. git clone
   2. yarn and yarn server
