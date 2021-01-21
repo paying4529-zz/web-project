@@ -57,6 +57,7 @@ function Userhome_director({setToGetdate,enddate,setEnddate}){
             <div className="pick">
               <h3>Pick the date of your seminar:</h3>
               <DatePicker
+                className="pic"
                 onChange={onChange}
                 value={enddate2}
                 format="MM-dd-y"

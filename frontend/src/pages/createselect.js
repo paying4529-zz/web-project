@@ -40,7 +40,7 @@ function CreateSelect({options,setoptions}){
         }
     },[start])
     return (
-        <CreatableSelect isClearable 
+        <CreatableSelect isClearable className="option"
             isDisabled={isLoading}  isLoading={isLoading}
             onChange={handleChange} onCreateOption={handleCreate}
             options={options}       value={value}

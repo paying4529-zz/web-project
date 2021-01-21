@@ -53,6 +53,7 @@ function TodoList({myclass,subclass}){
           margin: theme.spacing(1),
           minWidth: 300,
           textAlign: "left",
+          
         },
         chips: {
             display: 'flex',
@@ -84,7 +85,7 @@ function TodoList({myclass,subclass}){
             </div>
             {clss[clss.length-1]!=="member"?<div class="sub_todo">
                 <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="subuser">Select member to see their Todos</InputLabel>
+                    <InputLabel id="subuser" style={{color:"white"}}>Select member to see their Todos</InputLabel>
                     <Select id="subuser" value={select} onChange={handleChange} label="Select member" multiple
                             variant="outlined"
                             input={<Input />} 
