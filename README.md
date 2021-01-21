@@ -10,8 +10,8 @@ This is an app for hierarchical organizing. It is expected to apply to any activ
   - b/b/groupA manager
   - c/c/groupA member
   - d/d/groupB manager
-  - e/e/groupB member
-*Please wait 3 sec for the animation in the homepage, thank you. :))*
+  - e/e/groupB member<br/><br/>
+*Please wait 3 sec for the animation in the homepage, thank you. :))*<br/><br/>
 *Due to the sleep mode in Heroku, please try and give it some time to wake up....*
 
 ## Introduction  
