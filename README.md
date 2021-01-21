@@ -5,18 +5,15 @@ This is an app for hierarchical organizing. It is expected to apply to any activ
   1. git clone
   2. yarn and yarn server
   3. cd frontend, yarn and yarn start
-  4. You can login with these accounts:
-<br>
-(username/password/userclass)
+  4. You can login with these accounts:[username/password/userclass]
   - a/a/general director
   - b/b/groupA manager
   - c/c/groupA member
   - d/d/groupB manager
   - e/e/groupB member
-<br>
 *Please wait 3 sec for the animation in the homepage, thank you. :))*
-<br>
 *Due to the sleep mode in Heroku, please try and give it some time to wake up....*
+
 ## Introduction  
 ### Hierarchical design
 There are three hierarchical levels.  
