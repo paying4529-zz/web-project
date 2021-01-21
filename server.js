@@ -40,7 +40,6 @@ db.once('open', () => {
     app.get('*', function (req, res) {
         res.sendFile(path.resolve(__dirname, 'public', 'index.html')); // *****
     });
-
    
     SERVER.applyMiddleware({
         app: app
