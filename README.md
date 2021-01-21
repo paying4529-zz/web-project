@@ -1,4 +1,4 @@
-# Group 44 Web-programing final project
+# (Group 44) Web-programing final project
 # HierarchiOrg!
 This is an app for hierarchical organizing. It is expected to apply to any activities or organizations that have hierarchical structure, where members have differnet authority. People can conveniently send and receive information, and orgainize their plans by this app.
 ## Usage
