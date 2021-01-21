@@ -80,7 +80,7 @@ function TodoList({myclass,subclass}){
                 }
             />
             <div class="my_todo">
-                <SubTodoList username={username} me={username} userclass={myclass}/>
+                <SubTodoList username={username} me={username} userclass={myclass} neww={open}/>
             </div>
             {clss[clss.length-1]!=="member"?<div class="sub_todo">
                 <FormControl variant="outlined" className={classes.formControl}>

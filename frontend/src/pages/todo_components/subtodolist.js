@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Section from "./Section";
 
-function SubTodoList({username,userclass,me}){
+function SubTodoList({username,userclass,me,neww}){
     const [state, setState] = useState(0)
     const [total, setTotal] = useState(0)
     useEffect(()=>{
@@ -18,6 +18,7 @@ function SubTodoList({username,userclass,me}){
                 setTotal={setTotal} 
                 statenow={state}
                 me={me}
+                neww={neww}
             />
         </div>
     );

@@ -3,7 +3,7 @@ import List from "./List"
 import Input from "./Input"
 import {MutateTodo, GetTodo } from '../../axios'
 
-function Section({username, userclass, setTotal,statenow,me}){
+function Section({username, userclass, setTotal,statenow,me,neww}){
     const [start, setStart] = useState(1)
     const [order, setOrder] = useState(0)
     const [items, setItems] = useState([])
@@ -11,6 +11,10 @@ function Section({username, userclass, setTotal,statenow,me}){
     const {data, setToGet, setUsername} = GetTodo()
     const {saveTodo} = MutateTodo()
 
+    useEffect(()=>{
+        if(neww){
+            setToGet(true)}
+    },[neww])
    const setValueAndSave = async (deadline,todo) => {
         console.log(todo,deadline)
         var newItems = items.slice();

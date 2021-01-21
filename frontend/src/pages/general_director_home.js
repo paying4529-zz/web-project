@@ -20,8 +20,11 @@ function Userhome_director({setToGetdate,enddate,setEnddate}){
     useEffect(()=>{
       if(data){if(data.getClasses){
           const classoption = data.getClasses.classlist
-          if(classoption){setoptions(classoption)}
-    }}},[data])
+          if(classoption){setoptions(classoption)
+      }}else{
+        setToGet(true)
+      }
+    }},[data])
     useEffect(()=>{
       if(enddate){setShow(true)}
     },[enddate])
