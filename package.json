@@ -4,17 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "apollo-server-express": "^2.18.0-rc.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "dotenv-defaults": "^2.0.1",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.4.0",
-    "graphql-subscriptions": "^1.1.0",
-    "http-proxy-middleware": "^1.0.6",
-    "mongoose": "^5.11.5",
-    "subscriptions-transport-ws": "^0.9.18"
+    "graphql-yoga": "^1.18.3",
+    "mongoose": "^5.11.5"
   },
   "type": "module",
   "scripts": {

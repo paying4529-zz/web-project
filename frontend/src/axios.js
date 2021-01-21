@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useSubscription } from '@apollo/client';
 import  {JOB_QUERY, USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, CALENDAR_QUERY, CLASSES_QUERY} from './graphql/queries'
 import {CREATE_JOB_MUTATION, CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION,ADD_CLASS_MUTATION } from './graphql/mutations'
-import { TODO_SUBSCRIPTION, MSG_SUBSCRIPTION } from './graphql/subscription'
 import { useState, useEffect } from 'react';
 
 const GetUsers = () => { 
@@ -179,34 +178,15 @@ const MutateClass = () => {
 const GetTodo = () => { 
     const [username, setUsername] = useState("")
     const [toget, setToGet] = useState(false)
-    const {loading, error, data, subscribeToMore, refetch} = useQuery(TODOS_QUERY,{variables: { username }})
+    const {loading, error, data, refetch} = useQuery(TODOS_QUERY,{variables: { username }})
     useEffect(() => {   
         if(toget){
-            // refetch()
-            console.log("don't refetch")
+            refetch()
+            // console.log("don't refetch")
             setToGet(false)
         }
     }, [toget])
-    useEffect(() => {
-        if (username !== '')
-        {
-            subscribeToMore({
-                document: TODO_SUBSCRIPTION,
-                variables: {username: username},
-                updateQuery: (prev, {subscriptionData}) => {
-                    if (!subscriptionData) return prev
-                    console.log("update Query!", subscriptionData)
-                    console.log("prev:", prev)
-                    return {
-                        getTodos: prev.getTodos.map(e => {return (e.username === username) ? {username: e.username, userclass: e.userclass, todolist: subscriptionData.data.subTodo.todolist}:{e}})
-                    }
-                }
-            })
-        }
-    }, [username])
-    useEffect(() => {
-        console.log("GetTodo", username, data)
-    }, [JSON.stringify(data)])
+   
     return {data, setToGet, setUsername}
 }
 
@@ -284,29 +264,6 @@ const GetTodoCal = () => {
     return {todolist, updateTodoCal}
 }
 
-const SubMsg = (username) => {
-    const { data, loading } = useSubscription(
-        MSG_SUBSCRIPTION,
-        { variables: { username } }
-      );
-    const [msg, setMsg] = useState("")
-    const clearMsg = () => {
-        setMsg("")
-    }
-    useEffect(() => {
-        if (data)
-        {
-            if (data.subMsg.mutation === "CREATED")
-            {
-                setMsg(`${data.subMsg.sender} creates a TODO ${data.subMsg.todoitem.value}`)
-            }
-            else if (data.subMsg.mutation === "DELETED")
-            {
-                setMsg(`${data.subMsg.sender} finished a TODO ${data.subMsg.todoitem.value}`)
-            }
-        }
-    }, [data])
-    return {msg, clearMsg}
-}
 
-export { GetJobs, NewJob, GetUsers, NewUser, UserLogin, MutateTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, MutateClass, GetTodoCal, SubMsg};
+
+export { GetJobs, NewJob, GetUsers, NewUser, UserLogin, MutateTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, MutateClass, GetTodoCal};

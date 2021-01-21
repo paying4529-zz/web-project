@@ -2,15 +2,24 @@ import bodyParser from "body-parser"
 import cors from 'cors'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv-defaults'
-import pkg from 'http-proxy-middleware';
-const {createProxyMiddleware} = pkg;
+
+import User from './models/user.js'
 import express from 'express'
-import http from 'http'
+// import pkg_yoga from 'graphql-yoga'
+// const {PubSub} = pkg_yoga
+import pkg_express from 'express-graphql'
+const {graphqlHTTP} = pkg_express
 
 import path from "path"
 const __dirname = path.resolve();
 
-import SERVER from './schema.js'
+import Root from './resolvers/root.js'
+import schema from './schema.graphql.js'
+import Todo from "./models/todo.js"
+import Date from "./models/date.js"
+import Calendar from "./models/calendar.js"
+import Class from "./models/class.js"
+import Job from "./models/job.js"
 
 dotenv.config();
 if (!process.env.MONGO_URL) {
@@ -32,25 +41,29 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const port = process.env.PORT || 4000
-const URI = "http://localhost:4000"
-const apiProxy = createProxyMiddleware('/graphql', {target:URI});
-const wsProxy = createProxyMiddleware('/graphql', {ws:true, target:URI});
 
 db.once('open', () => {
     // be careful not to listen twice
-    app.use(apiProxy);
-    app.use(wsProxy);
-    app.use(express.static("public")); // *****
+    // const pubsub = new PubSub()
+    app.use('/graphql', graphqlHTTP({
+        schema: schema,
+        rootValue: Root,
+        context: { // pass by args
+            User: User,
+            Todo: Todo,
+            Date: Date,
+            Calendar: Calendar,
+            Class: Class,
+            Job:Job,
+            // Pubsub: pubsub
+        },
+        graphiql: true,
+    }));
+    app.use(express.static("public"));
     app.get('*', function (req, res) {
-        res.sendFile(path.resolve(__dirname, 'public', 'index.html')); // *****
+        res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
     });
-    
-    SERVER.applyMiddleware({
-        app: app
-    })
-    const httpServer = http.createServer(app);
-    SERVER.installSubscriptionHandlers(httpServer);
-    httpServer.listen(port, () => {
-        console.log(`The server has started on port ${port}`)
-    })
+    app.listen(port, () =>
+        console.log(`Example app listening on port ${port}!`)
+    )
 });

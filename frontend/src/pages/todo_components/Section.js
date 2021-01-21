@@ -79,11 +79,11 @@ function Section({username, userclass, setTotal,statenow,me,neww}){
         
     }, [start, data])
 
-    useEffect(() => {
-        // subscription update
-        console.log("getTodoFromBack")
-        getTodoFromBack()
-    }, [JSON.stringify(data)])
+    // useEffect(() => {
+    //     // subscription update
+    //     console.log("getTodoFromBack")
+    //     getTodoFromBack()
+    // }, [JSON.stringify(data)])
 
     return (
         <section className="todo-app__main" id="main">

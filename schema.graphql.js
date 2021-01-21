@@ -1,7 +1,6 @@
-
-import pkg from 'apollo-server-express'
-const { gql } = pkg
-const TYPEDEFS = gql`
+import pkg from 'graphql'
+const  { buildSchema } = pkg
+const schema = buildSchema(`
 type Query {
     getUsers: [User!]
     getSubusers(username: String!): [User!]
@@ -22,29 +21,12 @@ type Mutation {
     addJob(data: addJobInput): Boolean!
 }
 
-type Subscription {
-    subMsg(username: String!): MsgSubPayload!
-    subTodo(username: String!): TodoSubPayload!
-    
-}
-
 enum MutationType{
     CREATED
     MODIFIED
     DELETED
 }
   
-type TodoSubPayload {
-    mutation: String!
-    todolist: [TodoItem]
-}
-
-type MsgSubPayload {
-    sender: String!
-    mutation: String!
-    todoitem: TodoItem!
-}
-
 type Todo {
     username: String!
     userclass: String!
@@ -172,6 +154,5 @@ type getClassOutput{
 type getJobOutput{
     joblist: [[Job]]
 }
-`
-
-export default TYPEDEFS
+`);
+export default schema
