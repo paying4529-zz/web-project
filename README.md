@@ -12,6 +12,9 @@ This is an app for hierarchical organizing. It is expected to apply to any activ
   - c/c/groupA member
   - d/d/groupB manager
   - e/e/groupB member
+
+[ Please wait 3 sec for the animation in the homepage, thank you. :)) ]
+
 *Due to the sleep mode in Heroku, please try and give it some time to wake up....*
 ## Introduction  
 ### Hierarchical design
