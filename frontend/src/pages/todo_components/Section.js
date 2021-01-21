@@ -14,7 +14,7 @@ function Section({username, userclass, setTotal,statenow,me,neww}){
     useEffect(()=>{
         if(neww){
             setToGet(true)}
-    },[neww])
+    },[neww, username])
    const setValueAndSave = async (deadline,todo) => {
         console.log(todo,deadline)
         var newItems = items.slice();
