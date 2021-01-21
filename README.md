@@ -12,7 +12,7 @@ This is an app for hierarchical organizing. It is expected to apply to any activ
   - c/c/groupA member
   - d/d/groupB manager
   - e/e/groupB member
-  <br>*Due to the sleep mode in Heroku, please try and give it some time to wake up....*
+*Due to the sleep mode in Heroku, please try and give it some time to wake up....*
 ## Introduction  
 ### Hierarchical design
 There are three hierarchical levels.  
