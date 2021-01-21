@@ -5,8 +5,9 @@ This is an app for hierarchical organizing. It is expected to apply to any activ
   1. git clone
   2. yarn and yarn server
   3. cd frontend, yarn and yarn start
-  4. You can login with these accounts:<br>
-  (username/password/userclass)
+  4. You can login with these accounts:
+<br>
+(username/password/userclass)
   - a/a/general director
   - b/b/groupA manager
   - c/c/groupA member
