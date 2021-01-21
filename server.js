@@ -2,7 +2,8 @@ import bodyParser from "body-parser"
 import cors from 'cors'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv-defaults'
-
+import pkg from 'http-proxy-middleware';
+const {createProxyMiddleware} = pkg;
 import express from 'express'
 import http from 'http'
 
@@ -31,16 +32,19 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const port = process.env.PORT || 4000
+const URI = "http://localhost:4000"
+const apiProxy = createProxyMiddleware('/graphql', {target:URI});
+const wsProxy = createProxyMiddleware('/graphql', {ws:true, target:URI});
 
 db.once('open', () => {
     // be careful not to listen twice
-    
-
+    app.use(apiProxy);
+    app.use(wsProxy);
     app.use(express.static("public")); // *****
     app.get('*', function (req, res) {
         res.sendFile(path.resolve(__dirname, 'public', 'index.html')); // *****
     });
-   
+    
     SERVER.applyMiddleware({
         app: app
     })

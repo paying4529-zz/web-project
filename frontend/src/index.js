@@ -11,11 +11,11 @@ import { HttpLink } from 'apollo-link-http'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 
-import { SubscriptionClient } from 'subscriptions-transport-ws'
-import { fetch } from 'node-fetch'
+// import { SubscriptionClient } from 'subscriptions-transport-ws'
+// import { fetch } from 'node-fetch'
 import { ApolloClient } from 'apollo-client'
 // import { createHttpLink } from 'apollo-link-http'
-import ws from 'ws'
+// import ws from 'ws'
 import  { InMemoryCache } from 'apollo-cache-inmemory'
 
 /*
@@ -31,11 +31,11 @@ const client = new ApolloClient({
 */
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: '/graphql'
+  uri: 'http://localhost:4000/graphql'
 })
 // // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `/graphql`,
+  uri: `ws://localhost:4000/graphql`,
   options: { reconnect: true }
 })
 // using the ability to split links, you can send data to each link
