@@ -15,7 +15,7 @@ import TYPEDEFS from "./types.js"
 import RESOLVERS from "./resolvers/resolvers.js"
 
 const port = process.env.PORT || 4000
-const subscriptionsEndpoint = `ws://localhost:${port}/graphql`;
+const subscriptionsEndpoint = `/graphql`;
 const pubsub = new PubSub()
 
 const SERVER = new ApolloServer({
@@ -31,7 +31,7 @@ const SERVER = new ApolloServer({
         Pubsub: pubsub
     },
     playground: {
-        endpoint: `http://localhost:4000/graphql`,
+        endpoint: `/graphql`,
     },
     subscriptions: {
         onConnect: () => console.log('Connected to websocket'),

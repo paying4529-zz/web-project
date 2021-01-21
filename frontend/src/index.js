@@ -31,11 +31,11 @@ const client = new ApolloClient({
 */
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql'
+  uri: '/graphql'
 })
 // // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/graphql`,
+  uri: `/graphql`,
   options: { reconnect: true }
 })
 // using the ability to split links, you can send data to each link
