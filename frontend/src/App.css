@@ -178,7 +178,7 @@ html,body,#root{
   height: 100%;
   padding-top: 5px;
   text-align: center;
-  background-color: #b489a6;
+  background-color: #c06ca4;
 }
 .select{
   width: 250px;
@@ -188,7 +188,7 @@ html,body,#root{
 .Home_page{
   height: 100%;
   text-align: center;
-  background-color: #b4b389;
+  background-color: #cab956;
   padding-top: 5px;
 }
 
@@ -196,7 +196,7 @@ html,body,#root{
   height: 100%;
   padding-top: 5px;
   text-align: center;
-  background-color: #89b4ae;
+  background-color: #61beb2;
 }
 
 .user_page{
