@@ -16,6 +16,18 @@ const CREATE_USER_MUTATION = gql`
     }
 `
 
+const CREATE_JOB_MUTATION = gql`
+    mutation mutate (
+        $mutation: String!
+        $joblist: [[JobInput]]
+    ){
+        addJob(data: {
+            joblist: $joblist
+            mutation: $mutation
+        })
+    }
+`
+
 const SET_ENDDATE_MUTATION = gql`
     mutation mutate (
         $enddate: String!
@@ -62,7 +74,7 @@ const ADD_TODO_MUTATION = gql`
         $userclass: String!
         $todolist: [todoItemInput]
         $mutation: String!
-        $todoitem: todoItemInput
+        $todoitem: todoItemInput!
     ) {
         addTodo(data: {
             username: $username
@@ -74,4 +86,4 @@ const ADD_TODO_MUTATION = gql`
     }
 `
 export  {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CLASS_MUTATION,  
-        ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION}
+        ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION, CREATE_JOB_MUTATION}

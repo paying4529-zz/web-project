@@ -5,8 +5,6 @@ import Select from "react-select";
 import { useState, useEffect } from 'react';
 import { GetCalendar, GetTodoCal } from '../axios';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import x from './img/x.png'
 
 
@@ -42,9 +40,6 @@ function Calander(){
     const {data, setRefetch, addToCalendar} = GetCalendar(); // data: a list that contains #dayInAMonth sublists
     const {todolist, updateTodoCal} = GetTodoCal();
     
-    useEffect(() => {
-       console.log("todo:", todolist)
-    }, [todolist])
     useEffect(async () => {
         setStartDay(new Date(year, month - 1, 1).getDay());
         setMonthLong(new Date(year, month, 0).getDate());
@@ -63,14 +58,6 @@ function Calander(){
         })
     }, [chosenDate])
 
-    // useEffect(() => {
-    //     console.log(`chosenDate: ${chosenDate}`);
-    // }, [chosenDateList])
-
-    useEffect(() => {
-        console.log("data:", data)
-    }, [JSON.stringify(data)])
-
     let calendar = [];
     var date = 1;
     const deleteCalTodo = (e) => {
@@ -81,33 +68,21 @@ function Calander(){
         tmp[date - 1].splice(order, 1);
         addToCalendar({username: username, year: year, month: month, todolist: tmp})
     }
-    for (var row = 0; row < Math.round((monthLong + startDay) / 7) + 1; row++)
-    {
+    for (var row = 0; row < Math.round((monthLong + startDay) / 7) + 1; row++){
         let week = [];
-        for (var col = 0; col < 7; col++)
-        {
-            if (row === 0)
-            {
-                if (col < startDay)
-                {
-                    week.push(<td class='date notclickable'></td>)
-                }
-                else
-                {
+        for (var col = 0; col < 7; col++){
+            if (row === 0){
+                if (col < startDay){ week.push(<td class='date notclickable'></td>)}
+                else{
                     let todos = [];
-                    if (data && data.getCalendar.length > 0) // data: avoid initializing undefined, data.getCalendar.length: avoid empty array (default return when no data exist)
-                    {
-                        
-                        for (var i = 0; i < data.getCalendar[date - 1].length; i++)
-                        {
+                    if (data && data.getCalendar.length > 0){ // data: avoid initializing undefined, data.getCalendar.length: avoid empty array (default return when no data exist)
+                        for (var i = 0; i < data.getCalendar[date - 1].length; i++){
                             todos.push(<div class='cal-todo-row'><div class='cal-todo-task'>{data.getCalendar[date - 1][i]}</div>
                                         <img class='cal-x' src={x} id={`${date}_${i}`} onClick={(e) => {deleteCalTodo(e)}}/></div>)
                         }
                     }
-                    if (todolist.length > 0 && showTodo)
-                    {
-                        for (var i = 0; i < todolist[date - 1].length; i++)
-                        {
+                    if (todolist.length > 0 && showTodo){
+                        for (var i = 0; i < todolist[date - 1].length; i++){
                             todos.push(<div class='cal-todolist'>{todolist[date - 1][i]}</div>)
                         }
                     }
@@ -115,92 +90,57 @@ function Calander(){
                     onClick={(e) => setChosenDate([e.target.id.split('_')[0], e.target.id.split('_')[1]])}>
                     {date}{todos}</td>);
                     date++;
-                   
                 }
-
-            }
-            else
-            {
-                if (date <= monthLong)
-                {
+            }else{
+                if (date <= monthLong){
                     let todos = [];
-                    if (data && data.getCalendar.length > 0)
-                    {
-                        for (var i = 0; i < data.getCalendar[date - 1].length; i++)
-                        {
+                    if (data && data.getCalendar.length > 0){
+                        for (var i = 0; i < data.getCalendar[date - 1].length; i++){
                             todos.push(<div class='cal-todo-row'><div class='cal-todo-task'>{data.getCalendar[date - 1][i]}</div>
                                         <img class='cal-x' src={x} id={`${date}_${i}`} onClick={(e) => {deleteCalTodo(e)}}/></div>)
                         }
-                        
                     }
-                    if (todolist.length > 0 && showTodo)
-                    {
-                        for (var i = 0; i < todolist[date - 1].length; i++)
-                        {
-                            todos.push(<div class='cal-todolist'>{todolist[date - 1][i]}</div>)
-                        }
+                    if (todolist.length > 0 && showTodo){
+                        for (var i = 0; i < todolist[date - 1].length; i++){ todos.push(<div class='cal-todolist'>{todolist[date - 1][i]}</div>)}
                     }
                     week.push(<td class={chosenDateList[date - 1]?'date clicked':'date'} id={`${month}_${date}`}
                                   onClick={(e) => setChosenDate([e.target.id.split('_')[0], e.target.id.split('_')[1]])}>
                                   {date}{todos}</td>);
                     date++;
-                }
-                else
-                {
-                    week.push(<td class='date notclickable'></td>)
-                }
+                } else{  week.push(<td class='date notclickable'></td>)}
             }
         }
         calendar.push(<tr class="Cal-content-row">{week}</tr>)
     }
-    // ***** button ***** //
-    const useStyles = makeStyles((theme) => ({
-        button: {
-          margin: theme.spacing(1),
-        },
-    }));
 
-    return(
-            <div class="Theme-black">
+    return(<div class="Theme-black">
                 <h1>{username}'s Calendar</h1>
                 <div>
                     <input type="text" placeholder="Type something..." id="cal-input" onChange={(e) => {setInputTodo(e.target.value)}}></input>
-                    <input type="color" id="cal-color"></input>
                     <button id="cal-button" 
-                            onClick={() => { if (inputTodo !== "" && chosenDate[1] !== -1)
-                                             {
+                            onClick={() => { if (inputTodo !== "" && chosenDate[1] !== -1){
                                                 let tmp = data.getCalendar;
                                                 console.log("original todolist:", tmp, "index:", chosenDate[1] - 1);
-                                                if (tmp.length === 0)
-                                                {
+                                                if (tmp.length === 0){
                                                     tmp = Array(monthLong).fill([]);
                                                 }
                                                 tmp[chosenDate[1] - 1] = [...tmp[chosenDate[1] - 1], inputTodo];
                                                 // setTodoList(tmp);
                                                 setChosenDate([-1, -1]);
                                                 addToCalendar({username: username, year: year, month: month, todolist: tmp})
-                                             }
-                                           }}
-                            >Add to Calendar</button>
+                                    }}}>Add to Calendar</button>
                     <Select id="cal-year" options={yearoptions} placeholder={2021} 
                             onChange={(e)=>{setYear(e.value)
                                             setChosenDate([-1, -1])}}/>
                     <Select id="cal-month" options={monthoptions} placeholder={"January"}
                             onChange={(e)=>{setMonth(e.value)
                                             setChosenDate([-1, -1])}}/>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        className={useStyles().button}
-                        id="cal-import"
-                        onClick={() => {setShowTodo(!showTodo)}}
-                    >
-                        {showTodo ? 'Hide Todo':'Import Todo'}
-                    </Button>
+                    <button id="cal-import" onClick={() => {setShowTodo(!showTodo)}}
+                            >{showTodo ? 'Hide Todo':'Import Todo'}</button>
                 </div>
                 <div>
                     <table id='Cal-main'>
-                        <tr class="Cal-title-row">{weekdayname.map(day=>{return <td>{day}</td>})}</tr>
+                        <tr class="Cal-title-row">{weekdayname.map(day=>{return <td style={{overflowX:"hidden"}}>{day}</td>})}</tr>
                         {calendar}
                     </table>
                 </div>

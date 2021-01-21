@@ -1,16 +1,28 @@
-import axios from 'axios'
-
-
-import { useQuery, useMutation } from '@apollo/client';
-import  {USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, CALENDAR_QUERY, CLASSES_QUERY} from './graphql/queries'
-import {CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION,ADD_CLASS_MUTATION } from './graphql/mutations'
+import { useQuery, useMutation, useSubscription } from '@apollo/client';
+import  {JOB_QUERY, USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, CALENDAR_QUERY, CLASSES_QUERY} from './graphql/queries'
+import {CREATE_JOB_MUTATION, CREATE_USER_MUTATION, SET_ENDDATE_MUTATION, ADD_CALENDAR_MUTATION, ADD_TODO_MUTATION,ADD_CLASS_MUTATION } from './graphql/mutations'
+import { TODO_SUBSCRIPTION, MSG_SUBSCRIPTION } from './graphql/subscription'
 import { useState, useEffect } from 'react';
-
-const instance = axios.create({ baseURL: 'http://localhost:4000' });
 
 const GetUsers = () => { 
     const {loading, error, data} = useQuery(USERS_QUERY)
     return data
+}
+
+const GetJobs = () => { 
+    const {loading, error, data, refetch} = useQuery(JOB_QUERY)
+    const [toget, setToGet] = useState(true)
+    useEffect(() => {   
+        console.log("getjob")
+        if(toget){
+            refetch()
+            if(!data){
+                refetch()
+                setToGet(false)
+            }
+        }
+    }, [toget,data])
+    return {job:data,setToGet}
 }
 
 const GetClasses = () => { 
@@ -19,16 +31,29 @@ const GetClasses = () => {
     useEffect(() => {   
         if(toget){
             refetch()
-            setToGet(false)
+            if(!data){
+                refetch()
+            }
+            setToGet(false)   
         }
-    }, [toget])
+    }, [toget,data])
     return {data,setToGet}
 }
 
 const GetEnddate = () => { 
-    const {loading, error, data} = useQuery(ENDDATE_QUERY)
+    const {loading, error, data, refetch} = useQuery(ENDDATE_QUERY)
     // console.log("get enddate")
-    return data
+    const [toget, setToGet] = useState(false)
+    useEffect(() => {   
+        if(toget){
+            refetch()
+            if(!data){
+                refetch()
+                setToGet(false)
+            }
+        }
+    }, [toget,data])
+    return {data,setToGet}
 }
 
 const GetSubClass = (username) => { 
@@ -54,18 +79,32 @@ const NewUser = () => {
     return {createUser, isSuccess}
 }
 
+const NewJob = () => {
+    const [addJob] = useMutation(CREATE_JOB_MUTATION)
+    const createJob = (jobinfo) => {
+        const {joblist, mutation} = jobinfo
+        console.log("axios",jobinfo)
+        addJob({ variables: {
+            joblist: joblist,
+            mutation: mutation,
+        }})
+
+    }
+    return {createJob}
+}
+
 const SetEnddate = () => {
     const [setEnddate, {data}] = useMutation(SET_ENDDATE_MUTATION)
     const [isSuccess, setIsSuccess] = useState(false)
     useEffect(()=>{
         if (data){ 
-            // console.log(data)
+            console.log(data)
             setIsSuccess(data.setEnddate.success) 
         }
     }, [data])
     const newEnddate = async (date) => {
         if(date){
-            // console.log(date)
+            console.log(date)
             const x = await setEnddate({ variables: {
                 enddate: date,
             }})
@@ -114,7 +153,7 @@ const MutateTodo = () => {
                 userclass: userclass,
                 todolist: todolist,
                 mutation: mutation,
-                todoitem: todoitem
+                todoitem: todoitem,
             }
         })
     }
@@ -140,13 +179,34 @@ const MutateClass = () => {
 const GetTodo = () => { 
     const [username, setUsername] = useState("")
     const [toget, setToGet] = useState(false)
-    const {loading, error, data, refetch} = useQuery(TODOS_QUERY,{variables: { username }})
+    const {loading, error, data, subscribeToMore, refetch} = useQuery(TODOS_QUERY,{variables: { username }})
     useEffect(() => {   
         if(toget){
-            refetch()
+            // refetch()
+            console.log("don't refetch")
             setToGet(false)
         }
     }, [toget])
+    useEffect(() => {
+        if (username !== '')
+        {
+            subscribeToMore({
+                document: TODO_SUBSCRIPTION,
+                variables: {username: username},
+                updateQuery: (prev, {subscriptionData}) => {
+                    if (!subscriptionData) return prev
+                    console.log("update Query!", subscriptionData)
+                    console.log("prev:", prev)
+                    return {
+                        getTodos: prev.getTodos.map(e => {return (e.username === username) ? {username: e.username, userclass: e.userclass, todolist: subscriptionData.data.subTodo.todolist}:{e}})
+                    }
+                }
+            })
+        }
+    }, [username])
+    useEffect(() => {
+        console.log("GetTodo", username, data)
+    }, [JSON.stringify(data)])
     return {data, setToGet, setUsername}
 }
 
@@ -205,19 +265,14 @@ const GetTodoCal = () => {
 
     const updateCallback = (username, month, year, monthLong) => {
         let tmp = Array(monthLong).fill([]);
-        if (data)
-        {
-            for (var i = 0; i < data.getTodos.length; i++)
-            {
-                if (data.getTodos[i].username == username)
-                {
-                    for (var j = 0; j < data.getTodos[i].todolist.length; j++)
-                    {
+        if (data){
+            for (var i = 0; i < data.getTodos.length; i++){
+                if (data.getTodos[i].username == username){
+                    for (var j = 0; j < data.getTodos[i].todolist.length; j++){
                         const deadline = data.getTodos[i].todolist[j].deadline;
                         const value = data.getTodos[i].todolist[j].value;
                         const [_year, _month, _date] = deadline.split('-');
-                        if (_month == month && _year == year)
-                        {
+                        if (_month == month && _year == year){
                             tmp[parseInt(_date) - 1] = [...tmp[parseInt(_date) - 1], value];
                         }
                     }
@@ -229,4 +284,29 @@ const GetTodoCal = () => {
     return {todolist, updateTodoCal}
 }
 
-export { GetUsers, NewUser, UserLogin, MutateTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, MutateClass, GetTodoCal};
+const SubMsg = (username) => {
+    const { data, loading } = useSubscription(
+        MSG_SUBSCRIPTION,
+        { variables: { username } }
+      );
+    const [msg, setMsg] = useState("")
+    const clearMsg = () => {
+        setMsg("")
+    }
+    useEffect(() => {
+        if (data)
+        {
+            if (data.subMsg.mutation === "CREATED")
+            {
+                setMsg(`${data.subMsg.sender} creates a TODO ${data.subMsg.todoitem.value}`)
+            }
+            else if (data.subMsg.mutation === "DELETED")
+            {
+                setMsg(`${data.subMsg.sender} finished a TODO ${data.subMsg.todoitem.value}`)
+            }
+        }
+    }, [data])
+    return {msg, clearMsg}
+}
+
+export { GetJobs, NewJob, GetUsers, NewUser, UserLogin, MutateTodo, GetTodo, GetSubClass, SetEnddate, GetEnddate, GetCalendar, GetClasses, MutateClass, GetTodoCal, SubMsg};

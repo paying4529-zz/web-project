@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import List from "./List"
 import Input from "./Input"
 import {MutateTodo, GetTodo } from '../../axios'
-import uuid from 'uuid/v4';
 
-function Section({username, userclass, setTotal,statenow,me}){
+function Section({username, userclass, setTotal,statenow,me,neww}){
     const [start, setStart] = useState(1)
     const [order, setOrder] = useState(0)
     const [items, setItems] = useState([])
@@ -12,6 +11,10 @@ function Section({username, userclass, setTotal,statenow,me}){
     const {data, setToGet, setUsername} = GetTodo()
     const {saveTodo} = MutateTodo()
 
+    useEffect(()=>{
+        if(neww){
+            setToGet(true)}
+    },[neww])
    const setValueAndSave = async (deadline,todo) => {
         console.log(todo,deadline)
         var newItems = items.slice();
@@ -31,7 +34,7 @@ function Section({username, userclass, setTotal,statenow,me}){
 
     useEffect(()=>{
         if(clearid!=null){
-            const newItems = items.slice();
+            var newItems = items.slice();
             var index;
             for(var i=0;i<clearid+1;i++){
                 if(newItems[i].order===clearid){ index=i; break; }
@@ -42,6 +45,10 @@ function Section({username, userclass, setTotal,statenow,me}){
             setTotal(newItems.filter(e => !e.isComplete).length);
             setItems(newItems)
             setClearId(null)
+            newItems = newItems.map(ii=>{
+                delete ii.__typename;
+                return ii
+            })
             const addtodoinput = { username: username, todolist: newItems, userclass: userclass, mutation: "DELETED", todoitem: delItem}
             let msg = saveTodo(addtodoinput)
             setToGet(true)
@@ -71,6 +78,12 @@ function Section({username, userclass, setTotal,statenow,me}){
         }
         
     }, [start, data])
+
+    useEffect(() => {
+        // subscription update
+        console.log("getTodoFromBack")
+        getTodoFromBack()
+    }, [JSON.stringify(data)])
 
     return (
         <section className="todo-app__main" id="main">

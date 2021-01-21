@@ -1,28 +1,29 @@
 {
-  "name": "full_stack_test",
+  "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "scripts": {
-    "start": "cd frontend && yarn start",
-    "server": "cd backend && yarn server"
-  },
   "dependencies": {
-    "@date-io/date-fns": "1.x",
-    "@material-ui/core": "^4.11.2",
-    "@material-ui/data-grid": "^4.0.0-alpha.15",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.57",
-    "@material-ui/pickers": "^3.2.10",
-    "axios": "^0.21.0",
-    "bootstrap": "^4.5.3",
-    "date-fns": "^2.16.1",
-    "react-bootstrap": "^1.4.0",
-    "react-datasheet": "^1.4.8",
-    "react-date-picker": "^8.0.6",
-    "react-day-picker": "^7.4.8",
-    "react-moment": "^1.0.0",
-    "react-router-dom": "^5.2.0",
-    "react-select": "^3.1.1"
-  }
+    "apollo-server-express": "^2.18.0-rc.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "dotenv-defaults": "^2.0.1",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.4.0",
+    "graphql-subscriptions": "^1.1.0",
+    "mongoose": "^5.11.5",
+    "subscriptions-transport-ws": "^0.9.18"
+  },
+  "type": "module",
+  "scripts": {
+    "server": "node server.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@babel/node": "^7.12.6",
+    "@babel/preset-env": "^7.12.7"
+  },
+  "proxy": "http://localhost:4000"
 }

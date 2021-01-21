@@ -10,6 +10,21 @@ const USERS_QUERY = gql`
   }
 `
 
+const JOB_QUERY = gql`
+  query {
+    getJob {
+      joblist {
+        value
+        readOnly
+        width
+        colSpan
+        rowSpan
+        className
+      }
+    }
+  }
+`
+
 const CLASSES_QUERY = gql`
   query {
     getClasses {
@@ -75,4 +90,4 @@ const CALENDAR_QUERY = gql`
   }
 `
 
-export { USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY,  CALENDAR_QUERY, CLASSES_QUERY }
+export { USERS_QUERY, TODOS_QUERY, ONE_USER_QUERY, SUBUSER_QUERY, ENDDATE_QUERY, JOB_QUERY, CALENDAR_QUERY, CLASSES_QUERY }

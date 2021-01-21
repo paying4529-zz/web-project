@@ -43,7 +43,7 @@ function Userpage({setLogout}){
           <Route exact path={url}><UserHome myclass={myclass}/></Route>
           <Route path={url+"/calander"}><Calander myclass={myclass}/></Route>
           <Route path={url+"/todolist"}><TodoList myclass={myclass} subclass={subclass}/></Route>
-          <Route path={url+"/flowchart"}><FlowChart myclass={myclass} subclass={subclass}/></Route>
+          <Route path={url+"/flowchart"}><FlowChart username={username} myclass={myclass}/></Route>
       </Switch>
     </Router>
   )
@@ -74,15 +74,14 @@ function Login(){
           <input class="select"
                 value={password}
                 onChange={(e) => setpwd(e.target.value)}></input>
-          <div class="button"><Button variant="contained" 
+          <div class="button"><button  className="newbutton"
             onClick={() => {
                 setClick(true)
                 const userinfo = { username: username, password: password }
                 login(userinfo)
                 setpwd("")
               }}
-            disabled={!password}>Login</Button></div>
-          {clicked? <div>{loginSuccess? "login success": "wrong username or password"}</div>:<></>}
+            disabled={!password}>Login</button></div>
         </div>)}
     </Router>
   )

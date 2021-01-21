@@ -1,9 +1,11 @@
 import './todo_style.css';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SubTodoList from "./todo_components/subtodolist";
 import { useRouteMatch} from "react-router-dom";
-import {FormControl, MenuItem, InputLabel,Select, Chip, Input } from '@material-ui/core'
+import {FormControl, MenuItem, InputLabel,Select, Chip, Input, Button, Snackbar, IconButton } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
+import { SubMsg } from '../axios.js'
 
 function TodoList({myclass,subclass}){
     const clss = myclass.split(" ")
@@ -11,6 +13,21 @@ function TodoList({myclass,subclass}){
     const username = url.split("/")[1]
     const [select, setSelect] = useState([])
     const [selectclass, setSelectclass] = useState([])
+    const [open, setOpen] = useState(false)
+    const {msg, clearMsg} = SubMsg(username)
+    
+    useEffect(() => {
+        console.log("msg:", msg)
+        if (msg !== "") {
+            setOpen(true)
+        }
+    }, [msg])
+
+    const handleClose = () => {
+        setOpen(false)
+        clearMsg()
+    }
+
     const handleChange = (e) =>{
         if(e.target.value.length!==0){
             setSelect(e.target.value)
@@ -36,6 +53,7 @@ function TodoList({myclass,subclass}){
           margin: theme.spacing(1),
           minWidth: 300,
           textAlign: "left",
+          
         },
         chips: {
             display: 'flex',
@@ -45,12 +63,29 @@ function TodoList({myclass,subclass}){
     const classes = useStyles();
     return (
         <>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                message={msg}
+                action={
+                <React.Fragment>
+                    <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                    <CloseIcon fontSize="small" />
+                    </IconButton>
+                </React.Fragment>
+                }
+            />
             <div class="my_todo">
-                <SubTodoList username={username} me={username} userclass={myclass}/>
+                <SubTodoList username={username} me={username} userclass={myclass} neww={open}/>
             </div>
             {clss[clss.length-1]!=="member"?<div class="sub_todo">
                 <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="subuser">Select member to see their Todos</InputLabel>
+                    <InputLabel id="subuser" style={{color:"white"}}>Select member to see their Todos</InputLabel>
                     <Select id="subuser" value={select} onChange={handleChange} label="Select member" multiple
                             variant="outlined"
                             input={<Input />} 

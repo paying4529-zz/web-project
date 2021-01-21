@@ -1,46 +1,246 @@
 .App {
   text-align: center;
+  
 }
-.nav_bar{
+
+html,body,#root{
   height: 100%;
-  width: 10%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-  padding-left: 10px;
-  left: 0;
 }
+.fronttitle{
+  width: fit-content;
+  font-size: 50px;
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  animation: slidein 4s ease-in 1;
+}
+.change{
+  animation-delay: 5s;
+  animation: changecolor 9s infinite ease-out;
+}
+@keyframes slidein {
+  from {
+    font-size: 50%;
+    margin-left: 100%;
+    width: 300%;
+  }
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+@keyframes changecolor {
+  from {
+    color:white
+  }
+  75%{
+    color:#3484c5
+  }
+  to {
+    color:#f7f7f7 
+  }
+}
+
+@media screen and (min-width: 400px){
+  .nav_bar{
+    height: 100%;
+    width: 10%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    padding-left: 10px;
+    left: 0;
+  }
+  .main_screen{
+    height: 100%;
+    width: 90%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    right: 0;
+  }
+  .usercaption{
+    bottom: 0;
+    left: 0;
+    padding: 15px;
+    z-index: 100;
+    display:table;
+    position: fixed;
+    width: fit-content;
+  }
+  .column1{
+    width: 50%;
+    height: 100%;
+    float:left;
+  }
+  .column2{
+    padding: 40px;
+    width: 50%;
+    height: 100%;
+    float:right;
+  }
+  .card{
+    width: 200px;
+    position: relative;
+    border-style: none;
+    opacity: 1;
+    margin:10px;
+    transition: opcacity 0.3s;
+    transition: display 0.4s;
+  }
+  .cardd{
+    margin: 0;
+    height:45px;
+    padding:10px !important;
+  }
+  .card:hover{
+    border-style: dotted;
+    opacity: 0.4;
+    margin: 8px;
+    text-decoration: line-through;
+  }
+  .addgroup{
+    width: 500px;
+    align-content: center;
+    display: inline-block;
+    clear: right;
+    padding-inline: 50px;
+    padding-right: 100px;
+  }
+  .pick{
+    display: block;
+    clear: left;
+    padding-left:40px;
+  }
+  .pic{
+    color: #f7f7f7 !important;
+  }
+  .Countdown{
+    width: 450px;
+    margin: 40px 10px 50px 70px;
+    padding: 40px 40px;
+    display: block;
+    float:center;
+  }
+  .navitem{
+    width: fit-content;
+    height: fit-content;
+  }
+  .Countdown-col-element strong{
+    font-size: 40px;
+  }
+}
+@media screen and (max-width: 400px){
+  nav{
+    width: 100%;
+  }
+  li{
+    display: inline-flex;
+    width: fit-content !important;
+    flex-wrap: nowrap;
+  }
+  .Countdown{
+    margin: 20px 20px 0px 20px;
+    padding: 30px 10px;
+    display: block;
+  }
+  .Countdown-col-element strong{
+    font-size: 30px;
+  }
+  .cardd{
+    margin: 0;
+    height:65px;
+    padding:10px !important;
+  }
+  .pick{
+    display: block;
+    clear: left;
+    padding:20px;
+  }
+  .addgroup{
+    width: 300px;
+    align-content: center;
+    display: inline-block;
+    clear: right;
+    padding-inline: 10px;
+  }
+  .card{
+    width: 125px;
+    height: 70px;
+    overflow: hidden;
+    position: relative;
+    border-style: none;
+    opacity: 1;
+    margin:10px;
+    transition: opcacity 0.3s;
+    transition: display 0.4s;
+  }
+  .card:hover{
+    border-style: dotted;
+    opacity: 0.4;
+    margin: 8px;
+    text-decoration: line-through;
+  }
+  .nav_bar{
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 1;
+    overflow-x: hidden;
+    justify-content:space-around;
+  }
+  .main_screen{
+    height: 100%;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+  }
+  .usercaption{
+    top: 0;
+    right:0;
+    padding: 15px;
+    z-index: 100;
+    display:table;
+    position: fixed;
+    width: fit-content;
+    flex-wrap: nowrap
+  }
+}
+
+.usercaption{
+  color: #23292e;
+}
+a,u{
+  text-decoration: none;
+  color: black;
+  font-weight: 200;
+}
+
 .user{
   top: 130px;
   padding-top: 10px;
-}
-
-.main_screen{
-  height: 100%;
-  width: 90%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  right: 0;
 }
 .Register_page{
   height: 100%;
   padding-top: 5px;
   text-align: center;
-  background-color: #b489a6;
+  background-color: #23292e;
+  color:   #f7f7f7;
 }
 .select{
   width: 250px;
   margin: auto;
+  color: #23292e;
 }
 
 .Home_page{
   height: 100%;
   text-align: center;
-  background-color: #b4b389;
+  background-color:  #23292e;
+  color:   #f7f7f7;
   padding-top: 5px;
 }
 
@@ -48,28 +248,22 @@
   height: 100%;
   padding-top: 5px;
   text-align: center;
-  background-color: #89b4ae;
+  background-color:  #23292e;
+  color:   #f7f7f7;
 }
 
 .user_page{
   height: 100%;
   overflow: auto;
   text-align: center;
-  background-color: #8997b4;
+  background-color:  #23292e;
+  color:   #f7f7f7;
 }
-
+.option{
+  color: #23292e;
+}
 .button{
   padding: 20px;
-}
-
-.usercaption{
-  bottom: 0;
-  left: 0;
-  padding: 15px;
-  z-index: 100;
-  display:table;
-  position: fixed;
-  width: fit-content;
 }
 
 .title{
@@ -77,19 +271,27 @@
   margin-bottom: 5px;
 }
 
-.Countdown{
-  margin-right: 10px;
-  margin-top: 20px;
-  margin-left: 30px;
-  margin-bottom: 0;
-  padding: 30px 10px;
-  display: block;
-  /* float: left; */
-  
-}
-
 .Countdown-col{
   display: inline-block;
+}
+
+.newbutton{
+  height: 7vh;
+  display: inline-block;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 1vh;
+  margin: 20px 10px 15px 10px;
+  vertical-align: top;
+  color: rgb(255, 255, 255);
+  background: none;
+  overflow: hidden;
+  width: 100px;
+  font-size: medium;
+}
+
+.newbutton:hover{
+  background: rgba(255, 255, 255, 0.267);
 }
 
 .Countdown-col-element{
@@ -99,9 +301,6 @@
   flex-direction: column;
 }
 
-.Countdown-col-element strong{
-  font-size: 40px;
-}
 .userhome{
   height: 100%;
   width: 55%;
@@ -111,64 +310,32 @@
   position: relative;
 }
 
-.pick{
-  display: block;
-  clear: left;
-  padding-left:40px;
-}
-.column1{
-  width: 50%;
-  height: 100%;
-  float:left;
-}
-.column2{
-  padding: 40px;
-  width: 50%;
-  height: 100%;
-  float:right;
-}
-.addgroup{
-  width: 500px;
-  align-content: center;
-  display: inline-block;
-  clear: right;
-  padding-inline: 50px;
-  padding-right: 100px;
-}
 .twocolumns{
   display: flex;
   flex-wrap: wrap;
   padding:5% 4%;
 }
-.card{
-  position: relative;
-  border-style: none;
-  opacity: 1;
-  margin:10px;
-  transition: opcacity 0.3s;
-  transition: display 0.4s;
-}
-.card:hover{
-  border-style: dotted;
-  opacity: 0.4;
-  margin: 8px;
-  text-decoration: line-through;
-}
+
 .cell{
-  padding:5px 2px;
+  padding:10px 8px !important;
 }
 .time{
   float: center;
-  color:#dabc12;
-  font-weight: 500;
+  color:#ebd248;
+  font-weight: 500 !important;
+  background-color: #1f2427 !important;
 }
-.noon{
-  border-top: 2px;
+.noon.cell {
+  border-top: 5px solid;
   border-bottom: 2px;
-  background-color: #615e4a;
-  color: white
 }
 .group{
-  background-color: #5c5121;
-  color:white
+  background-color: #daba05 !important;
+  color:white !important;
+}
+.disable{
+  pointer-events: none;
+}
+.mmee{
+  background-color: #ce286d !important;
 }

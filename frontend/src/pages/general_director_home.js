@@ -5,20 +5,10 @@ import Countdown from './countdown';
 import DatePicker from 'react-date-picker';
 import { Paper, Card, CardContent, Button } from '@material-ui/core';
 import CreateSelect from "./createselect";
-import { makeStyles } from '@material-ui/core/styles';
 import { SetEnddate, GetClasses, MutateClass } from '../axios'
 
-const useStyles = makeStyles({
-  root: {
-    width: 200,
-    height: 40,
-    margin: 0,
-  },
-  content:{
-    padding:"10px",
-  }
-})
-function Userhome_director({enddate,setEnddate}){
+
+function Userhome_director({setToGetdate,enddate,setEnddate}){
     var { url } = useRouteMatch()
     const username = url.split("/")[-1]
     const [showcountdown, setShow] = useState(false)
@@ -28,15 +18,13 @@ function Userhome_director({enddate,setEnddate}){
     const {data,setToGet} = GetClasses()
     const {saveClass} = MutateClass()
     useEffect(()=>{
-      if(data){
-        console.log("get classes")
-        console.log(data)
-        if(data.getClasses){
+      if(data){if(data.getClasses){
           const classoption = data.getClasses.classlist
-          if(classoption){setoptions(classoption)}
-        }
+          if(classoption){setoptions(classoption)
+      }}else{
+        setToGet(true)
       }
-    },[data])
+    }},[data])
     useEffect(()=>{
       if(enddate){setShow(true)}
     },[enddate])
@@ -44,8 +32,8 @@ function Userhome_director({enddate,setEnddate}){
       if(enddate2){
         setEnddate(String(enddate2))
         newEnddate(String(enddate2))
-      }
-    },[enddate2])
+        setToGetdate(true)
+    }},[enddate2])
     const ssave = async () => {
       var newItems = groupOptions.slice();
       newItems.forEach((e) => {delete e.__typename})
@@ -57,7 +45,6 @@ function Userhome_director({enddate,setEnddate}){
       const newgroupOptions = groupOptions.filter(op => op.label!==value)
       setoptions(newgroupOptions)
     }
-    const classes = useStyles();
     return (
       <div className="Home_page">
         <div className="column1">
@@ -70,13 +57,13 @@ function Userhome_director({enddate,setEnddate}){
             <div className="pick">
               <h3>Pick the date of your seminar:</h3>
               <DatePicker
+                className="pic"
                 onChange={onChange}
                 value={enddate2}
                 format="MM-dd-y"
                 dayPlaceholder="DD"
                 monthPlaceholder="MM"
-                yearPlaceholder="YYYY"
-              />
+                yearPlaceholder="YYYY"/>
             </div>
         </div>
         <div className="column2">
@@ -86,16 +73,13 @@ function Userhome_director({enddate,setEnddate}){
             </div>
             <div className="twocolumns">
               {groupOptions.length!==0 ? groupOptions.map(group =>
-              <div className="card" id={group.value} onClick={()=>ddelete(group.value)}><Card className={classes.root}><CardContent className={classes.content}>{group.value}</CardContent>
+              <div className="card" id={group.value} onClick={()=>ddelete(group.value)}><Card ><CardContent className="cardd">{group.value}</CardContent>
               </Card></div>):<></>}
             </div>
             <div class="button"><Button variant="contained"
                 onClick={ssave}
                 disabled={!groupOptions}>Save</Button></div>
         </div>
-        
-        
-        
       </div>
     )
   }

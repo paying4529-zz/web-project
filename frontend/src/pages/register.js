@@ -39,7 +39,7 @@ function Register(){
                   setClass(e)
                 }}
                 options={groupOptions}/></div>
-        <div class="button"><Button variant="contained"
+        <div class="button"><button  className="newbutton"
                 onClick={() => {
                   setClick(true)
                   const userinfo = { username: username,
@@ -47,7 +47,7 @@ function Register(){
                                     userclass: userclass.value}
                   createUser(userinfo)
                 }}
-          disabled={!userclass}>Register</Button></div>
+          style={!userclass?{display:"none"}:{}}>Register</button></div>
         {clicked? <div>{isSuccess ? `add new user: ${username}`: `${username} already exist`}</div>:<></>}
       </div>
     )
